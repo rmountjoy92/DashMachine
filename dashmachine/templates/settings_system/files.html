@@ -1,0 +1,30 @@
+<div class="divider"></div>
+<div class="row">
+    <div class="col s12">
+        <ul class="collection with-header">
+            <li class="collection-header theme-primary white-text">Backgrounds</li>
+            {% for background_image in background_images %}
+                <li class="collection-item pt-2 pb-2"><span class="selectable-all">static/images/backgrounds/{{ background_image }}</span>
+                    <span class="secondary-content"><i class="material-icons-outlined icon-btn">close</i></span>
+                    <span class="secondary-content"><i class="material-icons-outlined icon-btn">filter_none</i></span>
+                    <span class="secondary-content"><i class="material-icons-outlined icon-btn">visibility</i></span>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+<div class="divider"></div>
+<div class="row">
+    <div class="col s12">
+        <ul class="collection with-header">
+            <li class="collection-header theme-primary white-text">Apps</li>
+            {% for apps_image in apps_images %}
+                <li class="collection-item pt-2 pb-2"><span class="selectable-all">static/images/apps/{{ apps_image }}</span>
+                    <span class="secondary-content"><i class="material-icons-outlined icon-btn">close</i></span>
+                    <span class="secondary-content"><i class="material-icons-outlined icon-btn">filter_none</i></span>
+                    <span class="secondary-content"><i class="material-icons-outlined icon-btn">visibility</i></span>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

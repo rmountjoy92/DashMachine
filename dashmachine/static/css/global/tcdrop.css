@@ -1,0 +1,58 @@
+.tcdrop-form .tcdrop {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+.tcdrop-form .tcdrop + label {
+    width: 100%;
+    height: 100%;
+    font-size: 1.25em;
+    font-weight: 700;
+    color: var(--theme-color-font);
+    display: inline-block;
+    cursor: pointer;
+    background: var(--theme-surface-2);
+    padding: 25px;
+    border-radius: 18px;
+    text-align: center;
+}
+.tcdrop-file-hover {
+  border: 2px dashed var(--theme-secondary);
+  padding: 23px !important;
+}
+.tcdrop-form .tcdrop + label:hover {
+    border: 2px dashed var(--theme-secondary);
+    padding: 23px;
+}
+.tcdrop-li {
+  margin-top: 10px;
+  background: var(--theme-surface-2);
+  padding: 15px;
+  border-radius: 18px;
+  color: var(--theme-color-font);
+  text-align: left;
+}
+.tcdrop-li .material-icons {
+  color: white;
+  position: relative;
+  margin-right: 10px;
+  padding: 5px;
+  border-radius: 24px;
+  background: var(--theme-primary);
+}
+.tcdrop-li .material-icons:hover {
+  -webkit-box-shadow: 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12), 0 2px 4px -1px rgba(0, 0, 0, .3);
+          box-shadow: 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12), 0 2px 4px -1px rgba(0, 0, 0, .3);
+}
+.tcdrop-li .file-name {
+  position: relative;
+  bottom: 5px;
+}
+#tcdrop-loading-upload {
+  text-align: center;
+  font-size: 1.25em;
+  font-weight: 700;
+}

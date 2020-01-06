@@ -1,0 +1,74 @@
+/*----------------------------------------
+    404 Page
+------------------------------------------*/
+.section.section-404
+{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display:    -moz-box;
+    display: -ms-flexbox;
+    display:         flex;
+    overflow: hidden; 
+
+    height: 100vh;
+    width: 100%;
+
+    background: #fff;
+
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+       -moz-box-pack: center;
+    -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+       -moz-box-align: center;
+    -ms-flex-align: center;
+            align-items: center;
+    color: #313541;
+}
+.section.section-404 .error-code
+{
+    font-size: 10rem !important;
+    color: #313541;
+}
+
+@media screen and (min-width: 992px)
+{
+    .section.section-404 .error-code
+    {
+        font-size: 5rem !important;
+    }
+    .section.section-404 .bg-image-404
+    {
+        width: 70% !important;
+    }
+}
+
+@media screen and (min-width: 769px)
+{
+    .bg-image-404
+    {
+        width: 100% !important;
+    }
+}
+
+@media screen and (max-width: 768px)
+{
+    .section.section-404 .error-code
+    {
+        font-size: 5rem !important;
+    }
+    .section.section-404 .bg-image-404
+    {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 540px)
+{
+    .section.section-404 .error-code
+    {
+        font-size: 2rem !important;
+    }
+}

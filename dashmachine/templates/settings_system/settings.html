@@ -1,0 +1,225 @@
+{% extends "main/layout.html" %}
+{% from 'global_macros.html' import input, button %}
+{% from 'main/tcdrop.html' import tcdrop %}
+{% block page_vendor_css %}
+{% endblock page_vendor_css %}
+
+{% block page_lvl_css %}
+    {% if settings.background %}
+        <style>
+            #main {
+                background-image: url("{{ settings.background }}");
+                background-size: cover;
+                height: 100vh;
+            }
+        </style>
+    {% endif %}
+{% endblock page_lvl_css %}
+
+{% block content %}
+    <div id="main" class="main-full">
+        <div class="container">
+            <div class="row">
+                <div class="col s12 m12 l6">
+                    <div class="card scrollbar" style="max-height: calc(100vh - 30px)">
+                        <div class="card-content">
+                                <div class="row">
+                                    <div class="col s12">
+                                        <h5>Config
+                                            <i class="material-icons-outlined theme-secondary-text icon-btn ml-2 toggle-config-help" style="position: relative; top: 4px;">info</i>
+                                        </h5>
+                                    </div>
+                                    <div id="config-help-col" class="col s12 hide theme-surface-1 padding-2 border-radius-10">
+                                        <h5>Settings Example</h5>
+                                        <code class="selectable-all">
+                                            [Settings]<br>
+                                            theme = dark<br>
+                                            accent = orange<br>
+                                            accent = static/images/backgrounds/background.png<br>
+                                        </code>
+
+                                        <table class="centered mt-4">
+                                            <thead>
+                                            <tr>
+                                                <th>Variable</th>
+                                                <th>Value</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>[Settings]</td>
+                                                <td>config section name. required.</td>
+                                            </tr>
+                                            <tr>
+                                                <td>theme</td>
+                                                <td>UI theme, options are light, dark</td>
+                                            </tr>
+                                            <tr>
+                                                <td>accent</td>
+                                                <td>UI accent, options are orange, green, blue, green, pink, grey</td>
+                                            </tr>
+                                            <tr>
+                                                <td>background</td>
+                                                <td>Background image. can be either a local link (prefixed by /static/images/backgrounds/), or an external link</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+
+                                        <h5>App Example</h5>
+                                        <code class="selectable-all">
+                                            [App Name]<br>
+                                            prefix = https://<br>
+                                            url = your-website.com<br>
+                                            icon = static/images/apps/default.png<br>
+                                            sidebar_icon = static/images/apps/default.png<br>
+                                            description = Example description<br>
+                                            open_in = iframe<br>
+                                        </code>
+
+                                        <table class="centered mt-4">
+                                            <thead>
+                                            <tr>
+                                                <th>Variable</th>
+                                                <th>Value</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>[App Name]</td>
+                                                <td>The name of your app.</td>
+                                            </tr>
+                                            <tr>
+                                                <td>prefix</td>
+                                                <td>the prefix for the app's url, e.g. http:// or https://</td>
+                                            </tr>
+                                            <tr>
+                                                <td>url</td>
+                                                <td>the url for your app, e.g. google.com</td>
+                                            </tr>
+                                            <tr>
+                                                <td>icon</td>
+                                                <td>icon for the dashboard, can be either a local link (prefixed by /static/images/apps/), or an external link</td>
+                                            </tr>
+                                            <tr>
+                                                <td>sidebar_icon</td>
+                                                <td>icon for the sidebar, can be either a local link (prefixed by /static/images/apps/), or an external link</td>
+                                            </tr>
+                                            <tr>
+                                                <td>description</td>
+                                                <td>a short description for the app</td>
+                                            </tr>
+                                            <tr>
+                                                <td>open_in</td>
+                                                <td>open the app in an embedded iframe or a new tab, options are iframe, new_tab</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                    <div class="divider"></div>
+                                    <form id="config-form">
+                                        {{ input(
+                                        size="s12",
+                                        class="materialize-textarea",
+                                        form_obj=config_form.config,
+                                        id="config-textarea"
+                                        ) }}
+                                    </form>
+                                    {{ button(
+                                    icon="save",
+                                    id="save-config-btn",
+                                    float="left",
+                                    data={'url': url_for('settings_system.save_config')},
+                                    text="save"
+                                    ) }}
+                                </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col s12 m12 l6">
+                    <div class="card scrollbar" style="max-height: calc(100vh - 30px)">
+                        <div class="card-content">
+                            <div class="row">
+                                <div class="col s12">
+                                    <h5>Images</h5>
+                                    <form id="add-images-form">
+                                        <div class="input-field col s12 mt-4">
+                                            <select name="folder">
+                                                <option value="apps">Apps</option>
+                                                <option value="backgrounds">Backgrounds</option>
+                                            </select>
+                                            <label>Folder</label>
+                                        </div>
+                                        <input name="files" id="add-images-input" class="hide">
+                                    </form>
+                                    {{ tcdrop(allowed_types='jpg,jpeg,png', id="images-tcdrop", max_files="30") }}
+                                    {{ button(text="save", icon="save", id="save-images-btn", float="left", data={"url": url_for('settings_system.add_images')}) }}
+                                </div>
+                            </div>
+                            <div id="files-div">{{ files_html|safe }}</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block page_vendor_js %}
+{% endblock page_vendor_js %}
+
+{% block page_lvl_js %}
+    <script type="text/javascript">
+        var d = document.getElementById("settings-sidenav");
+        d.className += " active theme-primary";
+
+        function apply_settings(settings_theme, settings_accent){
+            localStorage.setItem('mode', settings_theme);
+            document.documentElement.setAttribute('data-theme', settings_theme);
+            localStorage.setItem('accent', settings_accent);
+            document.documentElement.setAttribute('data-accent', settings_accent);
+        }
+
+        $( document ).ready(function() {
+            initTCdrop('#images-tcdrop');
+            $("#save-config-btn").on('click', function(e) {
+                $.ajax({
+                    url: $(this).attr('data-url'),
+                    type: 'POST',
+                    data: $("#config-form").serialize(),
+                    success: function(data){
+                        if (data.data.msg === "success"){
+                            M.toast({html: 'Config applied successfully'});
+                            apply_settings(data.data.settings.theme, data.data.settings.accent);
+                            location.reload(true);
+                        } else {
+                            M.toast({html: data.data.msg, classes: "theme-warning"});
+                        }
+                    }
+                });
+            });
+
+            $(".toggle-config-help").on('click', function(e) {
+               $("#config-help-col").toggleClass('hide');
+            });
+
+            $("#save-images-btn").on('click', function(e) {
+                $("#add-images-input").val(tcdrop_files['images-tcdrop'].toString());
+                $.ajax({
+                    url: $(this).attr('data-url'),
+                    type: 'POST',
+                    data: $("#add-images-form").serialize(),
+                    success: function(data){
+                        $("#add-images-form").trigger('reset');
+                        $("#files-div").empty();
+                        $("#files-div").append(data);
+                        tcdropResetAll();
+                    }
+                });
+            });
+
+        });
+    </script>
+{% endblock page_lvl_js %}

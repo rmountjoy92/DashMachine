@@ -1,0 +1,177 @@
+<!--addme global "are you sure" modal-->
+
+<!--GLOBAL SWITCH-->
+{% macro switch(
+id="",
+form_obj=None,
+label_left="",
+label_right="",
+val=None,
+size="",
+name="",
+onclickval=None,
+data={}) %}
+    <div class="switch col {{ size }}"
+            {% for key, value in data.items() %}
+         data-{{key}}="{{value}}"
+            {% endfor %}
+    >
+        {{ label_left }}
+        <label>
+            {% if form_obj%}
+
+                {% if value == True %}
+                    {{ form_obj(type="checkbox", checked="checked", onclick=onclickval, id=id, name=name) }}
+                {% else %}
+                    {{ form_obj(type="checkbox", onclick=onclickval, id=id, name=name) }}
+                {% endif %}
+
+            {% else %}
+
+                {% if value == True %}
+                    <input id="{{id}}" name="{{name}}" type="checkbox" checked>
+                {% else %}
+                    <input id="{{id}}" name="{{name}}" type="checkbox">
+                {% endif %}
+
+            {% endif %}
+            <span class="lever"></span>
+        </label>
+        {{ label_right }}
+    </div>
+{% endmacro %}
+
+
+<!--GLOBAL BUTTON-->
+{% macro button(
+text,
+id=None,
+class=None,
+data={},
+icon=None,
+float="right",
+href=None
+)%}
+    <a class="waves-effect waves-light btn {{class}} {{float}}"
+            {% if id %}
+       id="{{id}}"
+            {% endif %}
+
+            {% if href %}
+       href="{{href}}"
+            {% endif %}
+
+            {% for key, value in data.items() %}
+       data-{{key}}="{{value}}"
+            {% endfor %}
+
+       style="background-color: var(--theme-primary);
+          border-radius: 8px;
+          margin-right: 5px;
+          margin-left: 5px;">
+        {% if icon %}
+            <i class="material-icons-outlined left">{{icon}}</i>
+        {% endif %}
+        {{text}}</a>
+{% endmacro %}
+
+<!--GLOBAL TEXT INPUT FIELD (INCLUDES PARENT COL)-->
+{% macro input(
+id,
+label=None,
+name="",
+form_obj=None,
+val="",
+size="s6",
+class="",
+col_class="",
+col_id="",
+icon=None,
+spacer_icon=False,
+required='',
+helper=None
+)%}
+    <div id="{{col_id}}" class="input-field col {{ size }} {{ col_class }}">
+        {% if spacer_icon == True %}
+            <i class="material-icons-outlined prefix hide"> home </i>
+        {% endif %}
+        {% if icon %}
+            <i class="material-icons-outlined prefix"> {{icon}} </i>
+        {% endif %}
+
+        {% if form_obj %}
+            {% if required == "required" %}
+                {{ form_obj(id=id, value=val, class="validate " + class, required=required) }}
+            {% else %}
+                {{ form_obj(id=id, value=val, class="validate " + class) }}
+            {% endif %}
+        {% else %}
+            <input id="{{ id }}" type="text" value={{val}} class="validate {{class}}" {{required}}>
+        {% endif %}
+
+        {% if label %}
+            <label for="{{ id }}">{{ label }}</label>
+        {% endif %}
+
+        {% if helper %}
+            <span class="helper-text">{{helper}}</span>
+        {% endif %}
+
+    </div>
+{% endmacro %}
+
+{% macro preload_circle() %}
+    <div class="preloader-wrapper active center">
+        <div class="spinner-layer spinner-blue">
+            <div class="circle-clipper left">
+                <div class="circle"></div>
+            </div><div class="gap-patch">
+            <div class="circle"></div>
+        </div><div class="circle-clipper right">
+            <div class="circle"></div>
+        </div>
+        </div>
+
+        <div class="spinner-layer spinner-red">
+            <div class="circle-clipper left">
+                <div class="circle"></div>
+            </div><div class="gap-patch">
+            <div class="circle"></div>
+        </div><div class="circle-clipper right">
+            <div class="circle"></div>
+        </div>
+        </div>
+
+        <div class="spinner-layer spinner-yellow">
+            <div class="circle-clipper left">
+                <div class="circle"></div>
+            </div><div class="gap-patch">
+            <div class="circle"></div>
+        </div><div class="circle-clipper right">
+            <div class="circle"></div>
+        </div>
+        </div>
+
+        <div class="spinner-layer spinner-green">
+            <div class="circle-clipper left">
+                <div class="circle"></div>
+            </div><div class="gap-patch">
+            <div class="circle"></div>
+        </div><div class="circle-clipper right">
+            <div class="circle"></div>
+        </div>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro select(
+id='',
+form_obj=None,
+size="s12",
+label=''
+) %}
+    <div class="input-field col {{size}}">
+        {{ form_obj(id=id) }}
+        <label>{{ label }}</label>
+    </div>
+{% endmacro %}

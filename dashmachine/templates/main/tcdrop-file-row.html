@@ -1,0 +1,35 @@
+<li class="tcdrop-li tcdrop-file-li">
+  <i class="delete-{{ id }} tcdrop-delete-file material-icons pointer"
+     data-url="{{url_for('main.deleteCachedFile')}}"
+     data-file="{{ fn }}"
+     data-local="{{local}}">close</i>
+  <span class="file-name">{{orig_fn}}</span>
+</li>
+<script type="text/javascript">
+  $(".delete-{{ id }}").on('click', function(){
+    let el = $(this).closest('.row');
+    let url = $(this).attr('data-url');
+    let local = $(this).attr('data-local');
+    $(this).parent().remove();
+    if(local === 'true'){
+      let index = tcdrop_files[el.attr('id')].indexOf("{{fn}}");
+      if (index > -1) {
+        tcdrop_files[el.attr('id')].splice(index, 1);
+      }
+      tcdropHideDropArea(el)
+    } else{
+      $.ajax({
+        url: url,
+        type: 'GET',
+        data: { file: $(this).attr('data-file') },
+        success: function(data){
+          let index = tcdrop_files[el.attr('id')].indexOf("{{fn}}");
+          if (index > -1) {
+            tcdrop_files[el.attr('id')].splice(index, 1);
+          }
+          tcdropHideDropArea(el);
+        }
+      });
+    }
+  });
+</script>

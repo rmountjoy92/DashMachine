@@ -1,0 +1,36 @@
+/*----------------------------------------
+    Login Page
+------------------------------------------*/
+.login-bg
+{
+    background-image: url('../../images/gallery/flat-bg.jpg');
+    background-repeat: no-repeat;
+    -webkit-background-size: cover;
+            background-size: cover;
+}
+
+#login-page
+{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display:    -moz-box;
+    display: -ms-flexbox;
+    display:         flex;
+
+    height: 100vh; 
+
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+       -moz-box-pack: center;
+    -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+       -moz-box-align: center;
+    -ms-flex-align: center;
+            align-items: center;
+}
+#login-page .card-panel.border-radius-6.login-card
+{
+    margin-left: 0 !important;
+}

@@ -1,0 +1,75 @@
+{% extends "main/base.html" %}
+{% block content %}
+<div class="row">
+  <div class="col-md-4 col-md-offset-4"">
+    <div class="card">
+      <div class="card-action">
+        <h2>Billing Info</h2>
+      </div>
+      <div class="card-content">
+
+        <form class="col s12" method="POST">
+          {{ form.hidden_tag() }}
+
+          <div class="row">
+           <div class="input-field col s12">
+             {{ form.name(autocomplete="off", class="is-invalid") }}
+             <label for="name">Name on card</label>
+           </div>
+          </div>
+
+          <div class="row">
+           <div class="input-field col s12">
+             {{ form.card_number(autocomplete="off", class="is-invalid") }}
+             <label for="card_number">Card Number</label>
+           </div>
+          </div>
+
+          <div class="row">
+           <div class="input-field col s12">
+             {{ form.expiration_date(autocomplete="off", class="is-invalid") }}
+             <label for="expiration_date">Expiration ex: 08/21</label>
+           </div>
+          </div>
+
+          <div class="row">
+           <div class="input-field col s12">
+             {{ form.cvv(autocomplete="off", class="is-invalid") }}
+             <label for="cvv">CVV Code</label>
+           </div>
+          </div>
+
+          <div class="row">
+           <div class="input-field col s12">
+             {{ form.address(autocomplete="off", class="is-invalid") }}
+             <label for="address">Billing Address</label>
+           </div>
+          </div>
+
+          <div class="row">
+           <div class="input-field col s4">
+             {{ form.city(autocomplete="off", class="is-invalid") }}
+             <label for="city">City</label>
+           </div>
+           <div class="input-field col s4">
+             {{ form.state(autocomplete="off", class="is-invalid") }}
+             <label for="state">State</label>
+           </div>
+           <div class="input-field col s4">
+             {{ form.zip_code(autocomplete="off", class="is-invalid") }}
+             <label for="zip_code">Zip</label>
+           </div>
+          </div>
+
+
+          <div class="row">
+            {{ form.submit(class="waves-effect waves-light btn") }}
+          </div>
+
+        </form>
+        <div class="clearBoth"></div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

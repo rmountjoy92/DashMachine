@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="2d244493-7af1-4307-a64a-32ac4c2ea0a0" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ProjectId" id="1Vyp2sIL21mINKX6JBxGZr1SlH8" />
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="autoscrollToSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="NewWatcherDialog.advanced.open" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/run.py" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="watcher.settings" />
+  </component>
+  <component name="RunManager">
+    <configuration name="DashMachine" type="PythonConfigurationType" factoryName="Python">
+      <module name="DashMachine" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/run.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2d244493-7af1-4307-a64a-32ac4c2ea0a0" name="Default Changelist" comment="" />
+      <created>1578234985306</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1578234985306</updated>
+      <workItem from="1578234992218" duration="34152000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="560" y="215" key="#File_Watchers" timestamp="1578246024784">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state x="560" y="215" key="#File_Watchers/0.28.1920.1052@0.28.1920.1052" timestamp="1578246024784" />
+    <state x="418" y="212" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1578235072139">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state x="418" y="212" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.28.1920.1052@0.28.1920.1052" timestamp="1578235072139" />
+    <state x="554" y="321" width="810" height="703" key="EditFileWatcherDialog" timestamp="1578246021501">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state x="554" y="321" width="810" height="703" key="EditFileWatcherDialog/0.28.1920.1052@0.28.1920.1052" timestamp="1578246021501" />
+    <state x="748" y="311" key="FileChooserDialogImpl" timestamp="1578235103537">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state x="748" y="311" key="FileChooserDialogImpl/0.28.1920.1052@0.28.1920.1052" timestamp="1578235103537" />
+    <state width="1870" height="118" key="GridCell.Tab.0.bottom" timestamp="1578273944211">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state width="1870" height="118" key="GridCell.Tab.0.bottom/0.28.1920.1052@0.28.1920.1052" timestamp="1578273944211" />
+    <state width="1870" height="118" key="GridCell.Tab.0.center" timestamp="1578273944210">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state width="1870" height="118" key="GridCell.Tab.0.center/0.28.1920.1052@0.28.1920.1052" timestamp="1578273944210" />
+    <state width="1870" height="118" key="GridCell.Tab.0.left" timestamp="1578273944210">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state width="1870" height="118" key="GridCell.Tab.0.left/0.28.1920.1052@0.28.1920.1052" timestamp="1578273944210" />
+    <state width="1870" height="118" key="GridCell.Tab.0.right" timestamp="1578273944210">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state width="1870" height="118" key="GridCell.Tab.0.right/0.28.1920.1052@0.28.1920.1052" timestamp="1578273944210" />
+    <state x="446" y="188" key="SettingsEditor" timestamp="1578245994652">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state x="446" y="188" key="SettingsEditor/0.28.1920.1052@0.28.1920.1052" timestamp="1578245994652" />
+    <state x="525" y="224" width="869" height="660" key="find.popup" timestamp="1578272445893">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state x="525" y="224" width="869" height="660" key="find.popup/0.28.1920.1052@0.28.1920.1052" timestamp="1578272445893" />
+    <state x="623" y="260" width="672" height="678" key="search.everywhere.popup" timestamp="1578261460421">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state x="623" y="260" width="672" height="678" key="search.everywhere.popup/0.28.1920.1052@0.28.1920.1052" timestamp="1578261460421" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/DashMachine$DashMachine.coverage" NAME="DashMachine Coverage Results" MODIFIED="1578268471163" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+  </component>
+</project>

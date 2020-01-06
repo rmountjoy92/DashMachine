@@ -1,0 +1,75 @@
+{% extends "main/base.html" %}
+
+{% block header %}
+    <!-- BEGIN: Header-->
+    <header class="page-topbar" id="header">
+        <div class="navbar navbar-fixed">
+            <nav class="navbar-main navbar-color nav-collapsed nav-collapsible navbar-light" style="border-radius: 0 0 10px 10px; width: 99.7%;">
+                <div class="nav-wrapper" style="border-radius: 0 0 10px 10px;">
+                    {% block breadcrumb %}
+                    {% endblock breadcrumb %}
+
+                    <ul id="nav-mobile" class="left hide-on-large-only">
+                        <li><a href="#" class="theme-primary-text">
+                            <i class="material-icons-outlined tiny">dashboard</i>
+                            <span style="position: relative; bottom: 2px; left: 3px;" class="theme-secondary-text">Estimates</span>
+                        </a></li>
+                    </ul>
+
+                    <ul class="navbar-list right">
+                        <li>
+                            <a class="theme-secondary-text text-darken-1 tooltipped"
+                               data-position="left"
+                               data-tooltip="Logout"
+                               id="logout-nav-btn"
+                               href="{{ url_for('user_system.logout') }}">
+                                <i class="material-icons-outlined">exit_to_app</i>
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+                <nav class="display-none search-sm">
+                    <div class="nav-wrapper">
+                        <form>
+                            <div class="input-field">
+                                <input class="search-box-sm" type="search" required="">
+                                <label class="label-icon" for="search"><i class="material-icons-outlined search-sm-icon">search</i></label><i class="material-icons-outlined search-sm-close">close</i>
+                            </div>
+                        </form>
+                    </div>
+                </nav>
+            </nav>
+        </div>
+    </header>
+    <!-- END: Header-->
+{% endblock header %}
+
+{% block sidenav %}
+    <!-- BEGIN: SideNav-->
+    <aside class="sidenav-main nav-collapsed nav-collapsible sidenav-light sidenav-active-rounded z-depth-2">
+        <div class="brand-sidebar noselect" style="overflow: hidden;">
+            <h1 class="logo-wrapper hide-on-med-and-down"><a class="brand-logo darken-1" href="{{ url_for('main.home') }}"><img id="TCM-nav-logo" src="static/images/logo/logo.svg" alt="DashMachine logo"/><span class="logo-text theme-secondary-text"> </span></a></h1>
+        </div>
+        <ul class="sidenav sidenav-collapsible leftside-navigation collapsible sidenav-fixed menu-shadow" id="slide-out" data-menu="menu-navigation" data-collapsible="accordion">
+            <li class="bold"><a id="dashboard-sidenav" class="waves-effect waves-cyan" href="{{ url_for('main.home') }}">
+                <i class="material-icons-outlined">dashboard</i>
+                <span class="menu-title" data-i18n="">Dashboard</span>
+            </a></li>
+
+        </ul>
+        {#        <div class="navigation-background"></div><a class="sidenav-trigger btn-sidenav-toggle btn-floating btn-medium waves-effect waves-light hide-on-large-only theme-primary" href="#" data-target="slide-out"><i class="material-icons-outlined">menu</i></a>#}
+    </aside>
+    <!-- END: SideNav-->
+
+{% endblock sidenav%}
+
+{% block footer %}
+    <!-- BEGIN: Footer-->
+    <!-- <footer class="page-footer footer footer-static footer-light navbar-border navbar-shadow">
+      <div class="footer-copyright">
+        <div class="container"><span>&copy; 2019 All rights reserved.</span><span class="right hide-on-small-only">DashMachine</span></div>
+      </div>
+    </footer> -->
+    <!-- END: Footer-->
+{% endblock footer %}

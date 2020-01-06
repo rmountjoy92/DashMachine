@@ -1,0 +1,39 @@
+{% extends "main/base.html" %}
+{% from 'global_macros.html' import button %}
+
+{% block page_lvl_css %}
+    {{ process_css_sources(src='site_system/site.css')|safe }}
+{% endblock page_lvl_css %}
+
+{% block header %}
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper">
+                <a href="{{url_for('main.home')}}" class="brand-logo" style="margin-top: 10px"><img height="42px" src="static/images/logo/full.svg" alt="Restorely logo"/></a>
+                <a href="#" data-target="nav-mobile" class="sidenav-trigger right"><i class="material-icons theme-secondary-text">menu_open</i></a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="{{url_for('main.home')}}" class="theme-primary-text">
+                        <i class="material-icons-outlined tiny">home</i>
+                        <b class="navbar-link-text">Home</b>
+                    </a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+{% endblock header %}
+
+{% block sidenav %}
+    <ul id="nav-mobile" class="sidenav top-nav-mobile-sidenav">
+        <li><a href="{{url_for('main.home')}}"><i class="material-icons-outlined">
+            home</i>Home
+        </a></li>
+    </ul>
+{% endblock sidenav %}
+
+{% block footer %}
+{#    <footer class="page-footer footer footer-static footer-light navbar-border navbar-shadow">#}
+{#        <div class="footer-copyright">#}
+{#            <div class="container"><span>© 2019 Restorely All rights reserved.</span></div>#}
+{#        </div>#}
+{#    </footer>#}
+{% endblock footer %}

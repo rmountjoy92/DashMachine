@@ -1,0 +1,79 @@
+/* THEME VARIABLES */
+:root {
+  --theme-background: #EBEEF0;
+  --theme-surface: #fff;
+  --theme-surface-1: #fcfcfc;
+  --theme-surface-2: #e0e0e0;
+  --theme-primary: #FF9966;
+  --theme-secondary: #9e9e9e;
+  --theme-accent: #3399FF;
+  --theme-color-font: #2c2f3a;
+  --theme-color-font-muted: rgba(44, 47, 58, 0.85);
+  --theme-color-font-muted2: rgba(44, 47, 58, 0.65);
+  --theme-warning: #f44336;
+}
+[data-theme="dark"] {
+  --theme-background: #1c1c1c;
+  --theme-surface: #2f2f2f;
+  --theme-surface-1: #434343;
+  --theme-surface-2: #575757;
+  --theme-color-font: #fff;
+  --theme-color-font-muted: #f9f9f9;
+  --theme-warning: #dc584e;
+}
+[data-accent="green"] {
+  --theme-primary: #49B03E;
+}
+[data-accent="pink"] {
+  --theme-primary: #EE1289;
+}
+[data-accent="blue"] {
+  --theme-primary: #5151b0;
+}
+[data-accent="grey"] {
+  --theme-primary: #C6C3CC;
+}
+
+/* THEME CLASSES */
+.theme-surface {
+  background-color: var(--theme-surface) !important;
+}
+.theme-surface-1 {
+  background-color: var(--theme-surface-1) !important;
+}
+.theme-background {
+  background-color: var(--theme-background) !important;
+}
+.theme-primary {
+  background-color: var(--theme-primary) !important;
+}
+.theme-primary-text {
+  color: var(--theme-primary) !important;
+}
+.theme-secondary {
+  background-color: var(--theme-secondary) !important;
+}
+.theme-secondary-text {
+  color: var(--theme-secondary) !important;
+}
+.theme-accent {
+  background-color: var(--theme-accent) !important;
+}
+.theme-accent-text {
+  color: var(--theme-accent) !important;
+}
+.theme-text {
+  color: var(--theme-color-font) !important;
+}
+.theme-warning {
+  background-color: var(--theme-warning) !important;
+}
+.theme-warning-text {
+  color: var(--theme-warning) !important;
+}
+.theme-muted-text {
+  color: var(--theme-color-font-muted) !important;
+}
+.theme-muted2-text {
+  color: var(--theme-color-font-muted2) !important;
+}

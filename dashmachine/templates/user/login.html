@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html id="html" class="loading" lang="en" data-textdirection="ltr">
+<!-- BEGIN: Head-->
+
+<head>
+  <script>
+    let mode = localStorage.getItem('mode');
+    if (mode === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+    let accent = localStorage.getItem('accent');
+    document.documentElement.setAttribute('data-accent', accent);
+  </script>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+  <meta name="description"
+    content="Transaction coordination software">
+  <meta name="keywords"
+    content="Real Estate">
+  <meta name="author" content="ThemeSelect">
+  {% if title %}
+  <title>DashMachine - {{ title }}</title>
+  {% else %}
+  <title>DashMachine</title>
+  {% endif %}
+  <link rel="apple-touch-icon" href="static/images/favicon/apple-touch-icon-152x152.png">
+  <link rel="shortcut icon" type="image/x-icon" href="static/images/favicon/favicon-32x32.png">
+  <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  {{ process_css_sources(app_global=True)|safe }}
+
+</head>
+<!-- END: Head-->
+
+  <body>
+  <div class="row">
+    <div class="col s12 l4 offset-l4">
+      <div class="card">
+        <div class="card-content">
+          <div class="row center-align mt-4">
+            <img width="120px" src="static/images/logo/logo.svg" alt="DashMachine Logo">
+          </div>
+          <div class="row">
+            <form class="login-form" method="POST">
+              {{ form.hidden_tag() }}
+
+              <div class="input-field col s12">
+                <i class="material-icons-outlined prefix">mail_outline</i>
+                {{ form.email(class="validate", id="email", type="text") }}
+                <label for="email" class="center-align">Email</label>
+              </div>
+
+              <div class="input-field col s12">
+                <i class="material-icons-outlined prefix">lock_outline</i>
+                {{ form.password(class="validate", id="password", type="password") }}
+                <label for="password">Password</label>
+              </div>
+
+              <div class="switch">
+                <label>
+                  {{ form.remember(type="checkbox", checked="true") }}
+                  <span class="lever"></span>
+                  Remember Me
+                </label>
+              </div>
+
+
+              <div class="input-field col s12">
+                <button type=submit class="btn theme-primary waves-effect waves-light right">Sign in</button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BEGIN VENDOR JS-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <!-- END VENDOR JS-->
+</body>
+
+</html>

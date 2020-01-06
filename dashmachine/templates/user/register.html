@@ -1,0 +1,74 @@
+{% extends "main/base.html" %}
+{% from 'global_macros.html' import input, button %}
+{% block content %}
+    <div class="row">
+        <div class="card col s12 m12 l4 offset-l4">
+            <h5>Register</h5>
+
+            <form id="register-form">
+                {{input(
+                id="register-fname",
+                label="First Name",
+                form_obj=form.fname,
+                class="",
+                size="s6"
+                )}}
+
+                {{input(
+                id="register-lname",
+                label="Last Name",
+                form_obj=form.lname,
+                class="",
+                size="s6"
+                )}}
+
+                {{input(
+                id="register-email",
+                label="Email",
+                form_obj=form.email,
+                class="",
+                size="s12"
+                )}}
+
+                {{input(
+                id="register-password",
+                label="Password",
+                form_obj=form.password,
+                class="",
+                size="s12"
+                )}}
+
+                {{input(
+                id="register-confirm-password",
+                label="Confirm Password",
+                form_obj=form.confirm_password,
+                class="",
+                size="s12"
+                )}}
+
+                {{button(
+                text="submit",
+                id="register-submit-btn",
+                class="mb-2",
+                data={'url': url_for('user_system.add_user'),
+                      'done-url': url_for('user_system.login')}
+                )}}
+            </form>
+
+        </div>
+    </div>
+
+    <script>
+        $("#register-submit-btn").on('click', function(e) {
+            var done_url = $(this).attr('data-done-url')
+            $.ajax({
+                url: $(this).attr('data-url'),
+                type: 'POST',
+                data: $("#register-form").serialize(),
+                success: function(data){
+                    $(location).attr('href', done_url);
+                }
+            });
+        });
+    </script>
+{% endblock content %}

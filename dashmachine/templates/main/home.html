@@ -1,0 +1,75 @@
+{% extends "main/layout.html" %}
+{% block page_vendor_css %}
+{% endblock page_vendor_css %}
+
+{% block page_lvl_css %}
+    {% if settings.background %}
+        <style>
+            #main {
+                background-image: url("{{ settings.background }}");
+                background-size: cover;
+                height: 100vh;
+            }
+        </style>
+    {% endif %}
+{% endblock page_lvl_css %}
+
+{% block content %}
+    <div id="main" class="main-full">
+        <div class="container">
+            <div class="row card-filter-container">
+                <div class="col s12 l4 input-field">
+                    <span>
+                        <i class="material-icons prefix card-search-icon">search</i>
+                        <input type="text" id="apps-filter" class="card-filter theme-surface" placeholder="Search apps">
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                {% for app in apps %}
+                    {% if app.open_in == 'iframe' %}
+                        <a href="{{ url_for('main.app_view', url=app.url) }}" class="app-a" data-name="{{ app.name }}" data-description="{{ app.description }}">
+                    {% elif app.open_in == "new_tab" %}
+                        <a href="{{ app.prefix }}{{ app.url }}" target="_blank" class="app-a" data-name="{{ app.name }}" data-description="{{ app.description }}">
+                    {% endif %}
+                <div class="col s12 m6 l3">
+                    <div class="card">
+                        <div class="card-content center-align">
+                            <img src="{{ app.icon }}" height="64px">
+                        </div>
+                        <div class="card-action center-align">
+                            <h5>{{ app.name }}</h5>
+                            <span class="theme-secondary-text">{{ app.description }}</span>
+                        </div>
+                    </div>
+                </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block page_vendor_js %}
+{% endblock page_vendor_js %}
+
+{% block page_lvl_js %}
+    <script type="text/javascript">
+        var d = document.getElementById("dashboard-sidenav");
+        d.className += " active theme-primary";
+
+        $( document ).ready(function() {
+           $("#apps-filter").on('keyup', function(e) {
+               var value = $(this).val().toLowerCase();
+               $(".app-a").each(function(i, e) {
+                    if ($(this).attr("data-name").toLowerCase().indexOf(value) > -1
+                        || $(this).attr("data-description").toLowerCase().indexOf(value) > -1) {
+                        $(this).removeClass('hide');
+                    } else {
+                        $(this).addClass('hide');
+                    }
+               });
+           });
+        });
+    </script>
+{% endblock page_lvl_js %}

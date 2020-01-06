@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html id="html" class="loading" lang="en" data-textdirection="ltr">
+<!-- BEGIN: Head-->
+
+<head>
+  <script>
+    let mode = localStorage.getItem('mode');
+    if (mode === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+    let accent = localStorage.getItem('accent');
+    document.documentElement.setAttribute('data-accent', accent);
+  </script>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+  <meta name="description"
+    content="Transaction coordination software">
+  <meta name="keywords"
+    content="Real Estate">
+  <meta name="author" content="ThemeSelect">
+  {% if title %}
+  <title>DashMachine - {{ title }}</title>
+  {% else %}
+  <title>DashMachine</title>
+  {% endif %}
+  <link rel="apple-touch-icon" href="static/images/favicon/apple-touch-icon-152x152.png">
+  <link rel="shortcut icon" type="image/x-icon" href="static/images/favicon/favicon-32x32.png">
+  <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/5f4e7d9438.js" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css?family=Gelasio|Montserrat&display=swap" rel="stylesheet">
+  <!-- BEGIN: VENDOR CSS-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  {% block page_vendor_css %}{% endblock page_vendor_css %}
+  <!-- END: VENDOR CSS-->
+  <!-- BEGIN: Page Level CSS-->
+  {% block page_lvl_css %}{% endblock page_lvl_css %}
+  <!-- END: Page Level CSS-->
+
+  <!-- BEGIN: DashMachine modules CSS-->
+  {{ process_css_sources(app_global=True)|safe }}
+  <!-- END: DashMachine modules CSS-->
+</head>
+<!-- END: Head-->
+
+<body id="body" class="vertical-layout page-header-light vertical-menu-collapsible 2-columns  " data-open="click"
+  data-menu="vertical-dark-menu" data-col="2-columns">
+  <input id="copy-input" class="hide">
+
+  <input id="settings-theme" class="hide" value="{{ settings.theme }}">
+  <input id="settings-accent" class="hide" value="{{ settings.accent }}">
+
+  <script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+
+
+  {% block header %}{% endblock header %}
+
+  {% block sidenav %}{% endblock sidenav %}
+
+  {% block content %}{% endblock content %}
+
+  {% block footer %}{% endblock footer %}
+
+  <!-- BEGIN VENDOR JS-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="static/vendors/tinymce/tinymce.min.js?v={{ range(1, 9999) | random }}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.4.10/cleave.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.4.10/addons/cleave-phone.us.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <!-- END VENDOR JS-->
+
+  <!-- BEGIN PAGE VENDOR JS-->
+  {% block page_vendor_js %}{% endblock page_vendor_js %}
+  <!-- END PAGE VENDOR JS-->
+
+  <!-- BEGIN DashMachine modules JS-->
+  {{ process_js_sources(app_global=True)|safe }}
+  <!-- END DashMachine modules  JS-->
+
+  <!-- BEGIN PAGE LEVEL JS-->
+  {% block page_lvl_js %}{% endblock page_lvl_js %}
+  <!-- END PAGE LEVEL JS-->
+  <noscript>
+    <style>
+      body {
+        visibility: visible;
+      }
+    </style>
+  </noscript>
+
+  <!-- GLOBAL DOCUMENT VIEWER -->
+  <div id="pdf-viewer-modal" class="modal full-height-modal" style="overflow: hidden;">
+    <div class="modal-content p-0">
+      <embed id="pdf-viewer-modal-embed" src="" style="width: 100%; min-height: 99.4vh;">
+    </div>
+  </div>
+
+</body>
+
+</html>

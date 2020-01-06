@@ -1,0 +1,26 @@
+{% from "global_macros.html" import preload_circle %}
+{% macro tcdrop(allowed_types='all', max_files=-1, on_add="", id="", class="") %}
+
+<!-- tcdrop html -->
+<div id="{{ id }}" class="row {{ class }}">
+  <form class="tcdrop-form" method="post"
+        data-cache-url="{{url_for('main.cacheFile')}}"
+        data-clear-cache-url="{{url_for('main.clearCache')}}"
+        data-max-files="{{max_files}}",
+        data-allowed-types="{{allowed_types}}">
+    <input id="{{id}}-tcdrop-input" type="file" name="file" class="tcdrop tcdrop-input" onchange="{{on_add}}" multiple/>
+    <label class="tcdrop-label" for="{{id}}-tcdrop-input">Drag & drop or <u>choose</u></label>
+  </form>
+  <ul class="tcdrop-files-ul">
+    <li class="tcdrop-loading-upload hide">
+      {{ preload_circle() }}
+    </li>
+    <li class="tcdrop-error-msg tcdrop-li hide">
+      <i class="tcdrop-delete-file material-icons theme-warning">error</i>
+      <span class="tcdrop-error-msg-txt file-name theme-warning-text"></span>
+    </li>
+  </ul>
+</div>
+<!-- end tcdrop html -->
+
+{% endmacro %}

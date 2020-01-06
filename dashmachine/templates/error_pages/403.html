@@ -1,0 +1,26 @@
+{% extends "main/base.html" %}
+
+{% block page_lvl_css %}
+<link rel="stylesheet" type="text/css" href="static/css/pages/page-404.css">
+{% endblock page_lvl_css %}
+
+
+{% block content %}
+  <div class="row">
+      <div class="col s12">
+        <div class="container"><div class="section section-404 p-0 m-0 height-100vh">
+  <div class="row">
+    <!-- 404 -->
+    <div class="col s12 center-align white">
+      <img src="static/images/gallery/error-2.png" class="bg-image-404" alt="">
+      <h1 class="error-code m-0">403</h1>
+      <h6 class="mb-2 theme-secondary-text">Forbidden</h6>
+      <a class="btn waves-effect waves-light theme-primary mb-4" href="javascript:history.back()">Back
+        </a>
+    </div>
+  </div>
+</div>
+        </div>
+      </div>
+    </div>
+{% endblock content %}
