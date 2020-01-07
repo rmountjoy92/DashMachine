@@ -7,8 +7,11 @@
 {% endblock header %}
 
 {% block sidenav %}
+    <div id="show-sidenav" class="draggable z-depth-1 hide">
+        <i class="material-icons-outlined white-text pointer">chevron_right</i>
+    </div>
     <!-- BEGIN: SideNav-->
-    <aside class="sidenav-main nav-collapsed nav-collapsible sidenav-light sidenav-active-rounded z-depth-2">
+    <aside id="main-sidenav" class="sidenav-main nav-collapsed nav-collapsible sidenav-light sidenav-active-rounded z-depth-2">
         <div class="brand-sidebar noselect" style="overflow: hidden;">
             <h1 class="logo-wrapper hide-on-med-and-down"><a class="brand-logo darken-1" href="{{ url_for('main.home') }}"><img id="TCM-nav-logo" src="static/images/logo/logo.svg" alt="DashMachine logo"/><span class="logo-text theme-secondary-text"> </span></a></h1>
         </div>
@@ -38,6 +41,11 @@
             <li class="bold"><a id="logout-sidenav" class="waves-effect waves-cyan" href="{{ url_for('user_system.logout') }}">
                 <i class="material-icons-outlined">exit_to_app</i>
                 <span class="menu-title" data-i18n="">Logout</span>
+            </a></li>
+
+            <li class="bold"><a id="hide-sidenav" class="waves-effect waves-cyan" href="#">
+                <i class="material-icons-outlined">menu_open</i>
+                <span class="menu-title" data-i18n="">Hide Sidenav</span>
             </a></li>
 
         </ul>

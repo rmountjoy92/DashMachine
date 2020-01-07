@@ -1,13 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2d244493-7af1-4307-a64a-32ac4c2ea0a0" name="Default Changelist" comment="" />
+    <list default="true" id="2d244493-7af1-4307-a64a-32ac4c2ea0a0" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.ini" beforeDir="false" afterPath="$PROJECT_DIR$/config.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashmachine/site.db" beforeDir="false" afterPath="$PROJECT_DIR$/dashmachine/site.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashmachine/static/css/global/dashmachine.css" beforeDir="false" afterPath="$PROJECT_DIR$/dashmachine/static/css/global/dashmachine.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashmachine/static/js/global/dashmachine.js" beforeDir="false" afterPath="$PROJECT_DIR$/dashmachine/static/js/global/dashmachine.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashmachine/templates/main/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/dashmachine/templates/main/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashmachine/templates/main/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/dashmachine/templates/main/layout.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Ross Mountjoy &lt;ross.mountjoy@gmail.com&gt;" />
+      </list>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1Vyp2sIL21mINKX6JBxGZr1SlH8" />
@@ -79,11 +92,25 @@
       <option name="presentableId" value="Default" />
       <updated>1578234985306</updated>
       <workItem from="1578234992218" duration="34772000" />
+      <workItem from="1578313408670" duration="637000" />
+      <workItem from="1578359378893" duration="3688000" />
     </task>
+    <task id="LOCAL-00001" summary="1">
+      <created>1578313443241</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1578313443242</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="1" />
+    <option name="LAST_COMMIT_MESSAGE" value="1" />
   </component>
   <component name="WindowStateProjectService">
     <state x="560" y="215" key="#File_Watchers" timestamp="1578246024784">
@@ -94,6 +121,10 @@
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
     <state x="418" y="212" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.28.1920.1052@0.28.1920.1052" timestamp="1578235072139" />
+    <state x="515" y="145" width="879" height="818" key="CommitChangelistDialog2" timestamp="1578313442792">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state x="515" y="145" width="879" height="818" key="CommitChangelistDialog2/0.28.1920.1052@0.28.1920.1052" timestamp="1578313442792" />
     <state x="554" y="321" width="810" height="703" key="EditFileWatcherDialog" timestamp="1578246021501">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
@@ -102,36 +133,40 @@
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
     <state x="748" y="311" key="FileChooserDialogImpl/0.28.1920.1052@0.28.1920.1052" timestamp="1578235103537" />
-    <state width="1870" height="118" key="GridCell.Tab.0.bottom" timestamp="1578313382401">
+    <state width="1870" height="117" key="GridCell.Tab.0.bottom" timestamp="1578364199120">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
-    <state width="1870" height="118" key="GridCell.Tab.0.bottom/0.28.1920.1052@0.28.1920.1052" timestamp="1578313382401" />
-    <state width="1870" height="118" key="GridCell.Tab.0.center" timestamp="1578313382401">
+    <state width="1870" height="117" key="GridCell.Tab.0.bottom/0.28.1920.1052@0.28.1920.1052" timestamp="1578364199120" />
+    <state width="1870" height="117" key="GridCell.Tab.0.center" timestamp="1578364199120">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
-    <state width="1870" height="118" key="GridCell.Tab.0.center/0.28.1920.1052@0.28.1920.1052" timestamp="1578313382401" />
-    <state width="1870" height="118" key="GridCell.Tab.0.left" timestamp="1578313382401">
+    <state width="1870" height="117" key="GridCell.Tab.0.center/0.28.1920.1052@0.28.1920.1052" timestamp="1578364199120" />
+    <state width="1870" height="117" key="GridCell.Tab.0.left" timestamp="1578364199120">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
-    <state width="1870" height="118" key="GridCell.Tab.0.left/0.28.1920.1052@0.28.1920.1052" timestamp="1578313382401" />
-    <state width="1870" height="118" key="GridCell.Tab.0.right" timestamp="1578313382401">
+    <state width="1870" height="117" key="GridCell.Tab.0.left/0.28.1920.1052@0.28.1920.1052" timestamp="1578364199120" />
+    <state width="1870" height="117" key="GridCell.Tab.0.right" timestamp="1578364199120">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
-    <state width="1870" height="118" key="GridCell.Tab.0.right/0.28.1920.1052@0.28.1920.1052" timestamp="1578313382401" />
+    <state width="1870" height="117" key="GridCell.Tab.0.right/0.28.1920.1052@0.28.1920.1052" timestamp="1578364199120" />
     <state x="446" y="188" key="SettingsEditor" timestamp="1578245994652">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
     <state x="446" y="188" key="SettingsEditor/0.28.1920.1052@0.28.1920.1052" timestamp="1578245994652" />
+    <state x="560" y="289" key="Vcs.Push.Dialog.v2" timestamp="1578313444881">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state x="560" y="289" key="Vcs.Push.Dialog.v2/0.28.1920.1052@0.28.1920.1052" timestamp="1578313444881" />
     <state x="525" y="224" width="869" height="660" key="find.popup" timestamp="1578272445893">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
     <state x="525" y="224" width="869" height="660" key="find.popup/0.28.1920.1052@0.28.1920.1052" timestamp="1578272445893" />
-    <state x="623" y="260" width="672" height="678" key="search.everywhere.popup" timestamp="1578261460421">
+    <state x="623" y="260" width="672" height="678" key="search.everywhere.popup" timestamp="1578362044385">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
-    <state x="623" y="260" width="672" height="678" key="search.everywhere.popup/0.28.1920.1052@0.28.1920.1052" timestamp="1578261460421" />
+    <state x="623" y="260" width="672" height="678" key="search.everywhere.popup/0.28.1920.1052@0.28.1920.1052" timestamp="1578362044385" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/DashMachine$DashMachine.coverage" NAME="DashMachine Coverage Results" MODIFIED="1578268471163" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/DashMachine$DashMachine.coverage" NAME="DashMachine Coverage Results" MODIFIED="1578359407820" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

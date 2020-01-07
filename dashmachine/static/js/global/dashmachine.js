@@ -349,6 +349,21 @@ $(document).ready(function () {
     init_tooltips();
     init_copy_btn();
     init_select();
+
+    $("#hide-sidenav").on('click', function(e) {
+        $("#main-sidenav").addClass('hide');
+        $("#main.main-full").css('padding-left', 0);
+        $("#show-sidenav").removeClass('hide');
+    });
+
+    $("#show-sidenav .material-icons-outlined").on('click', function(e) {
+        $("#main-sidenav").removeClass('hide');
+        $("#main.main-full").css('padding-left', 64);
+        $("#show-sidenav").addClass('hide');
+    });
+
+    $( "#show-sidenav" ).draggable({ axis: "y" });
+
     $(".dropdown-trigger").dropdown({
         coverTrigger: false,
         constrainWidth: false

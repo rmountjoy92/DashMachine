@@ -276,6 +276,22 @@ input:disabled {
 /* END FORM STYLES */
 
 /* SIDENAV*/
+#show-sidenav {
+    position: fixed;
+    bottom: 10px;
+    left: 0px;
+    height: 40px;
+    width: 48px;
+    z-index: 9999;
+    border-radius: 0 10px 10px 0;
+    background: var(--theme-primary);
+}
+#show-sidenav .material-icons-outlined {
+    font-size: 32px;
+    position: relative;
+    left: 15px;
+    top: 5px;
+}
 .sidenav-main .sidenav-collapsible {
     border-radius: 0px;
     background-color: var(--theme-surface);
