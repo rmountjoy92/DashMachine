@@ -1,9 +1,10 @@
 import os
+import random
 from jsmin import jsmin
 from dashmachine import app
 from dashmachine.main.models import Apps
 from dashmachine.settings_system.models import Settings
-from dashmachine.paths import static_folder
+from dashmachine.paths import static_folder, backgrounds_images_folder
 from dashmachine.cssmin import cssmin
 
 """This file establishes bundles of js and css sources, minifies them using jsmin and
@@ -73,6 +74,11 @@ def process_css_sources(process_bundle=None, src=None, app_global=False):
 def context_processor():
     apps = Apps.query.all()
     settings = Settings.query.first()
+    if settings.background == "random":
+        settings.background = (
+            f"static/images/backgrounds/"
+            f"{random.choice(os.listdir(backgrounds_images_folder))}"
+        )
     return dict(
         test_key="test",
         process_js_sources=process_js_sources,

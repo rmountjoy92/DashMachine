@@ -15,7 +15,7 @@ def row2dict(row):
 def read_config():
     config = ConfigParser()
     try:
-        config.read("config.ini")
+        config.read("dashmachine/user_data/config.ini")
     except Exception as e:
         return {"msg": f"Invalid Config: {e}."}
 
@@ -35,20 +35,40 @@ def read_config():
 
     for section in config.sections():
         if section != "Settings":
-            try:
-                app = Apps(
-                    name=section,
-                    prefix=config[section]["prefix"],
-                    url=config[section]["url"],
-                    icon=config[section]["icon"],
-                    sidebar_icon=config[section]["sidebar_icon"],
-                    description=config[section]["description"],
-                    open_in=config[section]["open_in"],
-                )
-                db.session.add(app)
-                db.session.commit()
-            except KeyError as e:
-                return {"msg": f"Invalid Config: {section} does not contain {e}."}
+            app = Apps()
+            app.name = section
+            if "prefix" in config[section]:
+                app.prefix = config[section]["prefix"]
+            else:
+                return {"msg": f"Invalid Config: {section} does not contain prefix."}
+
+            if "url" in config[section]:
+                app.url = config[section]["url"]
+            else:
+                return {"msg": f"Invalid Config: {section} does not contain url."}
+
+            if "icon" in config[section]:
+                app.icon = config[section]["icon"]
+            else:
+                app.icon = None
+
+            if "sidebar_icon" in config[section]:
+                app.sidebar_icon = config[section]["sidebar_icon"]
+            else:
+                app.sidebar_icon = app.icon
+
+            if "description" in config[section]:
+                app.description = config[section]["description"]
+            else:
+                app.description = None
+
+            if "open_in" in config[section]:
+                app.open_in = config[section]["open_in"]
+            else:
+                app.open_in = "this_tab"
+
+            db.session.add(app)
+            db.session.commit()
     return {"msg": "success", "settings": row2dict(settings)}
 
 

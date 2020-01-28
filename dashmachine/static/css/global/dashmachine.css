@@ -36,7 +36,7 @@
 
 /* ELEMENT STLYES */
 body {
-    overflow: hidden !important;
+    overflow: scroll;
     overflow-x: hidden !important;
     min-height: 100%;
     color: var(--theme-color-font);
@@ -614,6 +614,7 @@ input:disabled {
 
 .sidenav {
     background-color: var(--theme-surface);
+    top: unset;
 }
 
 .border-bottom-1 {

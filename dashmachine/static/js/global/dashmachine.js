@@ -336,6 +336,20 @@ function initTinyMCE(el){
     }
 }
 
+function hide_sidenav() {
+    $("#main-sidenav").addClass('hide');
+    $("#main.main-full").css('padding-left', 0);
+    $("#show-sidenav").removeClass('hide');
+    localStorage.setItem('sidenav_hidden', 'true');
+}
+
+function show_sidenav(){
+    $("#main-sidenav").removeClass('hide');
+    $("#main.main-full").css('padding-left', 64);
+    $("#show-sidenav").addClass('hide');
+    localStorage.setItem('sidenav_hidden', null);
+}
+
 //--------------------------------------------------------------------------------------
 // Document ready function
 //--------------------------------------------------------------------------------------
@@ -350,16 +364,16 @@ $(document).ready(function () {
     init_copy_btn();
     init_select();
 
+    if (localStorage.getItem('sidenav_hidden') === 'true'){
+        hide_sidenav();
+    }
+
     $("#hide-sidenav").on('click', function(e) {
-        $("#main-sidenav").addClass('hide');
-        $("#main.main-full").css('padding-left', 0);
-        $("#show-sidenav").removeClass('hide');
+        hide_sidenav();
     });
 
     $("#show-sidenav .material-icons-outlined").on('click', function(e) {
-        $("#main-sidenav").removeClass('hide');
-        $("#main.main-full").css('padding-left', 64);
-        $("#show-sidenav").addClass('hide');
+        show_sidenav();
     });
 
     $( "#show-sidenav" ).draggable({ axis: "y" });

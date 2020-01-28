@@ -8,7 +8,8 @@
             #main {
                 background-image: url("{{ settings.background }}");
                 background-size: cover;
-                height: 100vh;
+                background-attachment: fixed;
+                min-height: 100vh;
             }
         </style>
     {% endif %}
@@ -21,7 +22,7 @@
                 <div class="col s12 l4 input-field">
                     <span>
                         <i class="material-icons prefix card-search-icon">search</i>
-                        <input type="text" id="apps-filter" class="card-filter theme-surface" placeholder="Search apps">
+                        <input type="text" id="apps-filter" class="card-filter theme-surface-transparent" placeholder="Search apps">
                     </span>
                 </div>
             </div>
@@ -29,11 +30,13 @@
                 {% for app in apps %}
                     {% if app.open_in == 'iframe' %}
                         <a href="{{ url_for('main.app_view', url=app.url) }}" class="app-a" data-name="{{ app.name }}" data-description="{{ app.description }}">
+                    {% elif app.open_in == 'this_tab' %}
+                        <a href="{{ app.prefix }}{{ app.url }}" class="app-a" data-name="{{ app.name }}" data-description="{{ app.description }}">
                     {% elif app.open_in == "new_tab" %}
                         <a href="{{ app.prefix }}{{ app.url }}" target="_blank" class="app-a" data-name="{{ app.name }}" data-description="{{ app.description }}">
                     {% endif %}
                 <div class="col s12 m6 l3">
-                    <div class="card">
+                    <div class="card theme-surface-transparent">
                         <div class="card-content center-align">
                             <img src="{{ app.icon }}" height="64px">
                         </div>

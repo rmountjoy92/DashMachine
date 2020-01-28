@@ -2,13 +2,37 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2d244493-7af1-4307-a64a-32ac4c2ea0a0" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/dashmachine/static/images/apps/bitwarden.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dashmachine/static/images/apps/jackett.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dashmachine/static/images/apps/radarr.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dashmachine/static/images/apps/sonarr.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dashmachine/static/images/backgrounds/Boy4aow.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dashmachine/static/images/backgrounds/Hk1KgQS.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dashmachine/static/images/backgrounds/ZtkPKMg.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dashmachine/static/images/backgrounds/aodvrziifxcjmgvqhbsg.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dashmachine/static/images/backgrounds/avbtqymfykwfcjylgqql.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dashmachine/static/images/backgrounds/fns7rzzwluh11.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dashmachine/static/images/backgrounds/glWla8v.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dashmachine/static/images/backgrounds/mKkaVVc.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dashmachine/static/images/backgrounds/wallpaper-hd-of-pixel-art-and-background-powerpoint-inspirations-picture-pics-desktop.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dashmachine/static/images/backgrounds/xdWDtvx.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dashmachine/static/images/backgrounds/xsxgvgayvfvekklkvwvf.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dashmachine/user_data/config.ini" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dashmachine/user_data/site.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.ini" beforeDir="false" afterPath="$PROJECT_DIR$/config.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dashmachine/site.db" beforeDir="false" afterPath="$PROJECT_DIR$/dashmachine/site.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashmachine/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/dashmachine/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashmachine/main/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/dashmachine/main/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashmachine/settings_system/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/dashmachine/settings_system/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashmachine/site.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashmachine/sources.py" beforeDir="false" afterPath="$PROJECT_DIR$/dashmachine/sources.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashmachine/static/css/global/dashmachine-theme.css" beforeDir="false" afterPath="$PROJECT_DIR$/dashmachine/static/css/global/dashmachine-theme.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dashmachine/static/css/global/dashmachine.css" beforeDir="false" afterPath="$PROJECT_DIR$/dashmachine/static/css/global/dashmachine.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashmachine/static/css/global/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/dashmachine/static/css/global/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dashmachine/static/js/global/dashmachine.js" beforeDir="false" afterPath="$PROJECT_DIR$/dashmachine/static/js/global/dashmachine.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dashmachine/templates/main/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/dashmachine/templates/main/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashmachine/templates/main/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/dashmachine/templates/main/home.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dashmachine/templates/main/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/dashmachine/templates/main/layout.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashmachine/templates/settings_system/settings.html" beforeDir="false" afterPath="$PROJECT_DIR$/dashmachine/templates/settings_system/settings.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,7 +48,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1Vyp2sIL21mINKX6JBxGZr1SlH8" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="autoscrollFromSource" value="true" />
     <option name="autoscrollToSource" value="true" />
@@ -33,6 +59,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="NewWatcherDialog.advanced.open" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -93,7 +120,8 @@
       <updated>1578234985306</updated>
       <workItem from="1578234992218" duration="34772000" />
       <workItem from="1578313408670" duration="637000" />
-      <workItem from="1578359378893" duration="3688000" />
+      <workItem from="1578359378893" duration="4330000" />
+      <workItem from="1580169186784" duration="11024000" />
     </task>
     <task id="LOCAL-00001" summary="1">
       <created>1578313443241</created>
@@ -102,13 +130,21 @@
       <option name="project" value="LOCAL" />
       <updated>1578313443242</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="1">
+      <created>1578364236996</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1578364236996</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="1" />
     <option name="LAST_COMMIT_MESSAGE" value="1" />
   </component>
@@ -121,10 +157,10 @@
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
     <state x="418" y="212" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.28.1920.1052@0.28.1920.1052" timestamp="1578235072139" />
-    <state x="515" y="145" width="879" height="818" key="CommitChangelistDialog2" timestamp="1578313442792">
+    <state x="515" y="145" width="879" height="818" key="CommitChangelistDialog2" timestamp="1578364236672">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
-    <state x="515" y="145" width="879" height="818" key="CommitChangelistDialog2/0.28.1920.1052@0.28.1920.1052" timestamp="1578313442792" />
+    <state x="515" y="145" width="879" height="818" key="CommitChangelistDialog2/0.28.1920.1052@0.28.1920.1052" timestamp="1578364236672" />
     <state x="554" y="321" width="810" height="703" key="EditFileWatcherDialog" timestamp="1578246021501">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
@@ -133,40 +169,40 @@
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
     <state x="748" y="311" key="FileChooserDialogImpl/0.28.1920.1052@0.28.1920.1052" timestamp="1578235103537" />
-    <state width="1870" height="117" key="GridCell.Tab.0.bottom" timestamp="1578364199120">
+    <state width="1870" height="117" key="GridCell.Tab.0.bottom" timestamp="1580176048036">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
-    <state width="1870" height="117" key="GridCell.Tab.0.bottom/0.28.1920.1052@0.28.1920.1052" timestamp="1578364199120" />
-    <state width="1870" height="117" key="GridCell.Tab.0.center" timestamp="1578364199120">
+    <state width="1870" height="117" key="GridCell.Tab.0.bottom/0.28.1920.1052@0.28.1920.1052" timestamp="1580176048036" />
+    <state width="1870" height="117" key="GridCell.Tab.0.center" timestamp="1580176048036">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
-    <state width="1870" height="117" key="GridCell.Tab.0.center/0.28.1920.1052@0.28.1920.1052" timestamp="1578364199120" />
-    <state width="1870" height="117" key="GridCell.Tab.0.left" timestamp="1578364199120">
+    <state width="1870" height="117" key="GridCell.Tab.0.center/0.28.1920.1052@0.28.1920.1052" timestamp="1580176048036" />
+    <state width="1870" height="117" key="GridCell.Tab.0.left" timestamp="1580176048036">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
-    <state width="1870" height="117" key="GridCell.Tab.0.left/0.28.1920.1052@0.28.1920.1052" timestamp="1578364199120" />
-    <state width="1870" height="117" key="GridCell.Tab.0.right" timestamp="1578364199120">
+    <state width="1870" height="117" key="GridCell.Tab.0.left/0.28.1920.1052@0.28.1920.1052" timestamp="1580176048036" />
+    <state width="1870" height="117" key="GridCell.Tab.0.right" timestamp="1580176048036">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
-    <state width="1870" height="117" key="GridCell.Tab.0.right/0.28.1920.1052@0.28.1920.1052" timestamp="1578364199120" />
+    <state width="1870" height="117" key="GridCell.Tab.0.right/0.28.1920.1052@0.28.1920.1052" timestamp="1580176048036" />
     <state x="446" y="188" key="SettingsEditor" timestamp="1578245994652">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
     <state x="446" y="188" key="SettingsEditor/0.28.1920.1052@0.28.1920.1052" timestamp="1578245994652" />
-    <state x="560" y="289" key="Vcs.Push.Dialog.v2" timestamp="1578313444881">
+    <state x="560" y="289" key="Vcs.Push.Dialog.v2" timestamp="1578364242204">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
-    <state x="560" y="289" key="Vcs.Push.Dialog.v2/0.28.1920.1052@0.28.1920.1052" timestamp="1578313444881" />
-    <state x="525" y="224" width="869" height="660" key="find.popup" timestamp="1578272445893">
+    <state x="560" y="289" key="Vcs.Push.Dialog.v2/0.28.1920.1052@0.28.1920.1052" timestamp="1578364242204" />
+    <state x="525" y="224" width="869" height="660" key="find.popup" timestamp="1580178406392">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
-    <state x="525" y="224" width="869" height="660" key="find.popup/0.28.1920.1052@0.28.1920.1052" timestamp="1578272445893" />
-    <state x="623" y="260" width="672" height="678" key="search.everywhere.popup" timestamp="1578362044385">
+    <state x="525" y="224" width="869" height="660" key="find.popup/0.28.1920.1052@0.28.1920.1052" timestamp="1580178406392" />
+    <state x="623" y="260" width="672" height="678" key="search.everywhere.popup" timestamp="1580213161556">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
-    <state x="623" y="260" width="672" height="678" key="search.everywhere.popup/0.28.1920.1052@0.28.1920.1052" timestamp="1578362044385" />
+    <state x="623" y="260" width="672" height="678" key="search.everywhere.popup/0.28.1920.1052@0.28.1920.1052" timestamp="1580213161556" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/DashMachine$DashMachine.coverage" NAME="DashMachine Coverage Results" MODIFIED="1578359407820" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/DashMachine$DashMachine.coverage" NAME="DashMachine Coverage Results" MODIFIED="1580169229147" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

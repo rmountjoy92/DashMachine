@@ -12,7 +12,7 @@ settings_system = Blueprint("settings_system", __name__)
 @settings_system.route("/settings", methods=["GET"])
 def settings():
     config_form = ConfigForm()
-    with open("config.ini", "r") as config_file:
+    with open("dashmachine/user_data/config.ini", "r") as config_file:
         config_form.config.data = config_file.read()
     files_html = load_files_html()
     return render_template(
@@ -22,7 +22,7 @@ def settings():
 
 @settings_system.route("/settings/save_config", methods=["POST"])
 def save_config():
-    with open("config.ini", "w") as config_file:
+    with open("dashmachine/user_data/config.ini", "w") as config_file:
         config_file.write(request.form.get("config"))
     msg = read_config()
     return jsonify(data=msg)

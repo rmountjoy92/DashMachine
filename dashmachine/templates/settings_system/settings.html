@@ -5,6 +5,11 @@
 {% endblock page_vendor_css %}
 
 {% block page_lvl_css %}
+    <style>
+        body {
+            overflow: hidden !important;
+        }
+    </style>
     {% if settings.background %}
         <style>
             #main {
@@ -28,6 +33,14 @@
                                         <h5>Config
                                             <i class="material-icons-outlined theme-secondary-text icon-btn ml-2 toggle-config-help" style="position: relative; top: 4px;">info</i>
                                         </h5>
+                                        {{ button(
+                                        icon="save",
+                                        id="save-config-btn",
+                                        float="left",
+                                        class="ml-0 mt-1 mb-1",
+                                        data={'url': url_for('settings_system.save_config')},
+                                        text="save"
+                                        ) }}
                                     </div>
                                     <div id="config-help-col" class="col s12 hide theme-surface-1 padding-2 border-radius-10">
                                         <h5>Settings Example</h5>
@@ -38,7 +51,7 @@
                                             accent = static/images/backgrounds/background.png<br>
                                         </code>
 
-                                        <table class="centered mt-4">
+                                        <table class="mt-4">
                                             <thead>
                                             <tr>
                                                 <th>Variable</th>
@@ -60,7 +73,7 @@
                                             </tr>
                                             <tr>
                                                 <td>background</td>
-                                                <td>Background image. can be either a local link (prefixed by /static/images/backgrounds/), or an external link</td>
+                                                <td>Background image. can be either a local link (prefixed by /static/images/backgrounds/) or an external link. Can also be set to random. If not set defaults to blank.</td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -76,7 +89,7 @@
                                             open_in = iframe<br>
                                         </code>
 
-                                        <table class="centered mt-4">
+                                        <table class="mt-4">
                                             <thead>
                                             <tr>
                                                 <th>Variable</th>
@@ -110,7 +123,7 @@
                                             </tr>
                                             <tr>
                                                 <td>open_in</td>
-                                                <td>open the app in an embedded iframe or a new tab, options are iframe, new_tab</td>
+                                                <td>open the app in the current tab, an iframe or a new tab, options are iframe, new_tab, or this_tab</td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -125,13 +138,6 @@
                                         id="config-textarea"
                                         ) }}
                                     </form>
-                                    {{ button(
-                                    icon="save",
-                                    id="save-config-btn",
-                                    float="left",
-                                    data={'url': url_for('settings_system.save_config')},
-                                    text="save"
-                                    ) }}
                                 </div>
                         </div>
                     </div>

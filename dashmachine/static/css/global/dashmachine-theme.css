@@ -2,6 +2,7 @@
 :root {
   --theme-background: #EBEEF0;
   --theme-surface: #fff;
+  --theme-surface-rgb: 255, 255, 255;
   --theme-surface-1: #fcfcfc;
   --theme-surface-2: #e0e0e0;
   --theme-primary: #FF9966;
@@ -15,6 +16,7 @@
 [data-theme="dark"] {
   --theme-background: #1c1c1c;
   --theme-surface: #2f2f2f;
+  --theme-surface-rgb: 47, 47, 47;
   --theme-surface-1: #434343;
   --theme-surface-2: #575757;
   --theme-color-font: #fff;
@@ -76,4 +78,10 @@
 }
 .theme-muted2-text {
   color: var(--theme-color-font-muted2) !important;
+}
+.theme-surface-transparent {
+  background: rgba(var(--theme-surface-rgb), 0.8) !important;
+}
+.theme-surface-transparent1 {
+  background: rgba(var(--theme-surface-rgb), 0.9) !important;
 }
