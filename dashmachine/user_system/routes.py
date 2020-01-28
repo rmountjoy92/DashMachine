@@ -7,9 +7,6 @@ from dashmachine.main.utils import public_route
 
 user_system = Blueprint("user_system", __name__)
 
-# *****REMINDER*****
-# user accounts for this platform can only be created/edited with the
-# functions in user_system.utils
 
 # ------------------------------------------------------------------------------
 # User system routes
@@ -26,7 +23,7 @@ def login():
     form = LoginForm()
 
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data.lower()).first()
+        user = User.query.filter_by(username=form.email.data.lower()).first()
 
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)

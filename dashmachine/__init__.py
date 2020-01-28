@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+import os
 from flask import Flask
 from flask_caching import Cache
 from flask_sqlalchemy import SQLAlchemy
@@ -9,6 +9,9 @@ from flask_restful import Api
 from flask_avatars import Avatars
 from apscheduler.jobstores.sqlalchemy import SQLAlchemyJobStore
 from flask_apscheduler import APScheduler
+
+if not os.path.isdir("dashmachine/user_data"):
+    os.mkdir("dashmachine/user_data")
 
 
 app = Flask(__name__)

@@ -1,4 +1,4 @@
-from configparser import ConfigParser, DuplicateSectionError
+from configparser import ConfigParser
 from dashmachine.main.models import Apps
 from dashmachine.settings_system.models import Settings
 from dashmachine import db

@@ -11,9 +11,9 @@ def get_root_folder():
 
 root_folder = get_root_folder()
 
-elm_folder = os.path.join(root_folder, "dashmachine")
+dashmachine_folder = os.path.join(root_folder, "dashmachine")
 
-static_folder = os.path.join(elm_folder, "static")
+static_folder = os.path.join(dashmachine_folder, "static")
 
 images_folder = os.path.join(static_folder, "images")
 

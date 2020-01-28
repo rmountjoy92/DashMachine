@@ -115,3 +115,9 @@ dmypy.json
 .directory
 scheduler.db
 scheduler.db
+
+.idea/
+
+dashmachine/user_data/
+dashmachine/static/user_icons
+dashmachine/static/backgrounds
