@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from dashmachine import app
-from dashmachine.dashmachine_init import dashmachine_init
+from dashmachine.main.utils import dashmachine_init
 
 dashmachine_init()
 

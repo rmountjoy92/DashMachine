@@ -1,15 +1,29 @@
+<style>
+    .file-title {
+        position: relative;
+        top: .6em;
+    }
+</style>
+
 <div class="divider"></div>
 <div class="row">
     <div class="col s12">
         <ul class="collection with-header">
             <li class="collection-header theme-primary white-text">Backgrounds</li>
-            {% for background_image in background_images %}
-                <li class="collection-item pt-2 pb-2"><span class="selectable-all">static/images/backgrounds/{{ background_image }}</span>
-                    <span class="secondary-content"><i class="material-icons-outlined icon-btn">close</i></span>
-                    <span class="secondary-content"><i class="material-icons-outlined icon-btn">filter_none</i></span>
-                    <span class="secondary-content"><i class="material-icons-outlined icon-btn">visibility</i></span>
-                </li>
-            {% endfor %}
+            {% if backgrounds %}
+                {% for background in backgrounds %}
+                    <li class="collection-item pt-2 pb-2 avatar">
+                        <a href="static/images/backgrounds/{{ background }}" target="_blank">
+                            <img src="static/images/backgrounds/{{ background }}" alt="" class="circle">
+                        </a>
+                        <span class="selectable-all copy-target file-title">static/images/backgrounds/{{ background }}</span>
+                        <span class="secondary-content"><i class="material-icons-outlined icon-btn">close</i></span>
+                        <span class="secondary-content mr-4"><i class="material-icons-outlined icon-btn copy-btn">filter_none</i></span>
+                    </li>
+                {% endfor %}
+            {% else %}
+                <li class="collection-item">No files yet</li>
+            {% endif %}
         </ul>
     </div>
 </div>
@@ -17,14 +31,27 @@
 <div class="row">
     <div class="col s12">
         <ul class="collection with-header">
-            <li class="collection-header theme-primary white-text">Apps</li>
-            {% for apps_image in apps_images %}
-                <li class="collection-item pt-2 pb-2"><span class="selectable-all">static/images/apps/{{ apps_image }}</span>
-                    <span class="secondary-content"><i class="material-icons-outlined icon-btn">close</i></span>
-                    <span class="secondary-content"><i class="material-icons-outlined icon-btn">filter_none</i></span>
-                    <span class="secondary-content"><i class="material-icons-outlined icon-btn">visibility</i></span>
-                </li>
-            {% endfor %}
+            <li class="collection-header theme-primary white-text">Icons</li>
+            {% if icons %}
+                {% for icon in icons %}
+                    <li class="collection-item pt-2 pb-2 avatar">
+                        <a href="static/images/icons/{{ icon }}" target="_blank">
+                            <img src="static/images/icons/{{ icon }}" alt="" class="circle">
+                        </a>
+                        <span class="selectable-all copy-target file-title">static/images/icons/{{ icon }}</span>
+                        <span class="secondary-content"><i class="material-icons-outlined icon-btn">close</i></span>
+                        <span class="secondary-content mr-4"><i class="material-icons-outlined icon-btn copy-btn">filter_none</i></span>
+                    </li>
+                {% endfor %}
+            {% else %}
+                <li class="collection-item">No files yet</li>
+            {% endif %}
         </ul>
     </div>
 </div>
+
+<script>
+    $( document ).ready(function() {
+        init_copy_btn(".collection-item");
+    });
+</script>

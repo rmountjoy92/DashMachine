@@ -48,32 +48,42 @@
                                             [Settings]<br>
                                             theme = dark<br>
                                             accent = orange<br>
-                                            accent = static/images/backgrounds/background.png<br>
+                                            background = static/images/backgrounds/background.png<br>
                                         </code>
 
                                         <table class="mt-4">
                                             <thead>
                                             <tr>
                                                 <th>Variable</th>
-                                                <th>Value</th>
+                                                <th>Required</th>
+                                                <th>Description</th>
+                                                <th>Options</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <tr>
                                                 <td>[Settings]</td>
-                                                <td>config section name. required.</td>
+                                                <td>Yes</td>
+                                                <td>Config section name.</td>
+                                                <td>string</td>
                                             </tr>
                                             <tr>
                                                 <td>theme</td>
-                                                <td>UI theme, options are light, dark</td>
+                                                <td>Yes</td>
+                                                <td>UI theme</td>
+                                                <td>light, dark</td>
                                             </tr>
                                             <tr>
                                                 <td>accent</td>
-                                                <td>UI accent, options are orange, green, blue, green, pink, grey</td>
+                                                <td>Yes</td>
+                                                <td>UI accent color</td>
+                                                <td>orange, green, blue, green, pink, grey</td>
                                             </tr>
                                             <tr>
                                                 <td>background</td>
-                                                <td>Background image. can be either a local link (prefixed by /static/images/backgrounds/) or an external link. Can also be set to random. If not set defaults to blank.</td>
+                                                <td>Yes</td>
+                                                <td>Background image for the UI</td>
+                                                <td>/static/images/backgrounds/yourpicture.png, external link to image, None, random</td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -93,37 +103,53 @@
                                             <thead>
                                             <tr>
                                                 <th>Variable</th>
-                                                <th>Value</th>
+                                                <th>Required</th>
+                                                <th>Description</th>
+                                                <th>Options</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <tr>
                                                 <td>[App Name]</td>
+                                                <td>Yes</td>
                                                 <td>The name of your app.</td>
+                                                <td>string</td>
                                             </tr>
                                             <tr>
                                                 <td>prefix</td>
-                                                <td>the prefix for the app's url, e.g. http:// or https://</td>
+                                                <td>Yes</td>
+                                                <td>The prefix for the app's url.</td>
+                                                <td>web prefix, e.g. http:// or https://</td>
                                             </tr>
                                             <tr>
                                                 <td>url</td>
-                                                <td>the url for your app, e.g. google.com</td>
+                                                <td>Yes</td>
+                                                <td>The url for your app.</td>
+                                                <td>web url, e.g. myapp.com</td>
                                             </tr>
                                             <tr>
                                                 <td>icon</td>
-                                                <td>icon for the dashboard, can be either a local link (prefixed by /static/images/apps/), or an external link</td>
+                                                <td>No</td>
+                                                <td>Icon for the dashboard.</td>
+                                                <td>/static/images/icons/yourpicture.png, external link to image</td>
                                             </tr>
                                             <tr>
                                                 <td>sidebar_icon</td>
-                                                <td>icon for the sidebar, can be either a local link (prefixed by /static/images/apps/), or an external link</td>
+                                                <td>No</td>
+                                                <td>Icon for the sidenav.</td>
+                                                <td>/static/images/icons/yourpicture.png, external link to image</td>
                                             </tr>
                                             <tr>
                                                 <td>description</td>
-                                                <td>a short description for the app</td>
+                                                <td>No</td>
+                                                <td>A short description for the app.</td>
+                                                <td>string</td>
                                             </tr>
                                             <tr>
                                                 <td>open_in</td>
-                                                <td>open the app in the current tab, an iframe or a new tab, options are iframe, new_tab, or this_tab</td>
+                                                <td>Yes</td>
+                                                <td>open the app in the current tab, an iframe or a new tab</td>
+                                                <td>iframe, new_tab, this_tab</td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -148,18 +174,72 @@
                         <div class="card-content">
                             <div class="row">
                                 <div class="col s12">
+                                    <h5>User</h5>
+                                    {{ user_form.hidden_tag() }}
+
+                                    {{ input(
+                                    label="Username",
+                                    id="user-form-username",
+                                    size="s12",
+                                    form_obj=user_form.username,
+                                    val=current_user.username
+                                    ) }}
+
+                                    {{ input(
+                                    label="Password",
+                                    id="user-form-password",
+                                    form_obj=user_form.password,
+                                    size="s12"
+                                    ) }}
+
+                                    {{ input(
+                                    label="Confirm Password",
+                                    id="user-form-confirm_password",
+                                    form_obj=user_form.confirm_password,
+                                    required='required',
+                                    size="s12"
+                                    ) }}
+
+                                    {{ button(
+                                    icon="save",
+                                    float="left",
+                                    text="save"
+                                    ) }}
+                                </div>
+                            </div>
+
+                            <div class="divider"></div>
+
+                            <div class="row">
+                                <div class="col s12">
+                                    <h5>App Templates</h5>
+                                    <div class="row card-filter-container">
+                                        <div class="col s12 input-field">
+                                            <span>
+                                                <i class="material-icons prefix card-search-icon">search</i>
+                                                <input type="text" id="templates-filter" class="card-filter theme-surface-1" placeholder="Search for app (e.g. Nextcloud)">
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="divider"></div>
+
+                            <div class="row">
+                                <div class="col s12">
                                     <h5>Images</h5>
                                     <form id="add-images-form">
                                         <div class="input-field col s12 mt-4">
                                             <select name="folder">
-                                                <option value="apps">Apps</option>
+                                                <option value="icons">Icons</option>
                                                 <option value="backgrounds">Backgrounds</option>
                                             </select>
                                             <label>Folder</label>
                                         </div>
                                         <input name="files" id="add-images-input" class="hide">
                                     </form>
-                                    {{ tcdrop(allowed_types='jpg,jpeg,png', id="images-tcdrop", max_files="30") }}
+                                    {{ tcdrop(allowed_types='jpg,jpeg,png,gif', id="images-tcdrop", max_files="30") }}
                                     {{ button(text="save", icon="save", id="save-images-btn", float="left", data={"url": url_for('settings_system.add_images')}) }}
                                 </div>
                             </div>

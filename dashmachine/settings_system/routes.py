@@ -1,9 +1,10 @@
 import os
-from flask import render_template, url_for, redirect, request, Blueprint, jsonify
+from flask import render_template, request, Blueprint, jsonify
 from dashmachine.settings_system.forms import ConfigForm
+from dashmachine.user_system.forms import UserForm
 from dashmachine.main.utils import read_config
 from dashmachine.main.models import Files
-from dashmachine.paths import backgrounds_images_folder, apps_images_folder
+from dashmachine.paths import backgrounds_images_folder, icons_images_folder
 from dashmachine.settings_system.utils import load_files_html
 
 settings_system = Blueprint("settings_system", __name__)
@@ -12,11 +13,12 @@ settings_system = Blueprint("settings_system", __name__)
 @settings_system.route("/settings", methods=["GET"])
 def settings():
     config_form = ConfigForm()
+    user_form = UserForm()
     with open("dashmachine/user_data/config.ini", "r") as config_file:
         config_form.config.data = config_file.read()
     files_html = load_files_html()
     return render_template(
-        "settings_system/settings.html", config_form=config_form, files_html=files_html
+        "settings_system/settings.html", config_form=config_form, files_html=files_html, user_form=user_form
     )
 
 
@@ -30,8 +32,8 @@ def save_config():
 
 @settings_system.route("/settings/add_images", methods=["POST"])
 def add_images():
-    if request.form.get("folder") == "apps":
-        dest_folder = apps_images_folder
+    if request.form.get("folder") == "icons":
+        dest_folder = icons_images_folder
     elif request.form.get("folder") == "backgrounds":
         dest_folder = backgrounds_images_folder
     for cached_file in request.form.get("files").split(","):

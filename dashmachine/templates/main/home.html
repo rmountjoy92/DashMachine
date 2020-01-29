@@ -27,27 +27,40 @@
                 </div>
             </div>
             <div class="row">
-                {% for app in apps %}
-                    {% if app.open_in == 'iframe' %}
-                        <a href="{{ url_for('main.app_view', url=app.url) }}" class="app-a" data-name="{{ app.name }}" data-description="{{ app.description }}">
-                    {% elif app.open_in == 'this_tab' %}
-                        <a href="{{ app.prefix }}{{ app.url }}" class="app-a" data-name="{{ app.name }}" data-description="{{ app.description }}">
-                    {% elif app.open_in == "new_tab" %}
-                        <a href="{{ app.prefix }}{{ app.url }}" target="_blank" class="app-a" data-name="{{ app.name }}" data-description="{{ app.description }}">
-                    {% endif %}
-                <div class="col s12 m6 l3">
-                    <div class="card theme-surface-transparent">
-                        <div class="card-content center-align">
-                            <img src="{{ app.icon }}" height="64px">
-                        </div>
-                        <div class="card-action center-align">
-                            <h5>{{ app.name }}</h5>
-                            <span class="theme-secondary-text">{{ app.description }}</span>
+                {% if apps %}
+
+                    {% for app in apps %}
+                        {% if app.open_in == 'iframe' %}
+                            <a href="{{ url_for('main.app_view', url=app.url) }}" class="app-a" data-name="{{ app.name }}" data-description="{{ app.description }}">
+                        {% elif app.open_in == 'this_tab' %}
+                            <a href="{{ app.prefix }}{{ app.url }}" class="app-a" data-name="{{ app.name }}" data-description="{{ app.description }}">
+                        {% elif app.open_in == "new_tab" %}
+                            <a href="{{ app.prefix }}{{ app.url }}" target="_blank" class="app-a" data-name="{{ app.name }}" data-description="{{ app.description }}">
+                        {% endif %}
+                    <div class="col s12 m6 l3">
+                        <div class="card theme-surface-transparent">
+                            <div class="card-content center-align">
+                                <img src="{{ app.icon }}" height="64px">
+                            </div>
+                            <div class="card-action center-align">
+                                <h5>{{ app.name }}</h5>
+                                <span class="theme-secondary-text">{{ app.description }}</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                </a>
-                {% endfor %}
+                    </a>
+                    {% endfor %}
+                {% else %}
+                    <a href="{{ url_for('settings_system.settings') }}">
+                        <div class="col s12 m6 l3">
+                            <div class="card theme-surface-transparent">
+                                <div class="card-action center-align">
+                                    <h5>No apps yet, go to settings.</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                {% endif %}
             </div>
         </div>
     </div>

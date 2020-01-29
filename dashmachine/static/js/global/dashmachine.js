@@ -170,22 +170,6 @@ function init_autocomplete_chips(){
     });
 }
 
-function init_send_doc_email_btns(el) {
-    el.on('click', function() {
-        let attachment_deal = $("#attachment-deal")
-        attachment_deal.val($(this).attr('data-deal_id'));
-        attachment_deal.trigger('change');
-        sleep(100).then(() => {
-            let deal_doc = $("#deal-doc")
-            deal_doc.val($(this).attr('data-file'));
-            deal_doc.trigger('change');
-            tinymce.get("email-panel-content").setContent($(this).attr('data-signature'));
-            $("#attachments").removeClass('hide');
-            $("#email-panel").removeClass('hide');
-            $("#chips-mailto input").trigger('focus');
-        });
-    });
-}
 
 function toggleDarkMode(){
     let mode = localStorage.getItem('mode');
@@ -212,9 +196,10 @@ function toggleTooltips(){
     }
 }
 
-function init_copy_btn(){
+function init_copy_btn(parent_class){
     $(".copy-btn").on('click', function(e) {
-        let target_text = $(this).closest('.col').find('.copy-target').text();
+        let target_text = $(this).closest(parent_class).find('.copy-target').text();
+        console.log(target_text)
         let copy_input = $("#copy-input");
         copy_input.val(target_text);
         copy_input.removeClass("hide");
@@ -293,49 +278,6 @@ function initCleave(){
     });
 }
 
-// TinyMCE Editor
-function initTinyMCE(el){
-    // Check TinyMCE initialized or not
-    if(tinyMCE.get(el)){
-        // Remove instance by id
-        tinymce.remove('#' + el);
-    }else{
-        let mode = localStorage.getItem('mode');
-        let theme = ""
-        if (mode === 'dark') {
-            theme = "dark"
-        } else {
-            theme = "light"
-        }
-        tinymce.init({
-            selector: '#' + el,
-            height: 200,
-            menubar: false,
-            removed_menuitems: 'undo, redo, anchor',
-            skin: theme,
-            statusbar: true,
-            branding: false,
-            paste_data_images: true,
-            force_br_newlines: true,
-            force_p_newlines: false,
-            forced_root_block: '',
-            content_style: "body {margin-top: 15px}",
-            visual_table_class: 'no-border',
-            mode: "exact",
-            plugins: [
-                'autolink lists link image charmap print preview anchor textcolor',
-                'searchreplace visualblocks code fullscreen',
-                'insertdatetime media table paste code help imagetools'
-            ],
-            toolbar: 'formatselect | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent fullscreen code',
-            content_css: [
-                '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
-                '//www.tiny.cloud/css/codepen.min.css'
-            ]
-        });
-    }
-}
-
 function hide_sidenav() {
     $("#main-sidenav").addClass('hide');
     $("#main.main-full").css('padding-left', 0);
@@ -361,7 +303,6 @@ $(document).ready(function () {
     init_timepicker();
     initCleave();
     init_tooltips();
-    init_copy_btn();
     init_select();
 
     if (localStorage.getItem('sidenav_hidden') === 'true'){

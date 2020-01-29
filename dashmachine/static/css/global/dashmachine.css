@@ -766,11 +766,6 @@ span.badge.new {
     position: relative;
     right: 10px;
 }
-.copy-btn {
-    position: relative;
-    top: 2px;
-    font-size: 1.25rem;
-}
 
 /*FAB*/
 .tap-target-wave::before, .tap-target-wave::after {

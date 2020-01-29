@@ -21,6 +21,8 @@ apps_images_folder = os.path.join(images_folder, "apps")
 
 backgrounds_images_folder = os.path.join(images_folder, "backgrounds")
 
+icons_images_folder = os.path.join(images_folder, "icons")
+
 cache_folder = os.path.join(static_folder, "cache")
 
 user_images_folder = os.path.join(images_folder, "user")

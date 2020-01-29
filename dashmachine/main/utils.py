@@ -1,6 +1,12 @@
+import os
+from shutil import copyfile
 from configparser import ConfigParser
+
+from dashmachine.paths import dashmachine_folder, images_folder
 from dashmachine.main.models import Apps
 from dashmachine.settings_system.models import Settings
+from dashmachine.user_system.models import User
+from dashmachine.user_system.utils import add_edit_user
 from dashmachine import db
 
 
@@ -77,3 +83,27 @@ def read_config():
 def public_route(decorated_function):
     decorated_function.is_public = True
     return decorated_function
+
+
+def dashmachine_init():
+    user_data_folder = os.path.join(dashmachine_folder, "user_data")
+
+    # create the user_data subdirectories, link them to static
+    user_backgrounds_folder = os.path.join(user_data_folder, "backgrounds")
+    if not os.path.isdir(user_backgrounds_folder):
+        os.mkdir(user_backgrounds_folder)
+        os.symlink(user_backgrounds_folder, os.path.join(images_folder, "backgrounds"))
+
+    icons_folder = os.path.join(user_data_folder, "icons")
+    if not os.path.isdir(icons_folder):
+        os.mkdir(icons_folder)
+        os.symlink(icons_folder, os.path.join(images_folder, "icons"))
+
+    config_file = os.path.join(user_data_folder, "config.ini")
+    if not os.path.exists(config_file):
+        copyfile("default_config.ini", config_file)
+        read_config()
+
+    user = User.query.first()
+    if not user:
+        add_edit_user(username="admin", password="admin")
