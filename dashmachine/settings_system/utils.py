@@ -7,7 +7,5 @@ def load_files_html():
     backgrounds = listdir(backgrounds_images_folder)
     icons = listdir(icons_images_folder)
     return render_template(
-        "settings_system/files.html",
-        backgrounds=backgrounds,
-        icons=icons,
+        "settings_system/files.html", backgrounds=backgrounds, icons=icons,
     )

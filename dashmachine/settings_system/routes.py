@@ -18,7 +18,10 @@ def settings():
         config_form.config.data = config_file.read()
     files_html = load_files_html()
     return render_template(
-        "settings_system/settings.html", config_form=config_form, files_html=files_html, user_form=user_form
+        "settings_system/settings.html",
+        config_form=config_form,
+        files_html=files_html,
+        user_form=user_form,
     )
 
 

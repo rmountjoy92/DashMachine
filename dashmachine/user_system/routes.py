@@ -53,4 +53,4 @@ def edit_user():
     if form.validate_on_submit():
         add_edit_user(username=form.username.data, password=form.password.data)
 
-    return 'ok'
+    return "ok"

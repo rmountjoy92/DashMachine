@@ -1,4 +1,6 @@
 {% extends "main/layout.html" %}
+{% from 'global_macros.html' import data %}
+
 {% block page_vendor_css %}
 {% endblock page_vendor_css %}
 
@@ -41,6 +43,11 @@
                         <div class="card theme-surface-transparent">
                             <div class="card-content center-align">
                                 <img src="{{ app.icon }}" height="64px">
+                                {% if app.data_template %}
+                                    <p class="data-template hide" data-url="{{ url_for('main.load_rest_data') }}">
+                                        {{ app.data_template }}
+                                    </p>
+                                {% endif %}
                             </div>
                             <div class="card-action center-align">
                                 <h5>{{ app.name }}</h5>
@@ -75,17 +82,30 @@
         d.className += " active theme-primary";
 
         $( document ).ready(function() {
-           $("#apps-filter").on('keyup', function(e) {
-               var value = $(this).val().toLowerCase();
-               $(".app-a").each(function(i, e) {
+            $("#apps-filter").on('keyup', function(e) {
+                var value = $(this).val().toLowerCase();
+                $(".app-a").each(function(i, e) {
                     if ($(this).attr("data-name").toLowerCase().indexOf(value) > -1
                         || $(this).attr("data-description").toLowerCase().indexOf(value) > -1) {
                         $(this).removeClass('hide');
                     } else {
                         $(this).addClass('hide');
                     }
-               });
-           });
+                });
+            });
+
+            $(".data-template").each(function(e) {
+                var el = $(this);
+                $.ajax({
+                    url: el.attr('data-url'),
+                    type: 'GET',
+                    data: {template: el.text()},
+                    success: function(data){
+                        el.text(data);
+                        el.removeClass('hide');
+                    }
+                });
+            });
         });
     </script>
 {% endblock page_lvl_js %}
