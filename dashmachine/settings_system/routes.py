@@ -2,8 +2,8 @@ import os
 from flask import render_template, request, Blueprint, jsonify
 from dashmachine.settings_system.forms import ConfigForm
 from dashmachine.user_system.forms import UserForm
-from dashmachine.main.utils import read_config
-from dashmachine.main.models import Files
+from dashmachine.main.utils import read_config, row2dict
+from dashmachine.main.models import Files, TemplateApps
 from dashmachine.paths import backgrounds_images_folder, icons_images_folder
 from dashmachine.settings_system.utils import load_files_html
 
@@ -17,11 +17,16 @@ def settings():
     with open("dashmachine/user_data/config.ini", "r") as config_file:
         config_form.config.data = config_file.read()
     files_html = load_files_html()
+    template_apps = []
+    t_apps = TemplateApps.query.all()
+    for t_app in t_apps:
+        template_apps.append(f"{t_app.name}&&{t_app.icon}")
     return render_template(
         "settings_system/settings.html",
         config_form=config_form,
         files_html=files_html,
         user_form=user_form,
+        template_apps=",".join(template_apps),
     )
 
 
@@ -44,3 +49,13 @@ def add_images():
         new_path = os.path.join(dest_folder, file.name)
         os.rename(file.path, new_path)
     return load_files_html()
+
+
+@settings_system.route("/settings/get_app_template", methods=["GET"])
+def get_app_template():
+    template_app = TemplateApps.query.filter_by(name=request.args.get("name")).first()
+    template = f"[{template_app.name}]<br>"
+    for key, value in row2dict(template_app).items():
+        if key not in ["id", "name"]:
+            template += f"{key} = {value}<br>"
+    return template

@@ -9,6 +9,17 @@
         body {
             overflow: hidden !important;
         }
+
+        .settings-page-card {
+            max-height: calc(100vh - 30px);
+            min-height: calc(100vh - 30px);
+        }
+
+        #apps .dropdown-content {
+            border-top-left-radius: 0px;
+            border-top-right-radius: 0px;
+            background: var(--theme-surface-1);
+        }
     </style>
     {% if settings.background %}
         <style>
@@ -22,16 +33,148 @@
 {% endblock page_lvl_css %}
 
 {% block content %}
+    <div id="config-wiki-modal" class="modal full-height-modal">
+        <div class="modal-content">
+            <div class="row">
+                <div class="col s12">
+                    <h4>Config.ini Readme</h4>
+                </div>
+                <div id="config-help-col" class="col s12 theme-surface-1 padding-2 border-radius-10">
+                    <h5>Settings Example</h5>
+                    <code class="selectable-all">
+                        [Settings]<br>
+                        theme = dark<br>
+                        accent = orange<br>
+                        background = static/images/backgrounds/background.png<br>
+                    </code>
+
+                    <table class="mt-4">
+                        <thead>
+                        <tr>
+                            <th>Variable</th>
+                            <th>Required</th>
+                            <th>Description</th>
+                            <th>Options</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>[Settings]</td>
+                            <td>Yes</td>
+                            <td>Config section name.</td>
+                            <td>string</td>
+                        </tr>
+                        <tr>
+                            <td>theme</td>
+                            <td>Yes</td>
+                            <td>UI theme</td>
+                            <td>light, dark</td>
+                        </tr>
+                        <tr>
+                            <td>accent</td>
+                            <td>Yes</td>
+                            <td>UI accent color</td>
+                            <td>orange, green, blue, green, pink, grey</td>
+                        </tr>
+                        <tr>
+                            <td>background</td>
+                            <td>Yes</td>
+                            <td>Background image for the UI</td>
+                            <td>/static/images/backgrounds/yourpicture.png, external link to image, None, random</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <h5>App Example</h5>
+                    <code class="selectable-all">
+                        [App Name]<br>
+                        prefix = https://<br>
+                        url = your-website.com<br>
+                        icon = static/images/apps/default.png<br>
+                        sidebar_icon = static/images/apps/default.png<br>
+                        description = Example description<br>
+                        open_in = iframe<br>
+                        data_template = None
+                    </code>
+
+                    <table class="mt-4">
+                        <thead>
+                        <tr>
+                            <th>Variable</th>
+                            <th>Required</th>
+                            <th>Description</th>
+                            <th>Options</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>[App Name]</td>
+                            <td>Yes</td>
+                            <td>The name of your app.</td>
+                            <td>string</td>
+                        </tr>
+                        <tr>
+                            <td>prefix</td>
+                            <td>Yes</td>
+                            <td>The prefix for the app's url.</td>
+                            <td>web prefix, e.g. http:// or https://</td>
+                        </tr>
+                        <tr>
+                            <td>url</td>
+                            <td>Yes</td>
+                            <td>The url for your app.</td>
+                            <td>web url, e.g. myapp.com</td>
+                        </tr>
+                        <tr>
+                            <td>icon</td>
+                            <td>No</td>
+                            <td>Icon for the dashboard.</td>
+                            <td>/static/images/icons/yourpicture.png, external link to image</td>
+                        </tr>
+                        <tr>
+                            <td>sidebar_icon</td>
+                            <td>No</td>
+                            <td>Icon for the sidenav.</td>
+                            <td>/static/images/icons/yourpicture.png, external link to image</td>
+                        </tr>
+                        <tr>
+                            <td>description</td>
+                            <td>No</td>
+                            <td>A short description for the app.</td>
+                            <td>string</td>
+                        </tr>
+                        <tr>
+                            <td>open_in</td>
+                            <td>Yes</td>
+                            <td>open the app in the current tab, an iframe or a new tab</td>
+                            <td>iframe, new_tab, this_tab</td>
+                        </tr>
+                        <tr>
+                            <td>data_template</td>
+                            <td>No</td>
+                            <td>Template for displaying variable(s) from rest data *Note: you must have a rest data variable set up in the config</td>
+                            <td>example: Data: {{ '{{ your_variable }}' }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="main" class="main-full">
         <div class="container">
             <div class="row">
                 <div class="col s12 m12 l6">
-                    <div class="card scrollbar" style="max-height: calc(100vh - 30px)">
+                    <div class="card scrollbar settings-page-card">
                         <div class="card-content">
                                 <div class="row">
                                     <div class="col s12">
                                         <h5>Config
-                                            <i class="material-icons-outlined theme-secondary-text icon-btn ml-2 toggle-config-help" style="position: relative; top: 4px;">info</i>
+                                            <a href="#config-wiki-modal" class="modal-trigger">
+                                                <i class="material-icons-outlined theme-secondary-text icon-btn ml-2 toggle-config-help" style="position: relative; top: 4px;">info</i>
+                                            </a>
                                         </h5>
                                         {{ button(
                                         icon="save",
@@ -42,119 +185,7 @@
                                         text="save"
                                         ) }}
                                     </div>
-                                    <div id="config-help-col" class="col s12 hide theme-surface-1 padding-2 border-radius-10">
-                                        <h5>Settings Example</h5>
-                                        <code class="selectable-all">
-                                            [Settings]<br>
-                                            theme = dark<br>
-                                            accent = orange<br>
-                                            background = static/images/backgrounds/background.png<br>
-                                        </code>
 
-                                        <table class="mt-4">
-                                            <thead>
-                                            <tr>
-                                                <th>Variable</th>
-                                                <th>Required</th>
-                                                <th>Description</th>
-                                                <th>Options</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td>[Settings]</td>
-                                                <td>Yes</td>
-                                                <td>Config section name.</td>
-                                                <td>string</td>
-                                            </tr>
-                                            <tr>
-                                                <td>theme</td>
-                                                <td>Yes</td>
-                                                <td>UI theme</td>
-                                                <td>light, dark</td>
-                                            </tr>
-                                            <tr>
-                                                <td>accent</td>
-                                                <td>Yes</td>
-                                                <td>UI accent color</td>
-                                                <td>orange, green, blue, green, pink, grey</td>
-                                            </tr>
-                                            <tr>
-                                                <td>background</td>
-                                                <td>Yes</td>
-                                                <td>Background image for the UI</td>
-                                                <td>/static/images/backgrounds/yourpicture.png, external link to image, None, random</td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-
-                                        <h5>App Example</h5>
-                                        <code class="selectable-all">
-                                            [App Name]<br>
-                                            prefix = https://<br>
-                                            url = your-website.com<br>
-                                            icon = static/images/apps/default.png<br>
-                                            sidebar_icon = static/images/apps/default.png<br>
-                                            description = Example description<br>
-                                            open_in = iframe<br>
-                                        </code>
-
-                                        <table class="mt-4">
-                                            <thead>
-                                            <tr>
-                                                <th>Variable</th>
-                                                <th>Required</th>
-                                                <th>Description</th>
-                                                <th>Options</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td>[App Name]</td>
-                                                <td>Yes</td>
-                                                <td>The name of your app.</td>
-                                                <td>string</td>
-                                            </tr>
-                                            <tr>
-                                                <td>prefix</td>
-                                                <td>Yes</td>
-                                                <td>The prefix for the app's url.</td>
-                                                <td>web prefix, e.g. http:// or https://</td>
-                                            </tr>
-                                            <tr>
-                                                <td>url</td>
-                                                <td>Yes</td>
-                                                <td>The url for your app.</td>
-                                                <td>web url, e.g. myapp.com</td>
-                                            </tr>
-                                            <tr>
-                                                <td>icon</td>
-                                                <td>No</td>
-                                                <td>Icon for the dashboard.</td>
-                                                <td>/static/images/icons/yourpicture.png, external link to image</td>
-                                            </tr>
-                                            <tr>
-                                                <td>sidebar_icon</td>
-                                                <td>No</td>
-                                                <td>Icon for the sidenav.</td>
-                                                <td>/static/images/icons/yourpicture.png, external link to image</td>
-                                            </tr>
-                                            <tr>
-                                                <td>description</td>
-                                                <td>No</td>
-                                                <td>A short description for the app.</td>
-                                                <td>string</td>
-                                            </tr>
-                                            <tr>
-                                                <td>open_in</td>
-                                                <td>Yes</td>
-                                                <td>open the app in the current tab, an iframe or a new tab</td>
-                                                <td>iframe, new_tab, this_tab</td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-
-                                    </div>
                                     <div class="divider"></div>
                                     <form id="config-form">
                                         {{ input(
@@ -170,10 +201,71 @@
                 </div>
 
                 <div class="col s12 m12 l6">
-                    <div class="card scrollbar" style="max-height: calc(100vh - 30px)">
+                    <div class="card scrollbar settings-page-card">
                         <div class="card-content">
+
                             <div class="row">
-                                <div class="col s12">
+                                <div class="col s12 mb-2">
+                                    <ul class="tabs tabs-fixed-width">
+                                        <li class="tab col s3"><a href="#images">
+                                            <i class="material-icons-outlined">photo_library</i>
+                                        </a></li>
+
+                                        <li class="tab col s3"><a href="#apps">
+                                            <i class="material-icons-outlined">apps</i>
+                                        </a></li>
+
+                                        <li class="tab col s3"><a href="#user">
+                                            <i class="material-icons-outlined">person</i>
+                                        </a></li>
+                                    </ul>
+                                </div>
+
+                                <div id="images" class="col s12">
+                                    <div class="row">
+                                        <h5>Images</h5>
+                                        <form id="add-images-form">
+                                            <div class="input-field col s12 mt-4">
+                                                <select name="folder">
+                                                    <option value="icons">Icons</option>
+                                                    <option value="backgrounds">Backgrounds</option>
+                                                </select>
+                                                <label>Folder</label>
+                                            </div>
+                                            <input name="files" id="add-images-input" class="hide">
+                                        </form>
+                                        {{ tcdrop(allowed_types='jpg,jpeg,png,gif', id="images-tcdrop", max_files="30") }}
+                                        {{ button(text="save", icon="save", id="save-images-btn", float="left", data={"url": url_for('settings_system.add_images')}) }}
+                                    </div>
+
+                                    <div class="row">
+                                        <div id="files-div">{{ files_html|safe }}</div>
+                                    </div>
+
+                                </div>
+
+                                <div id="apps" class="col s12">
+                                    <h5>App Templates</h5>
+                                    <div class="row card-filter-container">
+                                        <div class="col s12 input-field">
+                                            <span>
+                                                <i class="material-icons prefix card-search-icon">search</i>
+                                                <input type="text" id="templates-filter"
+                                                       class="card-filter theme-surface-1 autocomplete"
+                                                       data-url="{{ url_for('settings_system.get_app_template') }}"
+                                                       data-template_apps="{{ template_apps }}"
+                                                       placeholder="Search for app (e.g. Nextcloud)">
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col s12">
+                                            <div id="template-div" class="selectable-all"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="user" class="col s12">
                                     <h5>User</h5>
                                     {{ user_form.hidden_tag() }}
 
@@ -206,44 +298,9 @@
                                     text="save"
                                     ) }}
                                 </div>
+
                             </div>
 
-                            <div class="divider"></div>
-
-                            <div class="row">
-                                <div class="col s12">
-                                    <h5>App Templates</h5>
-                                    <div class="row card-filter-container">
-                                        <div class="col s12 input-field">
-                                            <span>
-                                                <i class="material-icons prefix card-search-icon">search</i>
-                                                <input type="text" id="templates-filter" class="card-filter theme-surface-1" placeholder="Search for app (e.g. Nextcloud)">
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="divider"></div>
-
-                            <div class="row">
-                                <div class="col s12">
-                                    <h5>Images</h5>
-                                    <form id="add-images-form">
-                                        <div class="input-field col s12 mt-4">
-                                            <select name="folder">
-                                                <option value="icons">Icons</option>
-                                                <option value="backgrounds">Backgrounds</option>
-                                            </select>
-                                            <label>Folder</label>
-                                        </div>
-                                        <input name="files" id="add-images-input" class="hide">
-                                    </form>
-                                    {{ tcdrop(allowed_types='jpg,jpeg,png,gif', id="images-tcdrop", max_files="30") }}
-                                    {{ button(text="save", icon="save", id="save-images-btn", float="left", data={"url": url_for('settings_system.add_images')}) }}
-                                </div>
-                            </div>
-                            <div id="files-div">{{ files_html|safe }}</div>
                         </div>
                     </div>
                 </div>
@@ -270,6 +327,7 @@
 
         $( document ).ready(function() {
             initTCdrop('#images-tcdrop');
+            $("#config-wiki-modal").modal();
             $("#save-config-btn").on('click', function(e) {
                 $.ajax({
                     url: $(this).attr('data-url'),
@@ -287,10 +345,6 @@
                 });
             });
 
-            $(".toggle-config-help").on('click', function(e) {
-               $("#config-help-col").toggleClass('hide');
-            });
-
             $("#save-images-btn").on('click', function(e) {
                 $("#add-images-input").val(tcdrop_files['images-tcdrop'].toString());
                 $.ajax({
@@ -304,6 +358,28 @@
                         tcdropResetAll();
                     }
                 });
+            });
+
+            var template_apps = $("#templates-filter").attr("data-template_apps").split(',');
+            var autocomplete_data = {}
+            $.each(template_apps, function(i, e) {
+                autocomplete_data[e.split('&&')[0]] = e.split('&&')[1]
+            });
+
+            $("#templates-filter").autocomplete({
+                limit: 16,
+                data: autocomplete_data,
+                onAutocomplete: function () {
+                    $.ajax({
+                        url: $("#templates-filter").attr('data-url'),
+                        type: 'GET',
+                        data: {name: $("#templates-filter").val()},
+                        success: function(data){
+                            $("#template-div").empty();
+                            $("#template-div").append(data)
+                        }
+                    });
+                }
             });
 
         });
