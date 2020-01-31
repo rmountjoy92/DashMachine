@@ -5,22 +5,7 @@
 {% endblock page_vendor_css %}
 
 {% block page_lvl_css %}
-    <style>
-        body {
-            overflow: hidden !important;
-        }
-
-        .settings-page-card {
-            max-height: calc(100vh - 30px);
-            min-height: calc(100vh - 30px);
-        }
-
-        #apps .dropdown-content {
-            border-top-left-radius: 0px;
-            border-top-right-radius: 0px;
-            background: var(--theme-surface-1);
-        }
-    </style>
+    {{ process_css_sources(src="settings_system/settings.css")|safe }}
     {% if settings.background %}
         <style>
             #main {
@@ -234,8 +219,10 @@
                                             </div>
                                             <input name="files" id="add-images-input" class="hide">
                                         </form>
-                                        {{ tcdrop(allowed_types='jpg,jpeg,png,gif', id="images-tcdrop", max_files="30") }}
-                                        {{ button(text="save", icon="save", id="save-images-btn", float="left", data={"url": url_for('settings_system.add_images')}) }}
+                                        <div class="col s12">
+                                            {{ tcdrop(allowed_types='jpg,jpeg,png,gif', id="images-tcdrop", max_files="30") }}
+                                            {{ button(text="save", icon="save", id="save-images-btn", float="left", data={"url": url_for('settings_system.add_images')}) }}
+                                        </div>
                                     </div>
 
                                     <div class="row">
@@ -260,7 +247,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col s12">
-                                            <div id="template-div" class="selectable-all"></div>
+                                            <div id="template-div" class="selectable-all copy-target"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -314,74 +301,5 @@
 {% endblock page_vendor_js %}
 
 {% block page_lvl_js %}
-    <script type="text/javascript">
-        var d = document.getElementById("settings-sidenav");
-        d.className += " active theme-primary";
-
-        function apply_settings(settings_theme, settings_accent){
-            localStorage.setItem('mode', settings_theme);
-            document.documentElement.setAttribute('data-theme', settings_theme);
-            localStorage.setItem('accent', settings_accent);
-            document.documentElement.setAttribute('data-accent', settings_accent);
-        }
-
-        $( document ).ready(function() {
-            initTCdrop('#images-tcdrop');
-            $("#config-wiki-modal").modal();
-            $("#save-config-btn").on('click', function(e) {
-                $.ajax({
-                    url: $(this).attr('data-url'),
-                    type: 'POST',
-                    data: $("#config-form").serialize(),
-                    success: function(data){
-                        if (data.data.msg === "success"){
-                            M.toast({html: 'Config applied successfully'});
-                            apply_settings(data.data.settings.theme, data.data.settings.accent);
-                            location.reload(true);
-                        } else {
-                            M.toast({html: data.data.msg, classes: "theme-warning"});
-                        }
-                    }
-                });
-            });
-
-            $("#save-images-btn").on('click', function(e) {
-                $("#add-images-input").val(tcdrop_files['images-tcdrop'].toString());
-                $.ajax({
-                    url: $(this).attr('data-url'),
-                    type: 'POST',
-                    data: $("#add-images-form").serialize(),
-                    success: function(data){
-                        $("#add-images-form").trigger('reset');
-                        $("#files-div").empty();
-                        $("#files-div").append(data);
-                        tcdropResetAll();
-                    }
-                });
-            });
-
-            var template_apps = $("#templates-filter").attr("data-template_apps").split(',');
-            var autocomplete_data = {}
-            $.each(template_apps, function(i, e) {
-                autocomplete_data[e.split('&&')[0]] = e.split('&&')[1]
-            });
-
-            $("#templates-filter").autocomplete({
-                limit: 16,
-                data: autocomplete_data,
-                onAutocomplete: function () {
-                    $.ajax({
-                        url: $("#templates-filter").attr('data-url'),
-                        type: 'GET',
-                        data: {name: $("#templates-filter").val()},
-                        success: function(data){
-                            $("#template-div").empty();
-                            $("#template-div").append(data)
-                        }
-                    });
-                }
-            });
-
-        });
-    </script>
+{{ process_js_sources(src="settings_system/settings.js")|safe }}
 {% endblock page_lvl_js %}

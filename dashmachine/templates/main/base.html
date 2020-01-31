@@ -48,7 +48,7 @@
 
 <body id="body" class="vertical-layout page-header-light vertical-menu-collapsible 2-columns  " data-open="click"
   data-menu="vertical-dark-menu" data-col="2-columns">
-  <input id="copy-input" class="hide">
+  <input id="copy-input" style="white-space: pre" class="hide">
 
   <input id="settings-theme" class="hide" value="{{ settings.theme }}">
   <input id="settings-accent" class="hide" value="{{ settings.accent }}">
@@ -64,7 +64,6 @@
   {% block sidenav %}{% endblock sidenav %}
 
   {% block content %}
-  <input id="copy-input" class="hide">
   {% endblock content %}
 
   {% block footer %}{% endblock footer %}

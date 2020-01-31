@@ -7,25 +7,6 @@ function js_Load() {
     document.body.style.visibility = 'visible';
 }
 
-function init_datepicker() {
-    $('.datepicker').datepicker({
-        container: 'body',
-        format: 'mm/dd/yy'
-    });
-}
-function init_timepicker() {
-    $('.timepicker').timepicker({
-        container: 'body'
-    });
-}
-// toggle/init tooltips
-function init_tooltips(){
-    let tooltips_enabled = localStorage.getItem('tooltips_enabled');
-    if (tooltips_enabled === 'false'){
-    } else {
-        $('.tooltipped').tooltip();
-    }
-}
 
 function updateTabIndicator(){
     sleep(250).then(() => {
@@ -65,141 +46,9 @@ function init_select(){
     });
 }
 
-function loadContactForm(){
-    let url = $("#load-contact-form-url").attr('data-url');
-    $.ajax({
-        url: url,
-        type: 'GET',
-        success: function(data){
-            $('body').append(data);
-            init_select();
-        }
-    });
-}
-
-function autocomplete_chips_add_function(el_id, el){
-    let instance = M.Chips.getInstance(el);
-    let val_list = []
-    $.each(instance.chipsData, function(index, el) {
-        val_list.push(el.tag);
-    });
-    let hidden_inp = `#${el_id.split('-')[1]}`
-    $(hidden_inp).val(val_list.toString());
-    // console.log($(hidden_inp).val());
-    $(`#${el_id} input`).trigger('focus');
-}
-
-function init_autocomplete_chips(){
-    $(".chips").each(function(index, el) {
-        let el_id = $(this).attr('id');
-        let el_this = $(this);
-        $(this).chips({
-            placeholder: $(this).attr('data-placeholder'),
-            secondaryPlaceholder: $(this).attr('data-second-placeholder'),
-            limit: $(this).attr('data-limit'),
-            autocompleteOptions: {
-                data: null,
-            },
-            onChipAdd: function (){
-                autocomplete_chips_add_function(el_id, el);
-                $("#deal-form-default-fields").trigger('change');
-            },
-            onChipDelete: function () {
-                autocomplete_chips_add_function(el_id, el);
-                $("#deal-form-default-fields").trigger('change');
-            },
-        });
-
-        let hidden_inp = `#${el_id.split('-')[1]}`
-        if ($(hidden_inp).val() !== "None") {
-            let instance = M.Chips.getInstance($(this));
-            let contacts = $(hidden_inp).val();
-            contacts = contacts.split(',');
-            $.each(contacts, function(index, el) {
-                instance.addChip({
-                    tag: el,
-                });
-            });
-        }
-        $(`#${el_id} input`).on('keydown', function(e) {
-            let instance = M.Chips.getInstance(el_this);
-            let keyCode = e.keyCode || e.which;
-            if (keyCode == 9) {
-                let option = $(el_this).find('.autocomplete-content li').first()
-                if (option.length > 0) {
-                    instance.autocomplete.selectOption(option);
-                    e.preventDefault();
-                }
-            }
-        });
-
-        $(`#${el_id} input`).on('keyup', function(e) {
-            let instance = M.Chips.getInstance(el_this);
-            let keyCode = e.keyCode || e.which;
-            let ign_codes = [40, 38, 37, 39, 16, 9, 20, 17, 18, 32]
-            if (ign_codes.includes(keyCode)) {}
-            else {
-                $.ajax({
-                    url: $("#load-autocomplete-contacts-url").attr('data-url'),
-                    type: 'GET',
-                    data: {
-                        contact_group: $(`#${el_id}`).attr('data-contact_group'),
-                        inp_val: $(this).val(),
-                    },
-                    success: function(data){
-                        instance.autocomplete.updateData(data);
-                        sleep(100).then(() => {
-                            instance.autocomplete.open();
-                        });
-                    }
-                });
-            }
-        });
-
-        $(`#${el_id} input`).on('blur', function() {
-            let instance = M.Chips.getInstance(el_this);
-            sleep(250).then(() => {
-                if (instance.chipsData.length < 1 && $(this).val().length > 0){
-                    $(this).val('');
-                    M.toast({html: "Press enter to add a contact"})
-                }
-            });
-
-        });
-
-    });
-}
-
-
-function toggleDarkMode(){
-    let mode = localStorage.getItem('mode');
-    if (mode === 'dark') {
-        document.documentElement.setAttribute('data-theme', 'light');
-        localStorage.setItem('mode', null);
-    } else {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        localStorage.setItem('mode', 'dark');
-    }
-    // location.reload(true);
-}
-
-function toggleTooltips(){
-    let tooltips_enabled = localStorage.getItem('tooltips_enabled');
-    if (tooltips_enabled === 'false'){
-        localStorage.setItem('tooltips_enabled', null);
-        $('.tooltipped').tooltip();
-    } else {
-        localStorage.setItem('tooltips_enabled', 'false');
-        try {
-            $(".tooltipped").tooltip('destroy');
-        } catch (e) {}
-    }
-}
-
 function init_copy_btn(parent_class){
     $(".copy-btn").on('click', function(e) {
         let target_text = $(this).closest(parent_class).find('.copy-target').text();
-        console.log(target_text)
         let copy_input = $("#copy-input");
         copy_input.val(target_text);
         copy_input.removeClass("hide");
@@ -208,73 +57,6 @@ function init_copy_btn(parent_class){
         copy_input.addClass("hide");
         copy_input.val('');
         M.toast({html: "Copied to Clipboard"})
-    });
-}
-
-function isEmail(email) {
-    let regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    return regex.test(email);
-}
-
-// Cleave
-function initCleave(){
-    // prevent database from filling inputs with "None"
-    $("input").each(function(e) {
-        if($(this).val() === "None"){
-            $(this).val('');
-        }
-    });
-    M.updateTextFields();
-    document.querySelectorAll('.input-phone').forEach(function (el) {
-        new Cleave(el, {
-            phone: true,
-            phoneRegionCode: 'US',
-            delimiter: '-',
-        });
-    });
-    document.querySelectorAll('.money').forEach(function (el) {
-        new Cleave(el, {
-            numeral: true,
-            numeralThousandsGroupStyle: 'thousand',
-            prefix: '$',
-            noImmediatePrefix: true,
-            numeralPositiveOnly: true
-        });
-    });
-    document.querySelectorAll('.days').forEach(function (el) {
-        new Cleave(el, {
-            blocks: [2],
-            numericOnly: true,
-        });
-    });
-    document.querySelectorAll('.datepicker').forEach(function (el) {
-        new Cleave(el, {
-            date: true,
-            delimiter: '/',
-            datePattern: ['m', 'd', 'y']
-        });
-    });
-    document.querySelectorAll('.zip_code').forEach(function (el) {
-        new Cleave(el, {
-            blocks: [5],
-            numericOnly: true,
-        });
-    });
-    document.querySelectorAll('.initial').forEach(function (el) {
-        new Cleave(el, {
-            blocks: [1],
-        });
-    });
-    document.querySelectorAll('.state').forEach(function (el) {
-        new Cleave(el, {
-            blocks: [2],
-            uppercase: true
-        });
-    });
-    document.querySelectorAll('.number').forEach(function (el) {
-        new Cleave(el, {
-            numeral: true
-        });
     });
 }
 
@@ -299,10 +81,6 @@ $(document).ready(function () {
     "use strict";
 
     //  INITS
-    init_datepicker();
-    init_timepicker();
-    initCleave();
-    init_tooltips();
     init_select();
 
     if (localStorage.getItem('sidenav_hidden') === 'true'){
@@ -324,7 +102,6 @@ $(document).ready(function () {
         constrainWidth: false
     });
     $(".tabs").tabs();
-    $(".scrollspy").scrollSpy();
 
     // Fab
     $(".fixed-action-btn").floatingActionButton();

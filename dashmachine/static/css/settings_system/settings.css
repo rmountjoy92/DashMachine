@@ -1,0 +1,14 @@
+body {
+    overflow: hidden !important;
+}
+
+.settings-page-card {
+    max-height: calc(100vh - 30px);
+    min-height: calc(100vh - 30px);
+}
+
+#apps .dropdown-content {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    background: var(--theme-surface-1);
+}

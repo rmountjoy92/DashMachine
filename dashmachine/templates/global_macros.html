@@ -89,9 +89,10 @@ col_id="",
 icon=None,
 spacer_icon=False,
 required='',
-helper=None
+helper=None,
+col_style=None
 )%}
-    <div id="{{col_id}}" class="input-field col {{ size }} {{ col_class }}">
+    <div id="{{col_id}}" class="input-field col {{ size }} {{ col_class }}" style="{{ col_style }}">
         {% if spacer_icon == True %}
             <i class="material-icons-outlined prefix hide"> home </i>
         {% endif %}
