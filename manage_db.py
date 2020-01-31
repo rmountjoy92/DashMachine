@@ -4,7 +4,7 @@ from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 from dashmachine import app, db
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///dashmachine/site.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///dashmachine/user_data/site.db"
 
 migrate = Migrate(app, db)
 
