@@ -119,5 +119,5 @@ scheduler.db
 .idea/
 
 dashmachine/user_data/
-dashmachine/static/images/user_icons
+dashmachine/static/images/icons
 dashmachine/static/images/backgrounds
