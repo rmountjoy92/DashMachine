@@ -5,6 +5,8 @@ from dashmachine.user_system.forms import UserForm
 from dashmachine.main.utils import read_config, row2dict
 from dashmachine.main.models import Files, TemplateApps
 from dashmachine.paths import backgrounds_images_folder, icons_images_folder
+from dashmachine.update import check_needed, update_dashmachine
+from dashmachine.version import version
 from dashmachine.settings_system.utils import load_files_html
 
 settings_system = Blueprint("settings_system", __name__)
@@ -21,12 +23,15 @@ def settings():
     t_apps = TemplateApps.query.all()
     for t_app in t_apps:
         template_apps.append(f"{t_app.name}&&{t_app.icon}")
+    update_need = check_needed()
     return render_template(
         "settings_system/settings.html",
         config_form=config_form,
         files_html=files_html,
         user_form=user_form,
         template_apps=",".join(template_apps),
+        version=version,
+        update_need=update_need,
     )
 
 
@@ -59,3 +64,9 @@ def get_app_template():
         if key not in ["id", "name"]:
             template += f"{key} = {value}<br>"
     return template
+
+
+@settings_system.route("/settings/update", methods=["GET"])
+def update():
+    update_dashmachine()
+    return "ok"

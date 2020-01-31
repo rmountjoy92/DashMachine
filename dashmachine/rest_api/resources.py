@@ -1,12 +1,12 @@
 import os
 from flask import request
 from flask_restful import Resource
-from dashmachine.version import tcmachine_version
+from dashmachine.version import version
 
 
 class GetVersion(Resource):
     def get(self):
-        return {"Version": tcmachine_version}
+        return {"Version": version}
 
 
 class ServerShutdown(Resource):

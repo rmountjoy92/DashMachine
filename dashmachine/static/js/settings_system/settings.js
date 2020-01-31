@@ -66,4 +66,14 @@ $( document ).ready(function() {
         }
     });
 
+    $("#update-btn").on('click', function(e) {
+        $.ajax({
+            url: $(this).attr('data-url'),
+            type: 'GET',
+            success: function(data){
+                M.toast({html: 'DashMachine Updated'});
+            }
+        });
+    });
+
 });

@@ -253,37 +253,56 @@
                                 </div>
 
                                 <div id="user" class="col s12">
-                                    <h5>User</h5>
-                                    {{ user_form.hidden_tag() }}
+                                    <div class="row">
+                                        <h5>User</h5>
+                                        {{ user_form.hidden_tag() }}
 
-                                    {{ input(
-                                    label="Username",
-                                    id="user-form-username",
-                                    size="s12",
-                                    form_obj=user_form.username,
-                                    val=current_user.username
-                                    ) }}
+                                        {{ input(
+                                        label="Username",
+                                        id="user-form-username",
+                                        size="s12",
+                                        form_obj=user_form.username,
+                                        val=current_user.username
+                                        ) }}
 
-                                    {{ input(
-                                    label="Password",
-                                    id="user-form-password",
-                                    form_obj=user_form.password,
-                                    size="s12"
-                                    ) }}
+                                        {{ input(
+                                        label="Password",
+                                        id="user-form-password",
+                                        form_obj=user_form.password,
+                                        size="s12"
+                                        ) }}
 
-                                    {{ input(
-                                    label="Confirm Password",
-                                    id="user-form-confirm_password",
-                                    form_obj=user_form.confirm_password,
-                                    required='required',
-                                    size="s12"
-                                    ) }}
+                                        {{ input(
+                                        label="Confirm Password",
+                                        id="user-form-confirm_password",
+                                        form_obj=user_form.confirm_password,
+                                        required='required',
+                                        size="s12"
+                                        ) }}
 
-                                    {{ button(
-                                    icon="save",
-                                    float="left",
-                                    text="save"
-                                    ) }}
+                                        {{ button(
+                                        icon="save",
+                                        float="left",
+                                        text="save"
+                                        ) }}
+                                    </div>
+
+                                    <div class="row mt-4">
+                                        <h5>DashMachine</h5>
+                                        <p class="mb-2">version: {{ version }}</p>
+
+                                        {% if update_needed %}
+                                            {{ button(
+                                            float="left",
+                                            id="update-btn",
+                                            icon="system_update_alt",
+                                            data={"url": url_for('settings_system.update')},
+                                            text="update available"
+                                            ) }}
+                                        {% endif %}
+
+                                    </div>
+
                                 </div>
 
                             </div>
