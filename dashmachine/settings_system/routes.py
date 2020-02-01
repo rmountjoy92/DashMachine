@@ -1,4 +1,5 @@
 import os
+from shutil import move
 from flask import render_template, request, Blueprint, jsonify
 from dashmachine.settings_system.forms import ConfigForm
 from dashmachine.user_system.forms import UserForm
@@ -51,7 +52,7 @@ def add_images():
     for cached_file in request.form.get("files").split(","):
         file = Files.query.filter_by(cache=cached_file).first()
         new_path = os.path.join(dest_folder, file.name)
-        os.rename(file.path, new_path)
+        move(file.path, new_path)
     return load_files_html()
 
 
