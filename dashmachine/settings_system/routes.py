@@ -23,7 +23,6 @@ def settings():
     t_apps = TemplateApps.query.all()
     for t_app in t_apps:
         template_apps.append(f"{t_app.name}&&{t_app.icon}")
-    update_need = check_needed()
     return render_template(
         "settings_system/settings.html",
         config_form=config_form,
@@ -31,7 +30,6 @@ def settings():
         user_form=user_form,
         template_apps=",".join(template_apps),
         version=version,
-        update_need=update_need,
     )
 
 
@@ -70,3 +68,8 @@ def get_app_template():
 def update():
     update_dashmachine()
     return "ok"
+
+
+@settings_system.route("/settings/check_update", methods=["GET"])
+def check_update():
+    return str(check_needed())

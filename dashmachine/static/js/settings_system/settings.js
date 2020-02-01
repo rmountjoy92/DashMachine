@@ -72,6 +72,23 @@ $( document ).ready(function() {
             type: 'GET',
             success: function(data){
                 M.toast({html: 'DashMachine Updated'});
+                $("#update-btn").removeClass('hide');
+                $("#check-update-btn").addClass('hide');
+            }
+        });
+    });
+
+    $("#check-update-btn").on('click', function(e) {
+        $.ajax({
+            url: $(this).attr('data-url'),
+            type: 'GET',
+            success: function(data){
+                if (data === "True"){
+                    $("#update-btn").removeClass('hide');
+                    $("#check-update-btn").addClass('hide');
+                } else {
+                    M.toast({html: 'Up to date!'});
+                }
             }
         });
     });
