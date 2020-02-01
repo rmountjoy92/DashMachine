@@ -72,8 +72,8 @@ $( document ).ready(function() {
             type: 'GET',
             success: function(data){
                 M.toast({html: 'DashMachine Updated'});
-                $("#update-btn").removeClass('hide');
-                $("#check-update-btn").addClass('hide');
+                $("#update-btn").addClass('hide');
+                $("#check-update-btn").removeClass('hide');
             }
         });
     });
