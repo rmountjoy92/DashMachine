@@ -164,6 +164,7 @@ def public_route(decorated_function):
 
 
 def dashmachine_init():
+    read_config()
     read_template_apps()
     user_data_folder = os.path.join(dashmachine_folder, "user_data")
 

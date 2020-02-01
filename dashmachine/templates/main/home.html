@@ -40,16 +40,25 @@
                             <a href="{{ app.prefix }}{{ app.url }}" target="_blank" class="app-a" data-name="{{ app.name }}" data-description="{{ app.description }}">
                         {% endif %}
                     <div class="col s12 m6 l3">
-                        <div class="card theme-surface-transparent">
-                            <div class="card-content center-align">
-                                <img src="{{ app.icon }}" height="64px">
+                        <div class="card theme-surface-transparent app-card">
+                            <div class="card-content center-align scrollbar" style="max-height: 118px; min-height: 118px;">
                                 {% if app.data_template %}
-                                    <p class="data-template hide" data-url="{{ url_for('main.load_rest_data') }}">
-                                        {{ app.data_template }}
-                                    </p>
+                                    <div class="row">
+                                        <div class="col s6 center-align">
+                                            <img src="{{ app.icon }}" height="64px">
+                                        </div>
+
+                                        <div class="col s6 left-align">
+                                            <p class="data-template hide theme-text" data-url="{{ url_for('main.load_rest_data') }}" style="white-space: pre-line">
+                                                {{ app.data_template|safe }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <img src="{{ app.icon }}" height="64px">
                                 {% endif %}
                             </div>
-                            <div class="card-action center-align">
+                            <div class="card-action center-align scrollbar" style="max-height: 127px; min-height: 127px;">
                                 <h5>{{ app.name }}</h5>
                                 <span class="theme-secondary-text">{{ app.description }}</span>
                             </div>
@@ -77,35 +86,5 @@
 {% endblock page_vendor_js %}
 
 {% block page_lvl_js %}
-    <script type="text/javascript">
-        var d = document.getElementById("dashboard-sidenav");
-        d.className += " active theme-primary";
-
-        $( document ).ready(function() {
-            $("#apps-filter").on('keyup', function(e) {
-                var value = $(this).val().toLowerCase();
-                $(".app-a").each(function(i, e) {
-                    if ($(this).attr("data-name").toLowerCase().indexOf(value) > -1
-                        || $(this).attr("data-description").toLowerCase().indexOf(value) > -1) {
-                        $(this).removeClass('hide');
-                    } else {
-                        $(this).addClass('hide');
-                    }
-                });
-            });
-
-            $(".data-template").each(function(e) {
-                var el = $(this);
-                $.ajax({
-                    url: el.attr('data-url'),
-                    type: 'GET',
-                    data: {template: el.text()},
-                    success: function(data){
-                        el.text(data);
-                        el.removeClass('hide');
-                    }
-                });
-            });
-        });
-    </script>
+    {{ process_js_sources(src="main/home.js")|safe }}
 {% endblock page_lvl_js %}

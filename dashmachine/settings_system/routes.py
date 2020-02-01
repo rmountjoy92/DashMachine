@@ -2,6 +2,7 @@ import os
 from flask import render_template, request, Blueprint, jsonify
 from dashmachine.settings_system.forms import ConfigForm
 from dashmachine.user_system.forms import UserForm
+from dashmachine.user_system.utils import add_edit_user
 from dashmachine.main.utils import read_config, row2dict
 from dashmachine.main.models import Files, TemplateApps
 from dashmachine.paths import backgrounds_images_folder, icons_images_folder
@@ -73,3 +74,20 @@ def update():
 @settings_system.route("/settings/check_update", methods=["GET"])
 def check_update():
     return str(check_needed())
+
+
+@settings_system.route("/settings/edit_user", methods=["POST"])
+def edit_user():
+    form = UserForm()
+    if form.validate_on_submit():
+        if form.password.data != form.confirm_password.data:
+            return jsonify(data={"err": "Passwords don't match"})
+        add_edit_user(form.username.data, form.password.data)
+    else:
+        err_str = ""
+        for fieldName, errorMessages in form.errors.items():
+            err_str += f"{fieldName}: "
+            for err in errorMessages:
+                err_str += f"{err} "
+        return jsonify(data={"err": err_str})
+    return jsonify(data={"err": "success"})

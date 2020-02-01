@@ -63,7 +63,7 @@ def app_view(url):
 @main.route("/load_rest_data", methods=["GET"])
 def load_rest_data():
     data_template = get_rest_data(request.args.get("template"))
-    return data_template[:50]
+    return data_template
 
 
 # ------------------------------------------------------------------------------

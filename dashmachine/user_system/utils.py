@@ -3,7 +3,10 @@ from dashmachine.user_system.models import User
 
 
 def add_edit_user(username, password, user_id=None):
-    user = User.query.filter_by(id=user_id).first()
+    if user_id:
+        user = User.query.filter_by(id=user_id).first()
+    else:
+        user = User.query.first()
     if not user:
         user = User()
 

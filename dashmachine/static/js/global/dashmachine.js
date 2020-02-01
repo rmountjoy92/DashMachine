@@ -74,10 +74,18 @@ function show_sidenav(){
     localStorage.setItem('sidenav_hidden', null);
 }
 
+function apply_settings(settings_theme, settings_accent){
+    localStorage.setItem('mode', settings_theme);
+    document.documentElement.setAttribute('data-theme', settings_theme);
+    localStorage.setItem('accent', settings_accent);
+    document.documentElement.setAttribute('data-accent', settings_accent);
+}
+
 //--------------------------------------------------------------------------------------
 // Document ready function
 //--------------------------------------------------------------------------------------
 $(document).ready(function () {
+    apply_settings($("#settings-theme").val(), $("#settings-accent").val());
     "use strict";
 
     //  INITS

@@ -1,13 +1,6 @@
 var d = document.getElementById("settings-sidenav");
 d.className += " active theme-primary";
 
-function apply_settings(settings_theme, settings_accent){
-    localStorage.setItem('mode', settings_theme);
-    document.documentElement.setAttribute('data-theme', settings_theme);
-    localStorage.setItem('accent', settings_accent);
-    document.documentElement.setAttribute('data-accent', settings_accent);
-}
-
 $( document ).ready(function() {
     initTCdrop('#images-tcdrop');
     $("#config-wiki-modal").modal();
@@ -20,7 +13,6 @@ $( document ).ready(function() {
             success: function(data){
                 if (data.data.msg === "success"){
                     M.toast({html: 'Config applied successfully'});
-                    apply_settings(data.data.settings.theme, data.data.settings.accent);
                     location.reload(true);
                 } else {
                     M.toast({html: data.data.msg, classes: "theme-warning"});
@@ -91,6 +83,23 @@ $( document ).ready(function() {
                 }
             }
         });
+    });
+
+    $("#edit-user-btn").on('click', function(e) {
+       $.ajax({
+           url: $(this).attr('data-url'),
+           type: 'POST',
+           data: $("#edit-user-form").serialize(),
+           success: function(data){
+               if (data.data.err !== 'success'){
+                   M.toast({html: data.data.err, classes: 'theme-warning'});
+               } else {
+                   $("#user-form-password").val('');
+                   $("#user-form-confirm_password").val('');
+                   M.toast({html: 'User updated'});
+               }
+           }
+       });
     });
 
 });
