@@ -186,7 +186,7 @@ def dashmachine_init():
 
     user = User.query.first()
     if not user:
-        add_edit_user(username="admin", password="admin")
+        add_edit_user(username="admin", password="adminadmin")
 
 
 def get_rest_data(template):
