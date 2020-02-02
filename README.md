@@ -1,5 +1,5 @@
 # DashMachine
-### Another application bookmark dashboard, with fun features.
+### Another web application bookmark dashboard, with fun features.
 
 ![screenshot](https://i.ibb.co/chbBkzk/2020-02-02-09-46.png)
 
