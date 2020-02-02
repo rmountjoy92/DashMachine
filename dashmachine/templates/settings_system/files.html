@@ -17,7 +17,12 @@
                             <img src="static/images/backgrounds/{{ background }}" alt="" class="circle">
                         </a>
                         <span class="selectable-all copy-target file-title">static/images/backgrounds/{{ background }}</span>
-                        <span class="secondary-content"><i class="material-icons-outlined icon-btn">close</i></span>
+                        <span class="secondary-content">
+                            <i class="material-icons-outlined icon-btn delete-file-btn"
+                               data-url="{{ url_for('settings_system.delete_file') }}"
+                               data-folder="backgrounds"
+                               data-file="{{ background }}">close</i>
+                        </span>
                         <span class="secondary-content mr-4"><i class="material-icons-outlined icon-btn copy-btn">filter_none</i></span>
                     </li>
                 {% endfor %}
@@ -39,7 +44,12 @@
                             <img src="static/images/icons/{{ icon }}" alt="" class="circle">
                         </a>
                         <span class="selectable-all copy-target file-title">static/images/icons/{{ icon }}</span>
-                        <span class="secondary-content"><i class="material-icons-outlined icon-btn">close</i></span>
+                        <span class="secondary-content">
+                            <i class="material-icons-outlined icon-btn delete-file-btn"
+                               data-url="{{ url_for('settings_system.delete_file') }}"
+                               data-folder="icons"
+                               data-file="{{ icon }}">close</i>
+                        </span>
                         <span class="secondary-content mr-4"><i class="material-icons-outlined icon-btn copy-btn">filter_none</i></span>
                     </li>
                 {% endfor %}
@@ -53,5 +63,16 @@
 <script>
     $( document ).ready(function() {
         init_copy_btn(".collection-item");
+        $(".delete-file-btn").on('click', function(e) {
+           $.ajax({
+               url: $(this).attr('data-url'),
+               type: 'GET',
+               data: {folder: $(this).attr("data-folder"), file: $(this).attr("data-file")},
+               success: function(data){
+                   $("#files-div").empty();
+                   $("#files-div").append(data);
+               }
+           });
+        });
     });
 </script>

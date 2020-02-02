@@ -390,23 +390,6 @@
                                         <h5>DashMachine</h5>
                                         <p class="mb-2">version: {{ version }}</p>
 
-                                        {{ button(
-                                        float="left",
-                                        id="update-btn",
-                                        icon="system_update_alt",
-                                        class="hide",
-                                        data={"url": url_for('settings_system.update')},
-                                        text="update available"
-                                        ) }}
-
-                                        {{ button(
-                                        float="left",
-                                        id="check-update-btn",
-                                        icon="security",
-                                        data={"url": url_for('settings_system.check_update')},
-                                        text="check for update"
-                                        ) }}
-
                                     </div>
 
                                 </div>

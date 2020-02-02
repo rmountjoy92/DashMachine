@@ -7,7 +7,6 @@ from dashmachine.user_system.utils import add_edit_user
 from dashmachine.main.utils import read_config, row2dict
 from dashmachine.main.models import Files, TemplateApps
 from dashmachine.paths import backgrounds_images_folder, icons_images_folder
-from dashmachine.update import check_needed, update_dashmachine
 from dashmachine.version import version
 from dashmachine.settings_system.utils import load_files_html
 
@@ -56,6 +55,16 @@ def add_images():
     return load_files_html()
 
 
+@settings_system.route("/settings/delete_file", methods=["GET"])
+def delete_file():
+    if request.args.get("folder") == "backgrounds":
+        file = os.path.join(backgrounds_images_folder, request.args.get("file"))
+    if request.args.get("folder") == "icons":
+        file = os.path.join(icons_images_folder, request.args.get("file"))
+    os.remove(file)
+    return load_files_html()
+
+
 @settings_system.route("/settings/get_app_template", methods=["GET"])
 def get_app_template():
     template_app = TemplateApps.query.filter_by(name=request.args.get("name")).first()
@@ -64,17 +73,6 @@ def get_app_template():
         if key not in ["id", "name"]:
             template += f"{key} = {value}<br>"
     return template
-
-
-@settings_system.route("/settings/update", methods=["GET"])
-def update():
-    update_dashmachine()
-    return "ok"
-
-
-@settings_system.route("/settings/check_update", methods=["GET"])
-def check_update():
-    return str(check_needed())
 
 
 @settings_system.route("/settings/edit_user", methods=["POST"])

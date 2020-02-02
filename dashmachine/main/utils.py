@@ -1,8 +1,9 @@
 import os
+import subprocess
 from shutil import copyfile
 from requests import get
 from configparser import ConfigParser
-from dashmachine.paths import dashmachine_folder, images_folder
+from dashmachine.paths import dashmachine_folder, images_folder, root_folder
 from dashmachine.main.models import Apps, ApiCalls, TemplateApps
 from dashmachine.settings_system.models import Settings
 from dashmachine.user_system.models import User
@@ -164,6 +165,12 @@ def public_route(decorated_function):
 
 
 def dashmachine_init():
+    migrate_cmd = "python " + os.path.join(root_folder, "manage_db.py db migrate")
+    subprocess.run(migrate_cmd, stderr=subprocess.PIPE, shell=True, encoding="utf-8")
+
+    upgrade_cmd = "python " + os.path.join(root_folder, "manage_db.py db upgrade")
+    subprocess.run(upgrade_cmd, stderr=subprocess.PIPE, shell=True, encoding="utf-8")
+
     read_config()
     read_template_apps()
     user_data_folder = os.path.join(dashmachine_folder, "user_data")
