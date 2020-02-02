@@ -31,7 +31,7 @@ docker create \
 ### Python
 Instructions are for linux.
 ```
-virtualenv DashMachineEnv
+virtualenv --python=python3 DashMachineEnv
 cd DashMachineEnv && source bin/activate
 git clone https://git.wolf-house.net/ross/DashMachine.git
 cd DashMachine && pip install -r requirements.txt
