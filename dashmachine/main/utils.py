@@ -204,7 +204,7 @@ def get_rest_data(template):
     while template and template.find("{{") > -1:
         start_braces = template.find("{{") + 2
         end_braces = template.find("}}")
-        key = template[start_braces:end_braces]
+        key = template[start_braces:end_braces].strip()
         key_w_braces = template[start_braces - 2 : end_braces + 2]
         value = do_api_call(key)
         template = template.replace(key_w_braces, value)
