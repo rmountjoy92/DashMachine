@@ -1,3 +1,4 @@
+![dashmachine logo](https://i.ibb.co/PMGkhdz/logo.png)
 # DashMachine
 ### Another web application bookmark dashboard, with fun features.
 
