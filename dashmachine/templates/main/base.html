@@ -29,11 +29,10 @@
   {% endif %}
   <link rel="apple-touch-icon" href="static/images/favicon/apple-touch-icon-152x152.png">
   <link rel="shortcut icon" type="image/x-icon" href="static/images/favicon/favicon-32x32.png">
-  <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
-  <script src="https://kit.fontawesome.com/5f4e7d9438.js" crossorigin="anonymous"></script>
-  <link href="https://fonts.googleapis.com/css?family=Gelasio|Montserrat&display=swap" rel="stylesheet">
+  <link href="static/css/vendors/material-icons.css" rel="stylesheet">
+  <link href="static/css/vendors/google-fonts.css" rel="stylesheet">
   <!-- BEGIN: VENDOR CSS-->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link rel="stylesheet" href="static/css/vendors/materialize.min.css">
   {% block page_vendor_css %}{% endblock page_vendor_css %}
   <!-- END: VENDOR CSS-->
   <!-- BEGIN: Page Level CSS-->
@@ -53,10 +52,7 @@
   <input id="settings-theme" class="hide" value="{{ settings.theme }}">
   <input id="settings-accent" class="hide" value="{{ settings.accent }}">
 
-  <script
-  src="https://code.jquery.com/jquery-3.4.1.min.js"
-  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-  crossorigin="anonymous"></script>
+  <script src="static/js/vendors/jquery.min.js"></script>
 
 
   {% block header %}{% endblock header %}
@@ -69,14 +65,8 @@
   {% block footer %}{% endblock footer %}
 
   <!-- BEGIN VENDOR JS-->
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
-          integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
-          crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <script src="static/vendors/tinymce/tinymce.min.js?v={{ range(1, 9999) | random }}"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.4.10/cleave.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.4.10/addons/cleave-phone.us.js"></script>
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="static/js/vendors/jqueryui.min.js"></script>
+  <script src="static/js/vendors/materialize.min.js"></script>
   <!-- END VENDOR JS-->
 
   <!-- BEGIN PAGE VENDOR JS-->
