@@ -72,3 +72,4 @@ If you change the config.ini file, you either have to restart the container (or 
 - [ ] fix Firefox scrollbars
 - [ ] work on responsiveness for mobile (sidenav, settings page)
 - [ ] find a way to mirror this repo on GitHub for exposure
+- [ ] support multiple users
