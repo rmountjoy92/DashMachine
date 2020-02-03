@@ -59,3 +59,12 @@ If you change the config.ini file, you either have to restart the container (or 
 * Materialize css
 * JavaScript/jQuery/jQueryUI
 * Requests (python)
+
+## Version 1.0 TODO list
+- [ ] finish rest api data functions (post requests, auth)
+- [ ] finish rest api data display (make it look prettier)
+- [ ] include nginx & gunicorn in docker container
+- [ ] tag/folder system
+- [ ] pull request template for adding template apps
+- [ ] work on responsiveness for mobile
+- [ ] find a way to mirror this repo on GitHub for exposure
