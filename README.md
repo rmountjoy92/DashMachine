@@ -64,7 +64,11 @@ If you change the config.ini file, you either have to restart the container (or 
 - [ ] finish rest api data functions (post requests, auth)
 - [ ] finish rest api data display (make it look prettier)
 - [ ] include nginx & gunicorn in docker container
-- [ ] tag/folder system
+- [ ] tag/folder system & support for services without web redirection
+- [ ] add more template apps from popular self hosted apps
 - [ ] pull request template for adding template apps
-- [ ] work on responsiveness for mobile
+- [ ] rest api data examples for template apps
+- [ ] add whole material design color pallete https://material-ui.com/customization/color/
+- [ ] fix Firefox scrollbars
+- [ ] work on responsiveness for mobile (sidenav, settings page)
 - [ ] find a way to mirror this repo on GitHub for exposure
