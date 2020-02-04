@@ -68,8 +68,5 @@ If you change the config.ini file, you either have to restart the container (or 
 - [ ] add more template apps from popular self hosted apps
 - [ ] pull request template for adding template apps
 - [ ] rest api data examples for template apps
-- [ ] add whole material design color pallete https://material-ui.com/customization/color/
-- [ ] fix Firefox scrollbars
-- [ ] work on responsiveness for mobile (sidenav, settings page)
 - [ ] find a way to mirror this repo on GitHub for exposure
 - [ ] support multiple users
