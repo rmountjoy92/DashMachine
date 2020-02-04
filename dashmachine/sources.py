@@ -13,8 +13,8 @@ context processor to make the process functions available to every jinja templat
 Load orders in bundles are respected here"""
 
 """You can disable minification for debug purposes here (set to True) """
-debug_js = True
-debug_css = True
+debug_js = False
+debug_css = False
 
 
 def process_js_sources(process_bundle=None, src=None, app_global=False):
