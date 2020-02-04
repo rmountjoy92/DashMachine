@@ -1,5 +1,9 @@
-body {
-    overflow: hidden !important;
+
+@media (min-width: 990px)
+{
+    body {
+        overflow: hidden !important;
+    }
 }
 
 .settings-page-card {

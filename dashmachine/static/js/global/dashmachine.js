@@ -201,6 +201,7 @@ $(document).ready(function () {
         }
     }, 300);
 
+    $("#slide-out").sidenav();
 
     // Collapsible navigation menu
     $(".nav-collapsible .navbar-toggler").click(function() {

@@ -6,12 +6,13 @@
 
 {% block page_lvl_css %}
     {{ process_css_sources(src="settings_system/settings.css")|safe }}
-    {% if settings.background %}
+    {% if settings.background and settings.background != 'None' %}
         <style>
             #main {
                 background-image: url("{{ settings.background }}");
                 background-size: cover;
-                height: 100vh;
+                background-attachment: fixed;
+                min-height: 100vh;
             }
         </style>
     {% endif %}
@@ -22,7 +23,9 @@
         <div class="modal-content">
             <div class="row">
                 <div class="col s12">
-                    <h4>Config.ini Readme</h4>
+                    <h4>Config.ini Readme
+                    <span><i class="material-icons-outlined modal-close right icon-btn">close</i></span>
+                    </h4>
                 </div>
                 <div id="config-help-col" class="col s12 theme-surface-1 padding-2 border-radius-10">
                     <h5>Settings Reference</h5>
@@ -33,7 +36,7 @@
                         background = static/images/backgrounds/background.png<br>
                     </code>
 
-                    <table class="mt-4">
+                    <table class="mt-4 responsive-table">
                         <thead>
                         <tr>
                             <th>Variable</th>
@@ -59,7 +62,10 @@
                             <td>accent</td>
                             <td>Yes</td>
                             <td>UI accent color</td>
-                            <td>orange, green, blue, green, pink, grey</td>
+                            <td>
+                                orange, red, pink, purple, deepPurple, indigo, blue, lightBlue,
+                                cyan, teal, green, lightGreen, lime, yellow, amber, deepOrange, brown, grey, blueGrey
+                            </td>
                         </tr>
                         <tr>
                             <td>background</td>
@@ -82,7 +88,7 @@
                         data_template = None
                     </code>
 
-                    <table class="mt-4">
+                    <table class="mt-4 responsive-table">
                         <thead>
                         <tr>
                             <th>Variable</th>
@@ -151,7 +157,7 @@
                         value_template = variable_name<br>
                     </code>
 
-                    <table class="mt-4">
+                    <table class="mt-4 responsive-table">
                         <thead>
                         <tr>
                             <th>Variable</th>

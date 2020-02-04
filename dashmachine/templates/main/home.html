@@ -5,7 +5,7 @@
 {% endblock page_vendor_css %}
 
 {% block page_lvl_css %}
-    {% if settings.background %}
+    {% if settings.background and settings.background != 'None' %}
         <style>
             #main {
                 background-image: url("{{ settings.background }}");
@@ -41,7 +41,7 @@
                         {% endif %}
                     <div class="col s12 m6 l3">
                         <div class="card theme-surface-transparent app-card">
-                            <div class="card-content center-align scrollbar" style="max-height: 118px; min-height: 118px;">
+                            <div class="card-content center-align scrollbar" style="max-height: 118px; min-height: 118px; scrollbar-width: none;">
                                 {% if app.data_template %}
                                     <div class="row">
                                         <div class="col s6 center-align">
@@ -58,7 +58,7 @@
                                     <img src="{{ app.icon }}" height="64px">
                                 {% endif %}
                             </div>
-                            <div class="card-action center-align scrollbar" style="max-height: 127px; min-height: 127px;">
+                            <div class="card-action center-align scrollbar" style="max-height: 127px; min-height: 127px; scrollbar-width: none;">
                                 <h5>{{ app.name }}</h5>
                                 <span class="theme-secondary-text">{{ app.description }}</span>
                             </div>

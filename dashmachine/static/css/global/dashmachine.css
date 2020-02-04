@@ -50,6 +50,8 @@ body {
     user-select: none;
     /* Non-prefixed version, currently
     supported by Chrome, Opera and Firefox */
+    scrollbar-color: var(--theme-secondary);
+    scrollbar-width: thin;
 }
 
 html {
@@ -328,15 +330,15 @@ input:disabled {
 .navbar .navbar-light ul a {
     color: var(--theme-color-font);
 }
-@media (min-width: 900px)
-{
-    .sidenav-overlay
-    {
-        display: none !important;
+/*@media (min-width: 900px)*/
+/*{*/
+/*    .sidenav-overlay*/
+/*    {*/
+/*        display: none !important;*/
 
-        opacity: 0 !important;
-    }
-}
+/*        opacity: 0 !important;*/
+/*    }*/
+/*}*/
 
 /* MODALS AND CARDS */
 .modal {
@@ -615,6 +617,14 @@ input:disabled {
 .sidenav {
     background-color: var(--theme-surface);
     top: unset;
+    overflow: scroll;
+    scrollbar-width: none;
+}
+
+#sidenav-mobile-toggle-btn {
+    position: fixed;
+    top: unset;
+    bottom: 10px;
 }
 
 .border-bottom-1 {
