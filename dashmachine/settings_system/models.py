@@ -6,7 +6,6 @@ class Settings(db.Model):
     theme = db.Column(db.String())
     accent = db.Column(db.String())
     background = db.Column(db.String())
-
-
-db.create_all()
-db.session.commit()
+    roles = db.Column(db.String())
+    home_access_groups = db.Column(db.String())
+    settings_access_groups = db.Column(db.String())

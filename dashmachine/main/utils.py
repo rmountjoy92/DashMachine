@@ -4,7 +4,7 @@ from shutil import copyfile
 from requests import get
 from configparser import ConfigParser
 from dashmachine.paths import dashmachine_folder, images_folder, root_folder
-from dashmachine.main.models import Apps, ApiCalls, TemplateApps
+from dashmachine.main.models import Apps, ApiCalls, TemplateApps, Groups
 from dashmachine.settings_system.models import Settings
 from dashmachine.user_system.models import User
 from dashmachine.user_system.utils import add_edit_user
@@ -29,66 +29,100 @@ def read_config():
     Apps.query.delete()
     ApiCalls.query.delete()
     Settings.query.delete()
-
-    try:
-        settings = Settings(
-            theme=config["Settings"]["theme"],
-            accent=config["Settings"]["accent"],
-            background=config["Settings"]["background"],
-        )
-        db.session.add(settings)
-        db.session.commit()
-    except Exception as e:
-        return {"msg": f"Invalid Config: {e}."}
+    Groups.query.delete()
 
     for section in config.sections():
-        if section != "Settings":
 
-            # API call creation
-            if "platform" in config[section]:
-                api_call = ApiCalls()
-                api_call.name = section
-                if "resource" in config[section]:
-                    api_call.resource = config[section]["resource"]
-                else:
-                    return {
-                        "msg": f"Invalid Config: {section} does not contain resource."
-                    }
+        # Settings creation
+        if section == "Settings":
+            settings = Settings()
+            if "theme" in config["Settings"]:
+                settings.theme = config["Settings"]["theme"]
+            else:
+                settings.theme = "light"
 
-                if "method" in config[section]:
-                    api_call.method = config[section]["method"]
-                else:
-                    api_call.method = "GET"
+            if "accent" in config["Settings"]:
+                settings.accent = config["Settings"]["accent"]
+            else:
+                settings.accent = "orange"
 
-                if "payload" in config[section]:
-                    api_call.payload = config[section]["payload"]
-                else:
-                    api_call.payload = None
+            if "background" in config["Settings"]:
+                settings.background = config["Settings"]["background"]
+            else:
+                settings.background = "None"
 
-                if "authentication" in config[section]:
-                    api_call.authentication = config[section]["authentication"]
-                else:
-                    api_call.authentication = None
+            if "roles" in config["Settings"]:
+                settings.roles = config["Settings"]["roles"]
+            else:
+                settings.roles = "admin"
 
-                if "username" in config[section]:
-                    api_call.username = config[section]["username"]
-                else:
-                    api_call.username = None
+            if "home_access_groups" in config["Settings"]:
+                settings.home_access_groups = config["Settings"]["home_access_groups"]
+            else:
+                settings.home_access_groups = "admin_only"
 
-                if "password" in config[section]:
-                    api_call.password = config[section]["password"]
-                else:
-                    api_call.password = None
+            if "settings_access_groups" in config["Settings"]:
+                settings.settings_access_groups = config["Settings"][
+                    "settings_access_groups"
+                ]
+            else:
+                settings.settings_access_groups = "admin_only"
 
-                if "value_template" in config[section]:
-                    api_call.value_template = config[section]["value_template"]
-                else:
-                    api_call.value_template = section
+            db.session.add(settings)
+            db.session.commit()
 
-                db.session.add(api_call)
-                db.session.commit()
-                continue
+        # Groups creation
+        elif "roles" in config[section]:
+            group = Groups()
+            group.name = section
+            group.roles = config[section]["roles"]
+            db.session.add(group)
+            db.session.commit()
 
+        # API call creation
+        elif "platform" in config[section]:
+            api_call = ApiCalls()
+            api_call.name = section
+            if "resource" in config[section]:
+                api_call.resource = config[section]["resource"]
+            else:
+                return {"msg": f"Invalid Config: {section} does not contain resource."}
+
+            if "method" in config[section]:
+                api_call.method = config[section]["method"]
+            else:
+                api_call.method = "GET"
+
+            if "payload" in config[section]:
+                api_call.payload = config[section]["payload"]
+            else:
+                api_call.payload = None
+
+            if "authentication" in config[section]:
+                api_call.authentication = config[section]["authentication"]
+            else:
+                api_call.authentication = None
+
+            if "username" in config[section]:
+                api_call.username = config[section]["username"]
+            else:
+                api_call.username = None
+
+            if "password" in config[section]:
+                api_call.password = config[section]["password"]
+            else:
+                api_call.password = None
+
+            if "value_template" in config[section]:
+                api_call.value_template = config[section]["value_template"]
+            else:
+                api_call.value_template = section
+
+            db.session.add(api_call)
+            db.session.commit()
+            continue
+
+        else:
             # App creation
             app = Apps()
             app.name = section
@@ -126,6 +160,11 @@ def read_config():
                 app.data_template = config[section]["data_template"]
             else:
                 app.data_template = None
+
+            if "groups" in config[section]:
+                app.groups = config[section]["groups"]
+            else:
+                app.groups = None
 
             db.session.add(app)
             db.session.commit()
@@ -165,13 +204,17 @@ def public_route(decorated_function):
 
 
 def dashmachine_init():
+    db.create_all()
+    db.session.commit()
+    migrate_cmd = "python " + os.path.join(root_folder, "manage_db.py db stamp head")
+    subprocess.run(migrate_cmd, stderr=subprocess.PIPE, shell=True, encoding="utf-8")
+
     migrate_cmd = "python " + os.path.join(root_folder, "manage_db.py db migrate")
     subprocess.run(migrate_cmd, stderr=subprocess.PIPE, shell=True, encoding="utf-8")
 
     upgrade_cmd = "python " + os.path.join(root_folder, "manage_db.py db upgrade")
     subprocess.run(upgrade_cmd, stderr=subprocess.PIPE, shell=True, encoding="utf-8")
 
-    read_config()
     read_template_apps()
     user_data_folder = os.path.join(dashmachine_folder, "user_data")
 
@@ -193,11 +236,17 @@ def dashmachine_init():
     config_file = os.path.join(user_data_folder, "config.ini")
     if not os.path.exists(config_file):
         copyfile("default_config.ini", config_file)
-        read_config()
+
+    read_config()
 
     user = User.query.first()
     if not user:
-        add_edit_user(username="admin", password="adminadmin")
+        settings = Settings.query.first()
+        add_edit_user(
+            username="admin",
+            password="adminadmin",
+            role=settings.roles.split(",")[0].strip(),
+        )
 
 
 def get_rest_data(template):

@@ -20,6 +20,7 @@ class Apps(db.Model):
     description = db.Column(db.String())
     open_in = db.Column(db.String())
     data_template = db.Column(db.String())
+    groups = db.Column(db.String())
 
 
 class TemplateApps(db.Model):
@@ -45,5 +46,7 @@ class ApiCalls(db.Model):
     value_template = db.Column(db.String())
 
 
-db.create_all()
-db.session.commit()
+class Groups(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String())
+    roles = db.Column(db.String())
