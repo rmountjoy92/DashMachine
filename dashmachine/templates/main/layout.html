@@ -8,7 +8,7 @@
 
 {% block sidenav %}
     <div id="show-sidenav" class="draggable z-depth-1 hide">
-        <i class="material-icons-outlined white-text pointer">chevron_right</i>
+        <i class="material-icons-outlined theme-on-primary-text pointer">chevron_right</i>
     </div>
     <!-- BEGIN: SideNav-->
     <aside id="main-sidenav" class="sidenav-main nav-collapsed nav-collapsible sidenav-light sidenav-active-rounded z-depth-2">
@@ -49,7 +49,11 @@
             {% endfor %}
 
         </ul>
-                <div class="navigation-background"></div><a id="sidenav-mobile-toggle-btn" class="sidenav-trigger btn-sidenav-toggle btn-floating btn-medium waves-effect waves-light hide-on-large-only theme-primary" href="#" data-target="slide-out"><i class="material-icons-outlined">menu</i></a>
+               <a id="sidenav-mobile-toggle-btn"
+                  class="sidenav-trigger btn-sidenav-toggle btn-floating btn-medium waves-effect waves-light hide-on-large-only theme-primary"
+                  href="#" data-target="slide-out">
+                   <i class="material-icons-outlined theme-on-primary-text">menu</i>
+               </a>
     </aside>
     <!-- END: SideNav-->
 

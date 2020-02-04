@@ -12,6 +12,7 @@
   --theme-color-font-muted: rgba(44, 47, 58, 0.85);
   --theme-color-font-muted2: rgba(44, 47, 58, 0.65);
   --theme-warning: #f44336;
+  --theme-on-primary: #fff;
 }
 [data-theme="dark"] {
   --theme-background: #1c1c1c;
@@ -43,27 +44,34 @@
 }
 [data-accent="lightBlue"] {
   --theme-primary: #03a9f4;
+  --theme-on-primary: #2c2f3a;
 }
 [data-accent="cyan"] {
   --theme-primary: #00bcd4;
+  --theme-on-primary: #2c2f3a;
 }
 [data-accent="teal"] {
   --theme-primary: #009688;
 }
 [data-accent="green"] {
   --theme-primary: #4caf50;
+  --theme-on-primary: #2c2f3a;
 }
 [data-accent="lightGreen"] {
   --theme-primary: #8bc34a;
+  --theme-on-primary: #2c2f3a;
 }
 [data-accent="lime"] {
   --theme-primary: #cddc39;
+  --theme-on-primary: #2c2f3a;
 }
 [data-accent="yellow"] {
   --theme-primary: #ffeb3b;
+  --theme-on-primary: #2c2f3a;
 }
 [data-accent="amber"] {
   --theme-primary: #ffc107;
+  --theme-on-primary: #2c2f3a;
 }
 [data-accent="deepOrange"] {
   --theme-primary: #ff5722;
@@ -73,6 +81,7 @@
 }
 [data-accent="grey"] {
   --theme-primary: #9e9e9e;
+  --theme-on-primary: #2c2f3a;
 }
 [data-accent="blueGrey"] {
   --theme-primary: #607d8b;
@@ -125,4 +134,10 @@
 }
 .theme-surface-transparent1 {
   background: rgba(var(--theme-surface-rgb), 0.9) !important;
+}
+.theme-on-primary {
+  background-color: var(--theme-on-primary) !important;
+}
+.theme-on-primary-text {
+  color: var(--theme-on-primary) !important;
 }

@@ -626,6 +626,15 @@ input:disabled {
     top: unset;
     bottom: 10px;
 }
+.sidenav-active-rounded .sidenav li > a.active > i {
+    color: var(--theme-on-primary) !important;
+}
+.sidenav-active-rounded .sidenav li > a.active > span {
+    color: var(--theme-on-primary) !important;
+}
+.sidenav-active-rounded .sidenav li > a.active {
+    min-width: 3.6rem;
+}
 
 .border-bottom-1 {
     border-bottom: 1px solid var(--theme-background);
@@ -730,7 +739,7 @@ span.badge.new {
 }
 
 .icon-btn:hover {
-    color: white !important;
+    color: var(--theme-on-primary) !important;
     background-color: var(--theme-primary);
     border-radius: 24px;
     padding: 5px;
