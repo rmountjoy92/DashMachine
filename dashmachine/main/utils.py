@@ -4,7 +4,8 @@ from shutil import copyfile
 from requests import get
 from configparser import ConfigParser
 from dashmachine.paths import dashmachine_folder, images_folder, root_folder
-from dashmachine.main.models import Apps, ApiCalls, TemplateApps, Groups
+from dashmachine.main.models import ApiCalls, TemplateApps, Groups
+from dashmachine.main.read_config import read_config
 from dashmachine.settings_system.models import Settings
 from dashmachine.user_system.models import User
 from dashmachine.user_system.utils import add_edit_user
@@ -17,158 +18,6 @@ def row2dict(row):
         d[column.name] = str(getattr(row, column.name))
 
     return d
-
-
-def read_config():
-    config = ConfigParser()
-    try:
-        config.read("dashmachine/user_data/config.ini")
-    except Exception as e:
-        return {"msg": f"Invalid Config: {e}."}
-
-    Apps.query.delete()
-    ApiCalls.query.delete()
-    Settings.query.delete()
-    Groups.query.delete()
-
-    for section in config.sections():
-
-        # Settings creation
-        if section == "Settings":
-            settings = Settings()
-            if "theme" in config["Settings"]:
-                settings.theme = config["Settings"]["theme"]
-            else:
-                settings.theme = "light"
-
-            if "accent" in config["Settings"]:
-                settings.accent = config["Settings"]["accent"]
-            else:
-                settings.accent = "orange"
-
-            if "background" in config["Settings"]:
-                settings.background = config["Settings"]["background"]
-            else:
-                settings.background = "None"
-
-            if "roles" in config["Settings"]:
-                settings.roles = config["Settings"]["roles"]
-            else:
-                settings.roles = "admin"
-
-            if "home_access_groups" in config["Settings"]:
-                settings.home_access_groups = config["Settings"]["home_access_groups"]
-            else:
-                settings.home_access_groups = "admin_only"
-
-            if "settings_access_groups" in config["Settings"]:
-                settings.settings_access_groups = config["Settings"][
-                    "settings_access_groups"
-                ]
-            else:
-                settings.settings_access_groups = "admin_only"
-
-            db.session.add(settings)
-            db.session.commit()
-
-        # Groups creation
-        elif "roles" in config[section]:
-            group = Groups()
-            group.name = section
-            group.roles = config[section]["roles"]
-            db.session.add(group)
-            db.session.commit()
-
-        # API call creation
-        elif "platform" in config[section]:
-            api_call = ApiCalls()
-            api_call.name = section
-            if "resource" in config[section]:
-                api_call.resource = config[section]["resource"]
-            else:
-                return {"msg": f"Invalid Config: {section} does not contain resource."}
-
-            if "method" in config[section]:
-                api_call.method = config[section]["method"]
-            else:
-                api_call.method = "GET"
-
-            if "payload" in config[section]:
-                api_call.payload = config[section]["payload"]
-            else:
-                api_call.payload = None
-
-            if "authentication" in config[section]:
-                api_call.authentication = config[section]["authentication"]
-            else:
-                api_call.authentication = None
-
-            if "username" in config[section]:
-                api_call.username = config[section]["username"]
-            else:
-                api_call.username = None
-
-            if "password" in config[section]:
-                api_call.password = config[section]["password"]
-            else:
-                api_call.password = None
-
-            if "value_template" in config[section]:
-                api_call.value_template = config[section]["value_template"]
-            else:
-                api_call.value_template = section
-
-            db.session.add(api_call)
-            db.session.commit()
-            continue
-
-        else:
-            # App creation
-            app = Apps()
-            app.name = section
-            if "prefix" in config[section]:
-                app.prefix = config[section]["prefix"]
-            else:
-                return {"msg": f"Invalid Config: {section} does not contain prefix."}
-
-            if "url" in config[section]:
-                app.url = config[section]["url"]
-            else:
-                return {"msg": f"Invalid Config: {section} does not contain url."}
-
-            if "icon" in config[section]:
-                app.icon = config[section]["icon"]
-            else:
-                app.icon = None
-
-            if "sidebar_icon" in config[section]:
-                app.sidebar_icon = config[section]["sidebar_icon"]
-            else:
-                app.sidebar_icon = app.icon
-
-            if "description" in config[section]:
-                app.description = config[section]["description"]
-            else:
-                app.description = None
-
-            if "open_in" in config[section]:
-                app.open_in = config[section]["open_in"]
-            else:
-                app.open_in = "this_tab"
-
-            if "data_template" in config[section]:
-                app.data_template = config[section]["data_template"]
-            else:
-                app.data_template = None
-
-            if "groups" in config[section]:
-                app.groups = config[section]["groups"]
-            else:
-                app.groups = None
-
-            db.session.add(app)
-            db.session.commit()
-    return {"msg": "success", "settings": row2dict(settings)}
 
 
 def read_template_apps():
@@ -248,6 +97,11 @@ def dashmachine_init():
             role=settings.roles.split(",")[0].strip(),
         )
 
+    users = User.query.all()
+    for user in users:
+        if not user.role:
+            user.role = "admin"
+
 
 def get_rest_data(template):
     while template and template.find("{{") > -1:
@@ -267,3 +121,25 @@ def do_api_call(key):
         exec(f"{key} = {value.json()}")
         value = str(eval(api_call.value_template))
     return value
+
+
+def check_groups(groups, current_user):
+    if current_user.is_anonymous:
+        current_user.role = "public_user"
+
+    if groups:
+        groups_list = groups.split(",")
+        roles_list = []
+        for group in groups_list:
+            group = Groups.query.filter_by(name=group.strip()).first()
+            for group_role in group.roles.split(","):
+                roles_list.append(group_role.strip())
+        if current_user.role in roles_list:
+            return True
+        else:
+            return False
+    else:
+        if current_user.role == "admin":
+            return True
+        else:
+            return False

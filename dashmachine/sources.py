@@ -1,8 +1,10 @@
 import os
 import random
 from jsmin import jsmin
+from flask_login import current_user
 from dashmachine import app
 from dashmachine.main.models import Apps
+from dashmachine.main.utils import check_groups
 from dashmachine.settings_system.models import Settings
 from dashmachine.paths import static_folder, backgrounds_images_folder
 from dashmachine.cssmin import cssmin
@@ -72,7 +74,14 @@ def process_css_sources(process_bundle=None, src=None, app_global=False):
 
 @app.context_processor
 def context_processor():
-    apps = Apps.query.all()
+    apps = []
+    apps_db = Apps.query.all()
+    for app_db in apps_db:
+        if not app_db.groups:
+            app_db.groups = None
+        if check_groups(app_db.groups, current_user):
+            apps.append(app_db)
+
     settings = Settings.query.first()
     if settings.background == "random":
         settings.background = (

@@ -13,6 +13,8 @@ root_folder = get_root_folder()
 
 dashmachine_folder = os.path.join(root_folder, "dashmachine")
 
+user_data_folder = os.path.join(dashmachine_folder, "user_data")
+
 static_folder = os.path.join(dashmachine_folder, "static")
 
 images_folder = os.path.join(static_folder, "images")

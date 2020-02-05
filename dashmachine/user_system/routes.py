@@ -18,9 +18,6 @@ user_system = Blueprint("user_system", __name__)
 def login():
     user = User.query.first()
 
-    if current_user.is_authenticated:
-        return redirect(url_for("main.home"))
-
     form = UserForm()
 
     if form.validate_on_submit():

@@ -5,7 +5,8 @@ from htmlmin.main import minify
 from flask import render_template, url_for, redirect, request, Blueprint, jsonify
 from flask_login import current_user
 from dashmachine.main.models import Files
-from dashmachine.main.utils import get_rest_data
+from dashmachine.main.utils import get_rest_data, public_route, check_groups
+from dashmachine.settings_system.models import Settings
 from dashmachine.paths import cache_folder
 from dashmachine import app, db
 
@@ -49,9 +50,13 @@ def check_valid_login():
 # ------------------------------------------------------------------------------
 # /home
 # ------------------------------------------------------------------------------
+@public_route
 @main.route("/")
 @main.route("/home", methods=["GET", "POST"])
 def home():
+    settings = Settings.query.first()
+    if not check_groups(settings.home_access_groups, current_user):
+        return redirect(url_for("user_system.login"))
     return render_template("main/home.html")
 
 

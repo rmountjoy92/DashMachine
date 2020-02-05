@@ -1,23 +1,35 @@
 import os
 from shutil import move
-from flask import render_template, request, Blueprint, jsonify
-from dashmachine.settings_system.forms import ConfigForm
+from flask_login import current_user
+from flask import render_template, request, Blueprint, jsonify, redirect, url_for
 from dashmachine.user_system.forms import UserForm
 from dashmachine.user_system.utils import add_edit_user
-from dashmachine.main.utils import read_config, row2dict
+from dashmachine.main.utils import row2dict, public_route, check_groups
+from dashmachine.main.read_config import read_config
 from dashmachine.main.models import Files, TemplateApps
-from dashmachine.paths import backgrounds_images_folder, icons_images_folder
-from dashmachine.version import version
+from dashmachine.settings_system.forms import ConfigForm
 from dashmachine.settings_system.utils import load_files_html
+from dashmachine.settings_system.models import Settings
+from dashmachine.paths import (
+    backgrounds_images_folder,
+    icons_images_folder,
+    user_data_folder,
+)
+from dashmachine.version import version
 
 settings_system = Blueprint("settings_system", __name__)
 
 
+@public_route
 @settings_system.route("/settings", methods=["GET"])
 def settings():
+    settings_db = Settings.query.first()
+    if not check_groups(settings_db.settings_access_groups, current_user):
+        return redirect(url_for("main.home"))
+
     config_form = ConfigForm()
     user_form = UserForm()
-    with open("dashmachine/user_data/config.ini", "r") as config_file:
+    with open(os.path.join(user_data_folder, "config.ini"), "r") as config_file:
         config_form.config.data = config_file.read()
     files_html = load_files_html()
     template_apps = []
@@ -36,7 +48,7 @@ def settings():
 
 @settings_system.route("/settings/save_config", methods=["POST"])
 def save_config():
-    with open("dashmachine/user_data/config.ini", "w") as config_file:
+    with open(os.path.join(user_data_folder, "config.ini"), "w") as config_file:
         config_file.write(request.form.get("config"))
     msg = read_config()
     return jsonify(data=msg)
