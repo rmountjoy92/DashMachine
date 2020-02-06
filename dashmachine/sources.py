@@ -84,10 +84,13 @@ def context_processor():
 
     settings = Settings.query.first()
     if settings.background == "random":
-        settings.background = (
-            f"static/images/backgrounds/"
-            f"{random.choice(os.listdir(backgrounds_images_folder))}"
-        )
+        if len(os.listdir(backgrounds_images_folder)) < 1:
+            settings.background = None
+        else:
+            settings.background = (
+                f"static/images/backgrounds/"
+                f"{random.choice(os.listdir(backgrounds_images_folder))}"
+            )
     return dict(
         test_key="test",
         process_js_sources=process_js_sources,
