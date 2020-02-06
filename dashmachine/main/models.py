@@ -40,18 +40,6 @@ class TemplateApps(db.Model):
     open_in = db.Column(db.String())
 
 
-class ApiCalls(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String())
-    resource = db.Column(db.String())
-    method = db.Column(db.String())
-    payload = db.Column(db.String())
-    authentication = db.Column(db.String())
-    username = db.Column(db.String())
-    password = db.Column(db.String())
-    value_template = db.Column(db.String())
-
-
 class DataSources(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String())

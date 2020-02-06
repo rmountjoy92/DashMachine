@@ -5,7 +5,7 @@ from shutil import copyfile
 from requests import get
 from configparser import ConfigParser
 from dashmachine.paths import dashmachine_folder, images_folder, root_folder
-from dashmachine.main.models import ApiCalls, TemplateApps, Groups
+from dashmachine.main.models import TemplateApps, Groups
 from dashmachine.main.read_config import read_config
 from dashmachine.settings_system.models import Settings
 from dashmachine.user_system.models import User
@@ -102,26 +102,6 @@ def dashmachine_init():
     for user in users:
         if not user.role:
             user.role = "admin"
-
-
-def get_rest_data(template):
-    while template and template.find("{{") > -1:
-        start_braces = template.find("{{") + 2
-        end_braces = template.find("}}")
-        key = template[start_braces:end_braces].strip()
-        key_w_braces = template[start_braces - 2 : end_braces + 2]
-        value = do_api_call(key)
-        template = template.replace(key_w_braces, value)
-    return template
-
-
-def do_api_call(key):
-    api_call = ApiCalls.query.filter_by(name=key).first()
-    if api_call.method.upper() == "GET":
-        value = get(api_call.resource)
-        exec(f"{key} = {value.json()}")
-        value = str(eval(api_call.value_template))
-    return value
 
 
 def check_groups(groups, current_user):

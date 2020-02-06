@@ -23,20 +23,7 @@ $( document ).ready(function() {
             data: {id: el.attr('data-id')},
             success: function(data){
                 el.closest('.col').find('.data-source-loading').addClass('hide');
-                el.text(data);
-            }
-        });
-    });
-
-    $(".data-template").each(function(e) {
-        var el = $(this);
-        $.ajax({
-            url: el.attr('data-url'),
-            type: 'GET',
-            data: {template: el.text()},
-            success: function(data){
-                el.text(data);
-                el.removeClass('hide');
+                el.html(data);
             }
         });
     });

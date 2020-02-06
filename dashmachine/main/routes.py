@@ -6,7 +6,6 @@ from flask import render_template, url_for, redirect, request, Blueprint, jsonif
 from flask_login import current_user
 from dashmachine.main.models import Files, Apps, DataSources
 from dashmachine.main.utils import (
-    get_rest_data,
     public_route,
     check_groups,
     get_data_source,
@@ -69,12 +68,6 @@ def home():
 def app_view(app_id):
     app_db = Apps.query.filter_by(id=app_id).first()
     return render_template("main/app-view.html", url=f"{app_db.prefix}{app_db.url}")
-
-
-@main.route("/load_rest_data", methods=["GET"])
-def load_rest_data():
-    data_template = get_rest_data(request.args.get("template"))
-    return data_template
 
 
 @main.route("/load_data_source", methods=["GET"])
