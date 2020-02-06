@@ -33,7 +33,7 @@
 
                     {% for app in apps %}
                         {% if app.open_in == 'iframe' %}
-                            <a href="{{ url_for('main.app_view', url=app.url) }}" class="app-a" data-name="{{ app.name }}" data-description="{{ app.description }}">
+                            <a href="{{ url_for('main.app_view', app_id=app.id) }}" class="app-a" data-name="{{ app.name }}" data-description="{{ app.description }}">
                         {% elif app.open_in == 'this_tab' %}
                             <a href="{{ app.prefix }}{{ app.url }}" class="app-a" data-name="{{ app.name }}" data-description="{{ app.description }}">
                         {% elif app.open_in == "new_tab" %}

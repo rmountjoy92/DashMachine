@@ -4,7 +4,7 @@ from secrets import token_hex
 from htmlmin.main import minify
 from flask import render_template, url_for, redirect, request, Blueprint, jsonify
 from flask_login import current_user
-from dashmachine.main.models import Files
+from dashmachine.main.models import Files, Apps
 from dashmachine.main.utils import get_rest_data, public_route, check_groups
 from dashmachine.settings_system.models import Settings
 from dashmachine.paths import cache_folder
@@ -60,9 +60,10 @@ def home():
     return render_template("main/home.html")
 
 
-@main.route("/app_view?<url>", methods=["GET"])
-def app_view(url):
-    return render_template("main/app-view.html", url=f"https://{url}")
+@main.route("/app_view?<app_id>", methods=["GET"])
+def app_view(app_id):
+    app_db = Apps.query.filter_by(id=app_id).first()
+    return render_template("main/app-view.html", url=f"{app_db.prefix}{app_db.url}")
 
 
 @main.route("/load_rest_data", methods=["GET"])

@@ -37,7 +37,7 @@
             {% for app in apps %}
                 <li class="bold">
                     {% if app.open_in == 'iframe' %}
-                        <a id="dashboard-sidenav" class="waves-effect waves-cyan" href="{{ url_for('main.app_view', url=app.url) }}">
+                        <a id="dashboard-sidenav" class="waves-effect waves-cyan" href="{{ url_for('main.app_view', app_id=app.id) }}">
                     {% elif app.open_in == "this_tab" %}
                         <a id="dashboard-sidenav" class="waves-effect waves-cyan" href="{{ app.prefix }}{{ app.url }}">
                     {% elif app.open_in == "new_tab" %}
