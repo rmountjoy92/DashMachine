@@ -1,5 +1,6 @@
 import os
 import subprocess
+import importlib
 from shutil import copyfile
 from requests import get
 from configparser import ConfigParser
@@ -143,3 +144,15 @@ def check_groups(groups, current_user):
             return True
         else:
             return False
+
+
+def get_data_source(data_source):
+    data_source_args = []
+    for arg in data_source.args:
+        data_source_args.append(row2dict(arg))
+    data_source = row2dict(data_source)
+    module = importlib.import_module(
+        f"dashmachine.platform.{data_source['platform']}", "."
+    )
+    platform = module.Platform(data_source, data_source_args)
+    return platform.process()

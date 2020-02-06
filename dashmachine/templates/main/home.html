@@ -1,5 +1,5 @@
 {% extends "main/layout.html" %}
-{% from 'global_macros.html' import data %}
+{% from 'global_macros.html' import data, preload_circle %}
 
 {% block page_vendor_css %}
 {% endblock page_vendor_css %}
@@ -42,16 +42,20 @@
                     <div class="col s12 m6 l3">
                         <div class="card theme-surface-transparent app-card">
                             <div class="card-content center-align scrollbar" style="max-height: 118px; min-height: 118px; scrollbar-width: none;">
-                                {% if app.data_template %}
+                                {% if app.data_sources.count() > 0 %}
                                     <div class="row">
                                         <div class="col s6 center-align">
                                             <img src="{{ app.icon }}" height="64px">
                                         </div>
 
                                         <div class="col s6 left-align">
-                                            <p class="data-template hide theme-text" data-url="{{ url_for('main.load_rest_data') }}" style="white-space: pre-line">
-                                                {{ app.data_template|safe }}
-                                            </p>
+                                            <span class="data-source-loading">{{ preload_circle() }}</span>
+                                            {% for data_source in app.data_sources %}
+                                                <p class="data-source-container"
+                                                   data-url="{{ url_for('main.load_data_source') }}"
+                                                   data-id="{{ data_source.id }}">
+                                                </p>
+                                            {% endfor %}
                                         </div>
                                     </div>
                                 {% else %}

@@ -4,8 +4,13 @@ from secrets import token_hex
 from htmlmin.main import minify
 from flask import render_template, url_for, redirect, request, Blueprint, jsonify
 from flask_login import current_user
-from dashmachine.main.models import Files, Apps
-from dashmachine.main.utils import get_rest_data, public_route, check_groups
+from dashmachine.main.models import Files, Apps, DataSources
+from dashmachine.main.utils import (
+    get_rest_data,
+    public_route,
+    check_groups,
+    get_data_source,
+)
 from dashmachine.settings_system.models import Settings
 from dashmachine.paths import cache_folder
 from dashmachine import app, db
@@ -70,6 +75,13 @@ def app_view(app_id):
 def load_rest_data():
     data_template = get_rest_data(request.args.get("template"))
     return data_template
+
+
+@main.route("/load_data_source", methods=["GET"])
+def load_data_source():
+    data_source = DataSources.query.filter_by(id=request.args.get("id")).first()
+    data = get_data_source(data_source)
+    return data
 
 
 # ------------------------------------------------------------------------------

@@ -15,6 +15,19 @@ $( document ).ready(function() {
         });
     });
 
+    $(".data-source-container").each(function(e) {
+        var el = $(this);
+        $.ajax({
+            url: el.attr('data-url'),
+            type: 'GET',
+            data: {id: el.attr('data-id')},
+            success: function(data){
+                el.closest('.col').find('.data-source-loading').addClass('hide');
+                el.text(data);
+            }
+        });
+    });
+
     $(".data-template").each(function(e) {
         var el = $(this);
         $.ajax({

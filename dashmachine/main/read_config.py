@@ -1,6 +1,6 @@
 import os
 from configparser import ConfigParser
-from dashmachine.main.models import Apps, ApiCalls, Groups
+from dashmachine.main.models import Apps, ApiCalls, Groups, DataSources, DataSourcesArgs
 from dashmachine.settings_system.models import Settings
 from dashmachine.paths import user_data_folder
 from dashmachine import db
@@ -21,6 +21,11 @@ def read_config():
     except Exception as e:
         return {"msg": f"Invalid Config: {e}."}
 
+    ds_list = DataSources.query.all()
+    for ds in ds_list:
+        ds.apps.clear()
+    DataSources.query.delete()
+    DataSourcesArgs.query.delete()
     Apps.query.delete()
     ApiCalls.query.delete()
     Settings.query.delete()
@@ -80,48 +85,21 @@ def read_config():
             db.session.add(group)
             db.session.commit()
 
-        # API call creation
+        # Data source creation
         elif "platform" in config[section]:
-            api_call = ApiCalls()
-            api_call.name = section
-            if "resource" in config[section]:
-                api_call.resource = config[section]["resource"]
-            else:
-                return {"msg": f"Invalid Config: {section} does not contain resource."}
-
-            if "method" in config[section]:
-                api_call.method = config[section]["method"]
-            else:
-                api_call.method = "GET"
-
-            if "payload" in config[section]:
-                api_call.payload = config[section]["payload"]
-            else:
-                api_call.payload = None
-
-            if "authentication" in config[section]:
-                api_call.authentication = config[section]["authentication"]
-            else:
-                api_call.authentication = None
-
-            if "username" in config[section]:
-                api_call.username = config[section]["username"]
-            else:
-                api_call.username = None
-
-            if "password" in config[section]:
-                api_call.password = config[section]["password"]
-            else:
-                api_call.password = None
-
-            if "value_template" in config[section]:
-                api_call.value_template = config[section]["value_template"]
-            else:
-                api_call.value_template = section
-
-            db.session.add(api_call)
+            data_source = DataSources()
+            data_source.name = section
+            data_source.platform = config[section]["platform"]
+            db.session.add(data_source)
             db.session.commit()
-            continue
+            for key, value in config[section].items():
+                if key not in ["name", "platform"]:
+                    arg = DataSourcesArgs()
+                    arg.key = key
+                    arg.value = value
+                    arg.data_source = data_source
+                    db.session.add(arg)
+                    db.session.commit()
 
         else:
             # App creation
@@ -157,11 +135,6 @@ def read_config():
             else:
                 app.open_in = "this_tab"
 
-            if "data_template" in config[section]:
-                app.data_template = config[section]["data_template"]
-            else:
-                app.data_template = None
-
             if "groups" in config[section]:
                 app.groups = config[section]["groups"]
             else:
@@ -169,6 +142,18 @@ def read_config():
 
             db.session.add(app)
             db.session.commit()
+
+            if "data_sources" in config[section]:
+                for config_ds in config[section]["data_sources"].split(","):
+                    db_ds = DataSources.query.filter_by(name=config_ds.strip()).first()
+                    if db_ds:
+                        app.data_sources.append(db_ds)
+                        db.session.merge(app)
+                        db.session.commit()
+                    else:
+                        return {
+                            "msg": f"Invalid Config: {section} has a data_source variable that doesn't exist."
+                        }
 
     group = Groups.query.filter_by(name="admin_only").first()
     if not group:
