@@ -1,4 +1,5 @@
-from requests import get
+import platform
+import subprocess
 
 
 class Platform:
@@ -8,16 +9,13 @@ class Platform:
             self.__dict__[key] = value
 
     def process(self):
-        try:
-            value = get(self.resource)
-        except Exception:
-            icon_class = "theme-failure-text"
+        param = "-n" if platform.system().lower() == "windows" else "-c"
+        command = ["ping", param, "1", self.resource]
+        up = subprocess.call(command) == 0
 
-        if 599 >= value.status_code >= 400:
-            icon_class = "theme-failure-text"
-        if 399 >= value.status_code >= 300:
-            icon_class = "theme-warning-text"
-        if 299 >= value.status_code >= 100:
+        if up is True:
             icon_class = "theme-success-text"
+        else:
+            icon_class = "theme-failure-text"
 
         return f"<i class='material-icons right {icon_class}'>fiber_manual_record </i>"
