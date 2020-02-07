@@ -1,0 +1,88 @@
+{% macro UserTab() %}
+    <div id="user-modal" class="modal">
+        <div class="modal-content">
+            <div class="row mt-2">
+                <div class="col s12">
+                    <form id="edit-user-form">
+                        {{ user_form.hidden_tag() }}
+
+{#                        {{ select(#}
+{#                        id='user-form-role',#}
+{#                        form_obj=user_form.role,#}
+{#                        size="s12",#}
+{#                        label='Role'#}
+{#                        ) }}#}
+
+                        {{ input(
+                        label="Username",
+                        id="user-form-username",
+                        size="s12",
+                        form_obj=user_form.username
+                        ) }}
+
+                        {{ input(
+                        label="Password",
+                        id="user-form-password",
+                        form_obj=user_form.password,
+                        size="s12"
+                        ) }}
+
+                        {{ input(
+                        label="Confirm Password",
+                        id="user-form-confirm_password",
+                        form_obj=user_form.confirm_password,
+                        required='required',
+                        size="s12"
+                        ) }}
+
+                        {{ user_form.id(class="hide", id="user-form-id") }}
+
+                    </form>
+
+                    {{ button(
+                    icon="save",
+                    float="left",
+                    id="save-user-btn",
+                    class="mb-2",
+                    data={'url': url_for('settings_system.edit_user')},
+                    text="save"
+                    ) }}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col s12">
+            <h5>Users
+                <a href="#user-modal" class="modal-trigger">
+                    <i class="material-icons-outlined theme-secondary-text icon-btn ml-2 toggle-config-help" style="position: relative; top: 4px;">add</i>
+                </a>
+            </h5>
+            {% for user in users %}
+                <div class="card theme-surface-1">
+                    <div class="card-content">
+                        <span style="font-size: 1.3rem">
+                            {{ user.username }}
+                            <span class="theme-secondary-text">{{ user.role }}</span>
+                        </span>
+                        <span class="right pb-2">
+                            <i class="material-icons-outlined icon-btn edit-user-btn"
+                               data-role="{{ user.role }}"
+                               data-id="{{ user.id }}"
+                               data-username="{{ user.username }}">edit</i>
+                            <i class="material-icons-outlined icon-btn">close</i>
+                        </span>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+    <div class="row mt-4">
+        <h5>DashMachine</h5>
+        <p class="mb-2">version: {{ version }}</p>
+    </div>
+{% endmacro %}

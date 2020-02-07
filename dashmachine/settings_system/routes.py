@@ -4,6 +4,7 @@ from flask_login import current_user
 from flask import render_template, request, Blueprint, jsonify, redirect, url_for
 from dashmachine.user_system.forms import UserForm
 from dashmachine.user_system.utils import add_edit_user
+from dashmachine.user_system.models import User
 from dashmachine.main.utils import row2dict, public_route, check_groups
 from dashmachine.main.read_config import read_config
 from dashmachine.main.models import Files, TemplateApps
@@ -29,6 +30,7 @@ def settings():
 
     config_form = ConfigForm()
     user_form = UserForm()
+    # user_form.role.choices = [(role, role) for role in settings_db.roles.split(",")]
     with open(os.path.join(user_data_folder, "config.ini"), "r") as config_file:
         config_form.config.data = config_file.read()
     files_html = load_files_html()
@@ -36,6 +38,8 @@ def settings():
     t_apps = TemplateApps.query.all()
     for t_app in t_apps:
         template_apps.append(f"{t_app.name}&&{t_app.icon}")
+
+    users = User.query.all()
     return render_template(
         "settings_system/settings.html",
         config_form=config_form,
@@ -43,6 +47,7 @@ def settings():
         user_form=user_form,
         template_apps=",".join(template_apps),
         version=version,
+        users=users,
     )
 
 
@@ -93,7 +98,13 @@ def edit_user():
     if form.validate_on_submit():
         if form.password.data != form.confirm_password.data:
             return jsonify(data={"err": "Passwords don't match"})
-        add_edit_user(form.username.data, form.password.data)
+        if not form.id.data:
+            new = True
+        else:
+            new = False
+        add_edit_user(
+            form.username.data, form.password.data, user_id=form.id.data, new=new
+        )
     else:
         err_str = ""
         for fieldName, errorMessages in form.errors.items():

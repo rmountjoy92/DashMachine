@@ -1,7 +1,8 @@
 {% extends "main/layout.html" %}
-{% from 'global_macros.html' import input, button %}
+{% from 'global_macros.html' import input, button, select %}
 {% from 'main/tcdrop.html' import tcdrop %}
 {% from 'settings_system/config-readme.html' import ConfigReadme %}
+{% from 'settings_system/user.html' import UserTab with context %}
 {% block page_vendor_css %}
 {% endblock page_vendor_css %}
 
@@ -133,51 +134,7 @@
                                 </div>
 
                                 <div id="user" class="col s12">
-                                    <div class="row">
-                                        <h5>User</h5>
-
-                                        <form id="edit-user-form">
-                                            {{ user_form.hidden_tag() }}
-
-                                            {{ input(
-                                            label="Username",
-                                            id="user-form-username",
-                                            size="s12",
-                                            form_obj=user_form.username,
-                                            val=current_user.username
-                                            ) }}
-
-                                            {{ input(
-                                            label="Password",
-                                            id="user-form-password",
-                                            form_obj=user_form.password,
-                                            size="s12"
-                                            ) }}
-
-                                            {{ input(
-                                            label="Confirm Password",
-                                            id="user-form-confirm_password",
-                                            form_obj=user_form.confirm_password,
-                                            required='required',
-                                            size="s12"
-                                            ) }}
-                                        </form>
-
-                                        {{ button(
-                                        icon="save",
-                                        float="left",
-                                        id="edit-user-btn",
-                                        data={'url': url_for('settings_system.edit_user')},
-                                        text="save"
-                                        ) }}
-                                    </div>
-
-                                    <div class="row mt-4">
-                                        <h5>DashMachine</h5>
-                                        <p class="mb-2">version: {{ version }}</p>
-
-                                    </div>
-
+                                    {{ UserTab() }}
                                 </div>
 
                             </div>

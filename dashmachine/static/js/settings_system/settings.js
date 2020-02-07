@@ -4,6 +4,11 @@ d.className += " active theme-primary";
 $( document ).ready(function() {
     initTCdrop('#images-tcdrop');
     $("#config-wiki-modal").modal();
+    $("#user-modal").modal({
+        onCloseEnd: function () {
+            $("#edit-user-form").trigger('reset');
+        }
+    });
 
     $("#save-config-btn").on('click', function(e) {
         $.ajax({
@@ -58,7 +63,7 @@ $( document ).ready(function() {
         }
     });
 
-    $("#edit-user-btn").on('click', function(e) {
+    $("#save-user-btn").on('click', function(e) {
        $.ajax({
            url: $(this).attr('data-url'),
            type: 'POST',
@@ -73,6 +78,14 @@ $( document ).ready(function() {
                }
            }
        });
+    });
+
+    $(".edit-user-btn").on('click', function(e) {
+        $("#user-modal").modal('open');
+        $("#user-form-username").val($(this).attr("data-username"));
+        $("#user-form-role").val($(this).attr("data-role"));
+        $("#user-form-id").val($(this).attr("data-id"));
+        M.updateTextFields();
     });
 
 });
