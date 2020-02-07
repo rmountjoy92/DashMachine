@@ -20,7 +20,7 @@ $( document ).ready(function() {
                     M.toast({html: 'Config applied successfully'});
                     location.reload(true);
                 } else {
-                    M.toast({html: data.data.msg, classes: "theme-warning"});
+                    M.toast({html: data.data.msg, classes: "theme-failure"});
                 }
             }
         });
@@ -70,7 +70,7 @@ $( document ).ready(function() {
            data: $("#edit-user-form").serialize(),
            success: function(data){
                if (data.data.err !== 'success'){
-                   M.toast({html: data.data.err, classes: 'theme-warning'});
+                   M.toast({html: data.data.err, classes: 'theme-failure'});
                } else {
                    $("#user-form-password").val('');
                    $("#user-form-confirm_password").val('');

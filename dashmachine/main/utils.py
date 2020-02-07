@@ -127,9 +127,10 @@ def check_groups(groups, current_user):
 
 
 def get_data_source(data_source):
-    data_source_args = []
+    data_source_args = {}
     for arg in data_source.args:
-        data_source_args.append(row2dict(arg))
+        arg = row2dict(arg)
+        data_source_args[arg.get("key")] = arg.get("value")
     data_source = row2dict(data_source)
     module = importlib.import_module(
         f"dashmachine.platform.{data_source['platform']}", "."
