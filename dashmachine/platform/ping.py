@@ -2,9 +2,9 @@ from requests import get
 
 
 class Platform:
-    def __init__(self, data_source, data_source_args):
+    def __init__(self, *args, **kwargs):
         # parse the user's options from the config entries
-        for key, value in data_source_args.items():
+        for key, value in kwargs.items():
             self.__dict__[key] = value
 
     def process(self):

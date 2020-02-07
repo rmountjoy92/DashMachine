@@ -135,5 +135,5 @@ def get_data_source(data_source):
     module = importlib.import_module(
         f"dashmachine.platform.{data_source['platform']}", "."
     )
-    platform = module.Platform(data_source, data_source_args)
+    platform = module.Platform(data_source, **data_source_args)
     return platform.process()
