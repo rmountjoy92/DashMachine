@@ -98,6 +98,8 @@ def get_app_template():
 @settings_system.route("/settings/edit_user", methods=["POST"])
 def edit_user():
     form = UserForm()
+    settings_db = Settings.query.first()
+    form.role.choices += [(role, role) for role in settings_db.roles.split(",")]
     if form.validate_on_submit():
         if form.password.data != form.confirm_password.data:
             return jsonify(data={"err": "Passwords don't match"})
