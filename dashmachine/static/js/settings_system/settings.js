@@ -3,7 +3,6 @@ d.className += " active theme-primary";
 
 $( document ).ready(function() {
     initTCdrop('#images-tcdrop');
-    $("#config-wiki-modal").modal();
     $("#user-modal").modal({
         onCloseEnd: function () {
             $("#edit-user-form").trigger('reset');

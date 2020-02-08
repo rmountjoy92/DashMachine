@@ -16,3 +16,39 @@
     border-top-right-radius: 0px;
     background: var(--theme-surface-1);
 }
+
+#config-readme h5 {
+    color: var(--theme-primary);
+    margin-top: 5%;
+}
+#config-readme h4 {
+    color: var(--theme-color-font-muted);
+    margin-top: 5%;
+}
+#configini-readme {
+    margin-top: 2% !important;
+}
+#config-readme code {
+    -webkit-touch-callout: all;
+    -webkit-user-select: all;
+    -khtml-user-select: all;
+    -moz-user-select: all;
+    -ms-user-select: all;
+    user-select: all;
+    cursor: text;
+}
+#config-readme th {
+    color: var(--theme-primary);
+}
+#config-readme td {
+    -webkit-touch-callout: text !important;
+    -webkit-user-select: text !important;
+    -khtml-user-select: text !important;
+    -moz-user-select: text !important;
+    -ms-user-select: text !important;
+    user-select: text !important;
+    cursor: text;
+}
+#config-readme strong {
+    font-weight: 900;
+}

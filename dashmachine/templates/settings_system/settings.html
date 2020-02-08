@@ -1,7 +1,6 @@
 {% extends "main/layout.html" %}
 {% from 'global_macros.html' import input, button, select %}
 {% from 'main/tcdrop.html' import tcdrop %}
-{% from 'settings_system/config-readme.html' import ConfigReadme %}
 {% from 'settings_system/user.html' import UserTab with context %}
 {% block page_vendor_css %}
 {% endblock page_vendor_css %}
@@ -21,13 +20,6 @@
 {% endblock page_lvl_css %}
 
 {% block content %}
-    <div id="config-wiki-modal" class="modal full-height-modal">
-        <div class="modal-content">
-            <div class="row">
-                {{ ConfigReadme() }}
-            </div>
-        </div>
-    </div>
 
     <div id="main" class="main-full">
         <div class="container">
@@ -37,11 +29,7 @@
                         <div class="card-content">
                                 <div class="row">
                                     <div class="col s12">
-                                        <h5>Config
-                                            <a href="#config-wiki-modal" class="modal-trigger">
-                                                <i class="material-icons-outlined theme-secondary-text icon-btn ml-2 toggle-config-help" style="position: relative; top: 4px;">info</i>
-                                            </a>
-                                        </h5>
+                                        <h5>Config.ini</h5>
                                         {{ button(
                                         icon="save",
                                         id="save-config-btn",
@@ -73,6 +61,10 @@
                             <div class="row">
                                 <div class="col s12 mb-2">
                                     <ul class="tabs tabs-fixed-width">
+                                        <li class="tab col s3"><a href="#config-readme">
+                                            <i class="material-icons-outlined">info</i>
+                                        </a></li>
+
                                         <li class="tab col s3"><a href="#images">
                                             <i class="material-icons-outlined">photo_library</i>
                                         </a></li>
@@ -131,6 +123,11 @@
                                             <div id="template-div" class="selectable-all code"></div>
                                         </div>
                                     </div>
+
+                                </div>
+
+                                <div id="config-readme" class="col s12">
+                                    {{ config_readme|safe }}
                                 </div>
 
                                 <div id="user" class="col s12">

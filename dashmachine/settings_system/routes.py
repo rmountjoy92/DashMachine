@@ -1,5 +1,6 @@
 import os
 from shutil import move
+from markdown2 import markdown_path
 from flask_login import current_user
 from flask import render_template, request, Blueprint, jsonify, redirect, url_for
 from dashmachine.user_system.forms import UserForm
@@ -15,6 +16,7 @@ from dashmachine.paths import (
     backgrounds_images_folder,
     icons_images_folder,
     user_data_folder,
+    root_folder,
 )
 from dashmachine.version import version
 
@@ -39,6 +41,10 @@ def settings():
         template_apps.append(f"{t_app.name}&&{t_app.icon}")
 
     users = User.query.all()
+    config_readme = markdown_path(
+        os.path.join(root_folder, "config_readme.md"),
+        extras=["tables", "fenced-code-blocks", "break-on-newline", "header-ids"],
+    )
     return render_template(
         "settings_system/settings.html",
         config_form=config_form,
@@ -47,6 +53,7 @@ def settings():
         template_apps=",".join(template_apps),
         version=version,
         users=users,
+        config_readme=config_readme,
     )
 
 
