@@ -11,7 +11,7 @@ class UserForm(FlaskForm):
 
     password = PasswordField(validators=[DataRequired(), Length(min=8, max=120)])
 
-    role = SelectField(choices=[(role, role) for role in settings_db.roles.split(",")])
+    role = SelectField(choices=[])
 
     id = StringField()
 

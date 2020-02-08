@@ -31,6 +31,7 @@ def settings():
 
     config_form = ConfigForm()
     user_form = UserForm()
+    user_form.role.choices += [(role, role) for role in settings_db.roles.split(",")]
     with open(os.path.join(user_data_folder, "config.ini"), "r") as config_file:
         config_form.config.data = config_file.read()
     files_html = load_files_html()
