@@ -1,6 +1,5 @@
 import os
 from shutil import move
-from markdown2 import markdown_path
 from flask_login import current_user
 from flask import render_template, request, Blueprint, jsonify, redirect, url_for
 from dashmachine.user_system.forms import UserForm
@@ -10,13 +9,12 @@ from dashmachine.main.utils import row2dict, public_route, check_groups
 from dashmachine.main.read_config import read_config
 from dashmachine.main.models import Files, TemplateApps
 from dashmachine.settings_system.forms import ConfigForm
-from dashmachine.settings_system.utils import load_files_html
+from dashmachine.settings_system.utils import load_files_html, get_config_html
 from dashmachine.settings_system.models import Settings
 from dashmachine.paths import (
     backgrounds_images_folder,
     icons_images_folder,
     user_data_folder,
-    root_folder,
 )
 from dashmachine.version import version
 
@@ -41,16 +39,7 @@ def settings():
         template_apps.append(f"{t_app.name}&&{t_app.icon}")
 
     users = User.query.all()
-    config_readme = markdown_path(
-        os.path.join(root_folder, "config_readme.md"),
-        extras=[
-            "tables",
-            "fenced-code-blocks",
-            "break-on-newline",
-            "header-ids",
-            "code-friendly",
-        ],
-    )
+    config_readme = get_config_html()
     return render_template(
         "settings_system/settings.html",
         config_form=config_form,
@@ -123,4 +112,6 @@ def edit_user():
             for err in errorMessages:
                 err_str += f"{err} "
         return jsonify(data={"err": err_str})
-    return jsonify(data={"err": "success"})
+    users = User.query.all()
+    html = render_template("settings_system/user.html", users=users)
+    return jsonify(data={"err": "success", "html": html})

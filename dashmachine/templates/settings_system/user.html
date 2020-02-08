@@ -60,23 +60,11 @@
                     <i class="material-icons-outlined theme-secondary-text icon-btn ml-2 toggle-config-help" style="position: relative; top: 4px;">add</i>
                 </a>
             </h5>
-            {% for user in users %}
-                <div class="card theme-surface-1">
-                    <div class="card-content">
-                        <span style="font-size: 1.3rem">
-                            {{ user.username }}
-                            <span class="theme-secondary-text">{{ user.role }}</span>
-                        </span>
-                        <span class="right pb-2">
-                            <i class="material-icons-outlined icon-btn edit-user-btn"
-                               data-role="{{ user.role }}"
-                               data-id="{{ user.id }}"
-                               data-username="{{ user.username }}">edit</i>
-                            <i class="material-icons-outlined icon-btn">close</i>
-                        </span>
-                    </div>
-                </div>
-            {% endfor %}
+
+            <div class="users-div">
+                {{ Users(users) }}
+            </div>
+
         </div>
     </div>
 
@@ -86,4 +74,25 @@
         <p class="mb-2">version: {{ version }}</p>
     </div>
 {% endmacro %}
-{{UserTab()}}
+
+{% macro Users(users) %}
+    {% for user in users %}
+        <div class="card theme-surface-1">
+            <div class="card-content">
+                <span style="font-size: 1.3rem">
+                    {{ user.username }}
+                    <span class="theme-secondary-text">{{ user.role }}</span>
+                </span>
+                <span class="right pb-2">
+                    <i class="material-icons-outlined icon-btn edit-user-btn"
+                       data-role="{{ user.role }}"
+                       data-id="{{ user.id }}"
+                       data-username="{{ user.username }}">edit</i>
+                    <i class="material-icons-outlined icon-btn">close</i>
+                </span>
+            </div>
+        </div>
+    {% endfor %}
+{% endmacro %}
+
+{{Users(users)}}

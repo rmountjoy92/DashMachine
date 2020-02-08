@@ -71,9 +71,10 @@ $( document ).ready(function() {
                if (data.data.err !== 'success'){
                    M.toast({html: data.data.err, classes: 'theme-failure'});
                } else {
-                   $("#user-form-password").val('');
-                   $("#user-form-confirm_password").val('');
-                   M.toast({html: 'User updated'});
+                   $("#users-div").empty();
+                   $("#users-div").append(data.data.html);
+                   $("#edit-user-modal").modal('close');
+                   M.toast({html: 'User saved'});
                }
            }
        });
