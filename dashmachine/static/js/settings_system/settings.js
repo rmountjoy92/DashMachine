@@ -3,7 +3,11 @@ d.className += " active theme-primary";
 
 $( document ).ready(function() {
     initTCdrop('#images-tcdrop');
-    $("#config-wiki-modal").modal();
+    $("#user-modal").modal({
+        onCloseEnd: function () {
+            $("#edit-user-form").trigger('reset');
+        }
+    });
 
     $("#save-config-btn").on('click', function(e) {
         $.ajax({
@@ -15,7 +19,7 @@ $( document ).ready(function() {
                     M.toast({html: 'Config applied successfully'});
                     location.reload(true);
                 } else {
-                    M.toast({html: data.data.msg, classes: "theme-warning"});
+                    M.toast({html: data.data.msg, classes: "theme-failure"});
                 }
             }
         });
@@ -58,21 +62,22 @@ $( document ).ready(function() {
         }
     });
 
-    $("#edit-user-btn").on('click', function(e) {
-       $.ajax({
-           url: $(this).attr('data-url'),
-           type: 'POST',
-           data: $("#edit-user-form").serialize(),
-           success: function(data){
-               if (data.data.err !== 'success'){
-                   M.toast({html: data.data.err, classes: 'theme-warning'});
-               } else {
-                   $("#user-form-password").val('');
-                   $("#user-form-confirm_password").val('');
-                   M.toast({html: 'User updated'});
-               }
-           }
-       });
+    $("#save-user-btn").on('click', function(e) {
+        $.ajax({
+            url: $(this).attr('data-url'),
+            type: 'POST',
+            data: $("#edit-user-form").serialize(),
+            success: function(data){
+                if (data.data.err !== 'success'){
+                    M.toast({html: data.data.err, classes: 'theme-failure'});
+                } else {
+                    $("#users-div").empty();
+                    $("#users-div").append(data.data.html);
+                    $("#user-modal").modal('close');
+                    M.toast({html: 'User saved'});
+                }
+            }
+        });
     });
 
 });

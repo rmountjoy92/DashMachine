@@ -1,5 +1,11 @@
 from dashmachine import db
 
+rel_app_data_source = db.Table(
+    "rel_app_data_source",
+    db.Column("data_source_id", db.Integer, db.ForeignKey("data_sources.id")),
+    db.Column("app_id", db.Integer, db.ForeignKey("apps.id")),
+)
+
 
 class Files(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -20,6 +26,8 @@ class Apps(db.Model):
     description = db.Column(db.String())
     open_in = db.Column(db.String())
     data_template = db.Column(db.String())
+    groups = db.Column(db.String())
+    tags = db.Column(db.String())
 
 
 class TemplateApps(db.Model):
@@ -33,17 +41,31 @@ class TemplateApps(db.Model):
     open_in = db.Column(db.String())
 
 
-class ApiCalls(db.Model):
+class DataSources(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String())
-    resource = db.Column(db.String())
-    method = db.Column(db.String())
-    payload = db.Column(db.String())
-    authentication = db.Column(db.String())
-    username = db.Column(db.String())
-    password = db.Column(db.String())
-    value_template = db.Column(db.String())
+    platform = db.Column(db.String())
+    args = db.relationship("DataSourcesArgs", backref="data_source")
+    apps = db.relationship(
+        "Apps",
+        secondary=rel_app_data_source,
+        backref=db.backref("data_sources", lazy="dynamic"),
+    )
 
 
-db.create_all()
-db.session.commit()
+class DataSourcesArgs(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    key = db.Column(db.String())
+    value = db.Column(db.String())
+    data_source_id = db.Column(db.Integer, db.ForeignKey("data_sources.id"))
+
+
+class Groups(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String())
+    roles = db.Column(db.String())
+
+
+class Tags(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String())

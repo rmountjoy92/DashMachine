@@ -15,15 +15,26 @@ $( document ).ready(function() {
         });
     });
 
-    $(".data-template").each(function(e) {
+    $(".data-source-container").each(function(e) {
         var el = $(this);
         $.ajax({
             url: el.attr('data-url'),
             type: 'GET',
-            data: {template: el.text()},
+            data: {id: el.attr('data-id')},
             success: function(data){
-                el.text(data);
-                el.removeClass('hide');
+                el.closest('.col').find('.data-source-loading').addClass('hide');
+                el.html(data);
+            }
+        });
+    });
+
+    $("#tags-select").on('change', function(e) {
+        var value = $(this).val();
+        $(".app-a").each(function(i, e) {
+            if ($(this).attr("data-tags").indexOf(value) > -1 || value === "All tags") {
+                $(this).removeClass('filtered');
+            } else {
+                $(this).addClass('filtered');
             }
         });
     });

@@ -169,10 +169,13 @@ col_style=None
 id='',
 form_obj=None,
 size="s12",
-label=''
+label=None,
+class=''
 ) %}
     <div class="input-field col {{size}}">
-        {{ form_obj(id=id) }}
-        <label>{{ label }}</label>
+        {{ form_obj(id=id, class=class, placeholder="Tags") }}
+        {% if label %}
+            <label>{{ label }}</label>
+        {% endif %}
     </div>
 {% endmacro %}

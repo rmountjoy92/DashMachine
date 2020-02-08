@@ -24,10 +24,17 @@
                 <span class="menu-title" data-i18n="">Settings</span>
             </a></li>
 
-            <li class="bold"><a id="logout-sidenav" class="waves-effect waves-cyan" href="{{ url_for('user_system.logout') }}">
-                <i class="material-icons-outlined">exit_to_app</i>
-                <span class="menu-title" data-i18n="">Logout</span>
-            </a></li>
+            {% if current_user.is_authenticated %}
+                <li class="bold"><a id="logout-sidenav" class="waves-effect waves-cyan" href="{{ url_for('user_system.logout') }}">
+                    <i class="material-icons-outlined">exit_to_app</i>
+                    <span class="menu-title" data-i18n="">Logout</span>
+                </a></li>
+            {% else %}
+                <li class="bold"><a id="logout-sidenav" class="waves-effect waves-cyan" href="{{ url_for('user_system.login') }}">
+                    <i class="material-icons-outlined">account_circle</i>
+                    <span class="menu-title" data-i18n="">Login</span>
+                </a></li>
+            {% endif %}
 
             <li class="bold"><a id="hide-sidenav" class="waves-effect waves-cyan" href="#">
                 <i class="material-icons-outlined">menu_open</i>
@@ -37,7 +44,7 @@
             {% for app in apps %}
                 <li class="bold">
                     {% if app.open_in == 'iframe' %}
-                        <a id="dashboard-sidenav" class="waves-effect waves-cyan" href="{{ url_for('main.app_view', url=app.url) }}">
+                        <a id="dashboard-sidenav" class="waves-effect waves-cyan" href="{{ url_for('main.app_view', app_id=app.id) }}">
                     {% elif app.open_in == "this_tab" %}
                         <a id="dashboard-sidenav" class="waves-effect waves-cyan" href="{{ app.prefix }}{{ app.url }}">
                     {% elif app.open_in == "new_tab" %}

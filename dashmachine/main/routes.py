@@ -4,8 +4,14 @@ from secrets import token_hex
 from htmlmin.main import minify
 from flask import render_template, url_for, redirect, request, Blueprint, jsonify
 from flask_login import current_user
-from dashmachine.main.models import Files
-from dashmachine.main.utils import get_rest_data
+from dashmachine.main.models import Files, Apps, DataSources, Tags
+from dashmachine.main.forms import TagsForm
+from dashmachine.main.utils import (
+    public_route,
+    check_groups,
+    get_data_source,
+)
+from dashmachine.settings_system.models import Settings
 from dashmachine.paths import cache_folder
 from dashmachine import app, db
 
@@ -49,21 +55,35 @@ def check_valid_login():
 # ------------------------------------------------------------------------------
 # /home
 # ------------------------------------------------------------------------------
+@public_route
 @main.route("/")
 @main.route("/home", methods=["GET", "POST"])
 def home():
-    return render_template("main/home.html")
+    tags_form = TagsForm()
+    tags_form.tags.choices += [
+        (tag.name, tag.name) for tag in Tags.query.order_by(Tags.name).all()
+    ]
+    settings = Settings.query.first()
+    if not check_groups(settings.home_access_groups, current_user):
+        return redirect(url_for("error_pages.unauthorized"))
+    return render_template("main/home.html", tags_form=tags_form)
 
 
-@main.route("/app_view?<url>", methods=["GET"])
-def app_view(url):
-    return render_template("main/app-view.html", url=f"https://{url}")
+@public_route
+@main.route("/app_view?<app_id>", methods=["GET"])
+def app_view(app_id):
+    settings = Settings.query.first()
+    if not check_groups(settings.home_access_groups, current_user):
+        return redirect(url_for("user_system.login"))
+    app_db = Apps.query.filter_by(id=app_id).first()
+    return render_template("main/app-view.html", url=f"{app_db.prefix}{app_db.url}")
 
 
-@main.route("/load_rest_data", methods=["GET"])
-def load_rest_data():
-    data_template = get_rest_data(request.args.get("template"))
-    return data_template
+@main.route("/load_data_source", methods=["GET"])
+def load_data_source():
+    data_source = DataSources.query.filter_by(id=request.args.get("id")).first()
+    data = get_data_source(data_source)
+    return data
 
 
 # ------------------------------------------------------------------------------

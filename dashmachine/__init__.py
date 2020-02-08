@@ -6,9 +6,10 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_restful import Api
+from dashmachine.paths import user_data_folder
 
-if not os.path.isdir("dashmachine/user_data"):
-    os.mkdir("dashmachine/user_data")
+if not os.path.isdir(user_data_folder):
+    os.mkdir(user_data_folder)
 
 
 app = Flask(__name__)

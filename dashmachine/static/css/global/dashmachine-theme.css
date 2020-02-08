@@ -11,7 +11,9 @@
   --theme-color-font: #2c2f3a;
   --theme-color-font-muted: rgba(44, 47, 58, 0.85);
   --theme-color-font-muted2: rgba(44, 47, 58, 0.65);
-  --theme-warning: #f44336;
+  --theme-failure: #f44336;
+  --theme-warning: #ffae42;
+  --theme-success: #4BB543;
   --theme-on-primary: #fff;
 }
 [data-theme="dark"] {
@@ -117,11 +119,23 @@
 .theme-text {
   color: var(--theme-color-font) !important;
 }
+.theme-failure {
+  background-color: var(--theme-failure) !important;
+}
+.theme-failure-text {
+  color: var(--theme-failure) !important;
+}
 .theme-warning {
   background-color: var(--theme-warning) !important;
 }
 .theme-warning-text {
   color: var(--theme-warning) !important;
+}
+.theme-success {
+  background-color: var(--theme-success) !important;
+}
+.theme-success-text {
+  color: var(--theme-success) !important;
 }
 .theme-muted-text {
   color: var(--theme-color-font-muted) !important;

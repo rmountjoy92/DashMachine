@@ -1,29 +1,46 @@
 import os
 from shutil import move
-from flask import render_template, request, Blueprint, jsonify
-from dashmachine.settings_system.forms import ConfigForm
+from flask_login import current_user
+from flask import render_template, request, Blueprint, jsonify, redirect, url_for
 from dashmachine.user_system.forms import UserForm
 from dashmachine.user_system.utils import add_edit_user
-from dashmachine.main.utils import read_config, row2dict
+from dashmachine.user_system.models import User
+from dashmachine.main.utils import row2dict, public_route, check_groups
+from dashmachine.main.read_config import read_config
 from dashmachine.main.models import Files, TemplateApps
-from dashmachine.paths import backgrounds_images_folder, icons_images_folder
+from dashmachine.settings_system.forms import ConfigForm
+from dashmachine.settings_system.utils import load_files_html, get_config_html
+from dashmachine.settings_system.models import Settings
+from dashmachine.paths import (
+    backgrounds_images_folder,
+    icons_images_folder,
+    user_data_folder,
+)
 from dashmachine.version import version
-from dashmachine.settings_system.utils import load_files_html
+from dashmachine import db
 
 settings_system = Blueprint("settings_system", __name__)
 
 
+@public_route
 @settings_system.route("/settings", methods=["GET"])
 def settings():
+    settings_db = Settings.query.first()
+    if not check_groups(settings_db.settings_access_groups, current_user):
+        return redirect(url_for("main.home"))
+
     config_form = ConfigForm()
     user_form = UserForm()
-    with open("dashmachine/user_data/config.ini", "r") as config_file:
+    with open(os.path.join(user_data_folder, "config.ini"), "r") as config_file:
         config_form.config.data = config_file.read()
     files_html = load_files_html()
     template_apps = []
     t_apps = TemplateApps.query.all()
     for t_app in t_apps:
         template_apps.append(f"{t_app.name}&&{t_app.icon}")
+
+    users = User.query.all()
+    config_readme = get_config_html()
     return render_template(
         "settings_system/settings.html",
         config_form=config_form,
@@ -31,12 +48,14 @@ def settings():
         user_form=user_form,
         template_apps=",".join(template_apps),
         version=version,
+        users=users,
+        config_readme=config_readme,
     )
 
 
 @settings_system.route("/settings/save_config", methods=["POST"])
 def save_config():
-    with open("dashmachine/user_data/config.ini", "w") as config_file:
+    with open(os.path.join(user_data_folder, "config.ini"), "w") as config_file:
         config_file.write(request.form.get("config"))
     msg = read_config()
     return jsonify(data=msg)
@@ -81,7 +100,14 @@ def edit_user():
     if form.validate_on_submit():
         if form.password.data != form.confirm_password.data:
             return jsonify(data={"err": "Passwords don't match"})
-        add_edit_user(form.username.data, form.password.data)
+        err = add_edit_user(
+            form.username.data,
+            form.password.data,
+            user_id=form.id.data,
+            role=form.role.data,
+        )
+        if err:
+            return jsonify(data={"err": err})
     else:
         err_str = ""
         for fieldName, errorMessages in form.errors.items():
@@ -89,4 +115,20 @@ def edit_user():
             for err in errorMessages:
                 err_str += f"{err} "
         return jsonify(data={"err": err_str})
-    return jsonify(data={"err": "success"})
+    users = User.query.all()
+    html = render_template("settings_system/user.html", users=users)
+    return jsonify(data={"err": "success", "html": html})
+
+
+@settings_system.route("/settings/delete_user", methods=["GET"])
+def delete_user():
+    admin_users = User.query.filter_by(role="admin").all()
+    user = User.query.filter_by(id=request.args.get("id")).first()
+    if len(admin_users) < 2 and user.role == "admin":
+        return jsonify(data={"err": "You must have at least one admin user"})
+    else:
+        User.query.filter_by(id=request.args.get("id")).delete()
+    db.session.commit()
+    users = User.query.all()
+    html = render_template("settings_system/user.html", users=users)
+    return jsonify(data={"err": "success", "html": html})
