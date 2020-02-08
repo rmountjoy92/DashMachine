@@ -27,4 +27,15 @@ $( document ).ready(function() {
             }
         });
     });
+
+    $("#tags-select").on('change', function(e) {
+        var value = $(this).val();
+        $(".app-a").each(function(i, e) {
+            if ($(this).attr("data-tags").indexOf(value) > -1 || value === "All tags") {
+                $(this).removeClass('filtered');
+            } else {
+                $(this).addClass('filtered');
+            }
+        });
+    });
 });

@@ -1,6 +1,6 @@
 import os
 from configparser import ConfigParser
-from dashmachine.main.models import Apps, Groups, DataSources, DataSourcesArgs
+from dashmachine.main.models import Apps, Groups, DataSources, DataSourcesArgs, Tags
 from dashmachine.settings_system.models import Settings
 from dashmachine.paths import user_data_folder
 from dashmachine import db
@@ -29,6 +29,7 @@ def read_config():
     Apps.query.delete()
     Settings.query.delete()
     Groups.query.delete()
+    Tags.query.delete()
 
     for section in config.sections():
 
@@ -138,6 +139,17 @@ def read_config():
                 app.groups = config[section]["groups"]
             else:
                 app.groups = None
+
+            if "tags" in config[section]:
+                app.tags = config[section]["tags"].title()
+                for tag in app.tags.split(","):
+                    tag = tag.strip().title()
+                    if not Tags.query.filter_by(name=tag).first():
+                        tag_db = Tags(name=tag)
+                        db.session.add(tag_db)
+                        db.session.commit()
+            else:
+                app.tags = None
 
             db.session.add(app)
             db.session.commit()

@@ -17,6 +17,7 @@ from dashmachine.paths import (
     user_data_folder,
 )
 from dashmachine.version import version
+from dashmachine import db
 
 settings_system = Blueprint("settings_system", __name__)
 
@@ -99,12 +100,14 @@ def edit_user():
     if form.validate_on_submit():
         if form.password.data != form.confirm_password.data:
             return jsonify(data={"err": "Passwords don't match"})
-        add_edit_user(
+        err = add_edit_user(
             form.username.data,
             form.password.data,
             user_id=form.id.data,
             role=form.role.data,
         )
+        if err:
+            return jsonify(data={"err": err})
     else:
         err_str = ""
         for fieldName, errorMessages in form.errors.items():
@@ -112,6 +115,20 @@ def edit_user():
             for err in errorMessages:
                 err_str += f"{err} "
         return jsonify(data={"err": err_str})
+    users = User.query.all()
+    html = render_template("settings_system/user.html", users=users)
+    return jsonify(data={"err": "success", "html": html})
+
+
+@settings_system.route("/settings/delete_user", methods=["GET"])
+def delete_user():
+    admin_users = User.query.filter_by(role="admin").all()
+    user = User.query.filter_by(id=request.args.get("id")).first()
+    if len(admin_users) < 2 and user.role == "admin":
+        return jsonify(data={"err": "You must have at least one admin user"})
+    else:
+        User.query.filter_by(id=request.args.get("id")).delete()
+    db.session.commit()
     users = User.query.all()
     html = render_template("settings_system/user.html", users=users)
     return jsonify(data={"err": "success", "html": html})

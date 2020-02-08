@@ -8,9 +8,12 @@ If you change the config.ini file, you either have to restart the container
 config to be applied.
 ```ini
 [Settings]
-theme = dark
+theme = light
 accent = orange
-background = static/images/backgrounds/background.png
+background = None
+roles = admin,user,public_user
+home_access_groups = admin_only
+settings_access_groups = admin_only
 ```
 
 | Variable               | Required | Description                                              | Options                                                                                                                                                                        |
@@ -35,6 +38,8 @@ sidebar_icon = static/images/apps/default.png
 description = Example description
 open_in = iframe
 data_sources = None
+tags = Example Tag
+groups = admin_only
 ```
 
 | Variable     | Required | Description                                                                                                                         | Options                                                      |
@@ -47,6 +52,8 @@ data_sources = None
 | sidebar_icon | No       | Icon for the sidenav.                                                                                                               | /static/images/icons/yourpicture.png, external link to image |
 | description  | No       | A short description for the app.                                                                                                    | string                                                       |
 | data_sources | No       | Data sources to be included on the app's card.*Note: you must have a data source set up in the config above this application entry. | comma separated string                                       |
+| tags         | No       | Optionally specify tags for organization on /home                                                                                   | comma separated string                                       |
+| groups       | No       | Optionally the access groups that can see this app.                                                                                 | comma separated string                                       |
 
 ##### Access Groups
 You can create access groups to control what user roles can access parts of the ui. Each

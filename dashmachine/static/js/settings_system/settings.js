@@ -63,29 +63,21 @@ $( document ).ready(function() {
     });
 
     $("#save-user-btn").on('click', function(e) {
-       $.ajax({
-           url: $(this).attr('data-url'),
-           type: 'POST',
-           data: $("#edit-user-form").serialize(),
-           success: function(data){
-               if (data.data.err !== 'success'){
-                   M.toast({html: data.data.err, classes: 'theme-failure'});
-               } else {
-                   $("#users-div").empty();
-                   $("#users-div").append(data.data.html);
-                   $("#edit-user-modal").modal('close');
-                   M.toast({html: 'User saved'});
-               }
-           }
-       });
-    });
-
-    $(".edit-user-btn").on('click', function(e) {
-        $("#user-modal").modal('open');
-        $("#user-form-username").val($(this).attr("data-username"));
-        $("#user-form-role").val($(this).attr("data-role"));
-        $("#user-form-id").val($(this).attr("data-id"));
-        M.updateTextFields();
+        $.ajax({
+            url: $(this).attr('data-url'),
+            type: 'POST',
+            data: $("#edit-user-form").serialize(),
+            success: function(data){
+                if (data.data.err !== 'success'){
+                    M.toast({html: data.data.err, classes: 'theme-failure'});
+                } else {
+                    $("#users-div").empty();
+                    $("#users-div").append(data.data.html);
+                    $("#user-modal").modal('close');
+                    M.toast({html: 'User saved'});
+                }
+            }
+        });
     });
 
 });

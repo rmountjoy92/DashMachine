@@ -4,7 +4,8 @@ from secrets import token_hex
 from htmlmin.main import minify
 from flask import render_template, url_for, redirect, request, Blueprint, jsonify
 from flask_login import current_user
-from dashmachine.main.models import Files, Apps, DataSources
+from dashmachine.main.models import Files, Apps, DataSources, Tags
+from dashmachine.main.forms import TagsForm
 from dashmachine.main.utils import (
     public_route,
     check_groups,
@@ -58,10 +59,14 @@ def check_valid_login():
 @main.route("/")
 @main.route("/home", methods=["GET", "POST"])
 def home():
+    tags_form = TagsForm()
+    tags_form.tags.choices += [
+        (tag.name, tag.name) for tag in Tags.query.order_by(Tags.name).all()
+    ]
     settings = Settings.query.first()
     if not check_groups(settings.home_access_groups, current_user):
-        return redirect(url_for("user_system.login"))
-    return render_template("main/home.html")
+        return redirect(url_for("error_pages.unauthorized"))
+    return render_template("main/home.html", tags_form=tags_form)
 
 
 @public_route

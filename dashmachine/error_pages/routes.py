@@ -19,3 +19,8 @@ def error_403(error):
 @error_pages.app_errorhandler(500)
 def error_500(error):
     return render_template("/error_pages/500.html"), 500
+
+
+@error_pages.route("/unauthorized")
+def unauthorized():
+    return render_template("/error_pages/unauthorized.html")

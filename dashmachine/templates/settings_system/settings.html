@@ -2,6 +2,7 @@
 {% from 'global_macros.html' import input, button, select %}
 {% from 'main/tcdrop.html' import tcdrop %}
 {% from 'settings_system/user.html' import UserTab with context %}
+{% from 'settings_system/files.html' import FilesTab with context %}
 {% block page_vendor_css %}
 {% endblock page_vendor_css %}
 
@@ -80,28 +81,7 @@
                                 </div>
 
                                 <div id="images" class="col s12">
-                                    <div class="row">
-                                        <h5>Images</h5>
-                                        <form id="add-images-form">
-                                            <div class="input-field col s12 mt-4">
-                                                <select name="folder">
-                                                    <option value="icons">Icons</option>
-                                                    <option value="backgrounds">Backgrounds</option>
-                                                </select>
-                                                <label>Folder</label>
-                                            </div>
-                                            <input name="files" id="add-images-input" class="hide">
-                                        </form>
-                                        <div class="col s12">
-                                            {{ tcdrop(allowed_types='jpg,jpeg,png,gif', id="images-tcdrop", max_files="30") }}
-                                            {{ button(text="save", icon="save", id="save-images-btn", float="left", data={"url": url_for('settings_system.add_images')}) }}
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div id="files-div">{{ files_html|safe }}</div>
-                                    </div>
-
+                                    {{ FilesTab() }}
                                 </div>
 
                                 <div id="apps" class="col s12">

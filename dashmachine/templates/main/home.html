@@ -1,10 +1,11 @@
 {% extends "main/layout.html" %}
-{% from 'global_macros.html' import data, preload_circle %}
+{% from 'global_macros.html' import data, preload_circle, select %}
 
 {% block page_vendor_css %}
 {% endblock page_vendor_css %}
 
 {% block page_lvl_css %}
+    {{ process_css_sources(src="main/home.css")|safe }}
     {% if settings.background and settings.background != 'None' %}
         <style>
             #main {
@@ -27,17 +28,22 @@
                         <input type="text" id="apps-filter" class="card-filter theme-surface-transparent" placeholder="Search apps">
                     </span>
                 </div>
+                {% if tags_form.tags.choices|count > 1 %}
+                    <div class="input-field col s12 l2 tags-select-col theme-surface-transparent">
+                        {{ tags_form.tags(id='tags-select') }}
+                    </div>
+                {% endif %}
             </div>
             <div class="row">
                 {% if apps %}
 
                     {% for app in apps %}
                         {% if app.open_in == 'iframe' %}
-                            <a href="{{ url_for('main.app_view', app_id=app.id) }}" class="app-a" data-name="{{ app.name }}" data-description="{{ app.description }}">
+                            <a href="{{ url_for('main.app_view', app_id=app.id) }}" class="app-a" data-name="{{ app.name }}" data-description="{{ app.description }}" data-tags="{{ app.tags }}">
                         {% elif app.open_in == 'this_tab' %}
-                            <a href="{{ app.prefix }}{{ app.url }}" class="app-a" data-name="{{ app.name }}" data-description="{{ app.description }}">
+                            <a href="{{ app.prefix }}{{ app.url }}" class="app-a" data-name="{{ app.name }}" data-description="{{ app.description }}" data-tags="{{ app.tags }}">
                         {% elif app.open_in == "new_tab" %}
-                            <a href="{{ app.prefix }}{{ app.url }}" target="_blank" class="app-a" data-name="{{ app.name }}" data-description="{{ app.description }}">
+                            <a href="{{ app.prefix }}{{ app.url }}" target="_blank" class="app-a" data-name="{{ app.name }}" data-description="{{ app.description }}" data-tags="{{ app.tags }}">
                         {% endif %}
                     <div class="col s12 m6 l3">
                         <div class="card theme-surface-transparent app-card">
@@ -63,7 +69,8 @@
                                 {% endif %}
                             </div>
                             <div class="card-action center-align scrollbar" style="max-height: 127px; min-height: 127px; scrollbar-width: none;">
-                                <h5>{{ app.name }}</h5>
+                                <h5>{{ app.name }}
+                                </h5>
                                 <span class="theme-secondary-text">{{ app.description }}</span>
                             </div>
                         </div>

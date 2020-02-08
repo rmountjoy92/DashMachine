@@ -16,7 +16,9 @@
 * hideable sidebar with dragable reveal button
 * user login system
 * 'app templates' which are sample config entries for popular self hosted apps
-* ability to display rest api data on application cards
+* powerful plugin system for adding data from various sources to display on cards
+* multiple users, access groups, access settings
+* tagging system
 
 ## Installation
 ### Docker
@@ -59,14 +61,3 @@ If you change the config.ini file, you either have to restart the container (or 
 * Materialize css
 * JavaScript/jQuery/jQueryUI
 * Requests (python)
-
-## Version 1.0 TODO list
-- [ ] finish rest api data functions (post requests, auth)
-- [ ] finish rest api data display (make it look prettier)
-- [ ] include nginx & gunicorn in docker container
-- [ ] tag/folder system & support for services without web redirection
-- [ ] add more template apps from popular self hosted apps
-- [ ] pull request template for adding template apps
-- [ ] rest api data examples for template apps
-- [ ] find a way to mirror this repo on GitHub for exposure
-- [ ] support multiple users

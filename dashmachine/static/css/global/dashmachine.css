@@ -28,6 +28,9 @@
 .no-vis {
     visibility: hidden;
 }
+.filtered {
+    display: none !important;
+}
 
 .scrollbar {
     overflow-y: scroll !important;

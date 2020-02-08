@@ -1,0 +1,23 @@
+
+.tags-select-col {
+    position: relative;
+    top: 15px;
+    margin: 0;
+    border-radius: .4rem;
+    height: 45px;
+    -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+}
+.tags-select-col .select-wrapper {
+    top: 5px;
+}
+.tags-select-col .select-wrapper input {
+    color: var(--theme-secondary);
+}
+@media screen and (max-width: 992px) {
+    .tags-select-col {
+        top: 0;
+        width: calc(100vw - 45px) !important;
+        margin-left: 15px !important;
+    }
+}

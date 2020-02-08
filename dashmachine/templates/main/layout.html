@@ -24,10 +24,17 @@
                 <span class="menu-title" data-i18n="">Settings</span>
             </a></li>
 
-            <li class="bold"><a id="logout-sidenav" class="waves-effect waves-cyan" href="{{ url_for('user_system.logout') }}">
-                <i class="material-icons-outlined">exit_to_app</i>
-                <span class="menu-title" data-i18n="">Logout</span>
-            </a></li>
+            {% if current_user.is_authenticated %}
+                <li class="bold"><a id="logout-sidenav" class="waves-effect waves-cyan" href="{{ url_for('user_system.logout') }}">
+                    <i class="material-icons-outlined">exit_to_app</i>
+                    <span class="menu-title" data-i18n="">Logout</span>
+                </a></li>
+            {% else %}
+                <li class="bold"><a id="logout-sidenav" class="waves-effect waves-cyan" href="{{ url_for('user_system.login') }}">
+                    <i class="material-icons-outlined">account_circle</i>
+                    <span class="menu-title" data-i18n="">Login</span>
+                </a></li>
+            {% endif %}
 
             <li class="bold"><a id="hide-sidenav" class="waves-effect waves-cyan" href="#">
                 <i class="material-icons-outlined">menu_open</i>

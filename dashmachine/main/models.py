@@ -27,6 +27,7 @@ class Apps(db.Model):
     open_in = db.Column(db.String())
     data_template = db.Column(db.String())
     groups = db.Column(db.String())
+    tags = db.Column(db.String())
 
 
 class TemplateApps(db.Model):
@@ -63,3 +64,8 @@ class Groups(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String())
     roles = db.Column(db.String())
+
+
+class Tags(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String())
