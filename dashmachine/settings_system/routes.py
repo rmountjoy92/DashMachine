@@ -43,7 +43,13 @@ def settings():
     users = User.query.all()
     config_readme = markdown_path(
         os.path.join(root_folder, "config_readme.md"),
-        extras=["tables", "fenced-code-blocks", "break-on-newline", "header-ids"],
+        extras=[
+            "tables",
+            "fenced-code-blocks",
+            "break-on-newline",
+            "header-ids",
+            "code-friendly",
+        ],
     )
     return render_template(
         "settings_system/settings.html",

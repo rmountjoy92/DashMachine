@@ -1,6 +1,11 @@
 #### Config.ini Readme
 
 ##### Settings
+This is the configuration entry for DashMachine's settings. DashMachine will not work if
+this is missing. As for all config entries, [Settings] can only appear once in the config.
+If you change the config.ini file, you either have to restart the container 
+(or python script) or click the ‘save’ button in the config section of settings for the 
+config to be applied.
 ```ini
 [Settings]
 theme = dark
@@ -19,6 +24,8 @@ background = static/images/backgrounds/background.png
 | settings_access_groups | No       | Define which access groups can access the /settings page | Groups defined in your config. If not defined, default is admin_only                                                                                                           |
 
 ##### Apps
+These entries are the cards that you see one the home page, as well as the sidenav. Entries
+must be unique. They are displayed in the order that they appear in config.ini
 ```ini
 [App Name]
 prefix = https://
@@ -42,10 +49,16 @@ data_sources = None
 | data_sources | No       | Data sources to be included on the app's card.*Note: you must have a data source set up in the config above this application entry. | comma separated string                                       |
 
 ##### Access Groups
+You can create access groups to control what user roles can access parts of the ui. Each
+application can have an access group, if the user's role is not in the group, the app will be hidden.
+Also, in the settings entry you can specify `home_access_groups` and `settings_access_groups` to control
+which groups can access /home and /settings
 ```ini
 [public]
 roles = admin, user, public_user
 ```
+
+> **Note:** if no access groups are defined in the config, the application will create a default group called 'admin_only' with 'roles = admin'
 
 | Variable     | Required | Description                                                                    | Options                                                                          |
 |--------------|----------|--------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
@@ -65,6 +78,7 @@ permanent, submit a pull request for it to be added by default!
 `data_source = variable_name`
 
 ##### ping
+Check if a service is online.
 ```ini
 [variable_name]
 platform = ping
@@ -79,6 +93,7 @@ resource = 192.168.1.1
 | resource        | Yes      | Url of whatever you want to ping                                | url               |
 
 ##### rest
+Make a call on a REST API and display the results as a jinja formatted string.
 ```ini
 [variable_name]
 platform = rest
