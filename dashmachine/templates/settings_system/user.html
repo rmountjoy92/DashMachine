@@ -6,12 +6,12 @@
                     <form id="edit-user-form">
                         {{ user_form.hidden_tag() }}
 
-{#                        {{ select(#}
-{#                        id='user-form-role',#}
-{#                        form_obj=user_form.role,#}
-{#                        size="s12",#}
-{#                        label='Role'#}
-{#                        ) }}#}
+                        {{ select(
+                        id='user-form-role',
+                        form_obj=user_form.role,
+                        size="s12",
+                        label='Role'
+                        ) }}
 
                         {{ input(
                         label="Username",
@@ -86,3 +86,4 @@
         <p class="mb-2">version: {{ version }}</p>
     </div>
 {% endmacro %}
+{{UserTab()}}

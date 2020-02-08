@@ -33,3 +33,4 @@ urllib3==1.25.8
 Werkzeug==0.16.1
 WTForms==2.2.1
 transmissionrpc
+markdown2

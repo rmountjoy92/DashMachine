@@ -1,6 +1,6 @@
 from flask import render_template, url_for, redirect, Blueprint
-from flask_login import login_user, logout_user, current_user
-from dashmachine.user_system.forms import UserForm
+from flask_login import login_user, logout_user
+from dashmachine.user_system.forms import LoginForm
 from dashmachine.user_system.models import User
 from dashmachine.user_system.utils import add_edit_user
 from dashmachine import bcrypt
@@ -18,7 +18,7 @@ user_system = Blueprint("user_system", __name__)
 def login():
     user = User.query.first()
 
-    form = UserForm()
+    form = LoginForm()
 
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data.lower()).first()
