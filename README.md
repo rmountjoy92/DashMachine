@@ -48,6 +48,9 @@ User: admin
 Password: adminadmin
 ```
 
+## Updating
+For python, use git. For docker, just pull the latest image and recreate the container.
+
 ## Configuration
 The user data folder is located at DashMachine/dashmachine/user_data. This is where the config.ini, custom backgrounds/icons, and the database file live. A reference for what can go into the config.ini file can be found on the settings page of the dashmachine by clicking the info icon next to 'Config'. 
 
