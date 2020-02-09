@@ -136,6 +136,11 @@ def read_config():
                 app.open_in = "this_tab"
 
             if "groups" in config[section]:
+                for group_name in config[section]["groups"].split(","):
+                    if not Groups.query.filter_by(name=group_name.strip()).first():
+                        return {
+                            "msg": f"Invalid Config: {section} contains at group that is not defined."
+                        }
                 app.groups = config[section]["groups"]
             else:
                 app.groups = None
