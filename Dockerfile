@@ -1,11 +1,19 @@
-FROM python:3.8.0-slim
-RUN rm /bin/sh && ln -s /bin/bash /bin/sh
-RUN apt-get update \
-&& apt-get install gcc git iputils-ping -y \
-&& apt-get clean
+FROM python:3.8-slim
 
-COPY ./ DashMachine
-WORKDIR DashMachine
-RUN pip install -r requirements.txt
+RUN apt-get update -q \
+  && apt-get install --no-install-recommends -qy \
+    inetutils-ping \
+  && rm -rf /var/lib/apt/lists/*
+
+COPY [ "requirements.txt", "/dashmachine/" ]
+
+WORKDIR /dashmachine
+
+RUN pip install --no-cache-dir --progress-bar off -r requirements.txt
+
+COPY [ ".", "/dashmachine/" ]
+
+ENV PRODUCTION=true
 EXPOSE 5000
-CMD ["python", "run.py"]
+VOLUME /dashmachine/dashmachine/user_data
+CMD [ "gunicorn", "--bind", "0.0.0.0:5000", "wsgi:app" ]
