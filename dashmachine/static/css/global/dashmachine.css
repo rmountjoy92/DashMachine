@@ -53,7 +53,7 @@ body {
     user-select: none;
     /* Non-prefixed version, currently
     supported by Chrome, Opera and Firefox */
-    scrollbar-color: var(--theme-secondary);
+    scrollbar-color: var(--theme-primary) !important;
     scrollbar-width: thin;
 }
 
@@ -95,13 +95,13 @@ blockquote {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: var(--theme-secondary);
+    background: var(--theme-primary);
     border-radius: 24px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--theme-secondary);
+    background: var(--theme-primary);
     border-radius: 24px;
 }
 
