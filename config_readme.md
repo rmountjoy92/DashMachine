@@ -56,21 +56,53 @@ groups = admin_only
 | groups       | No       | Optionally the access groups that can see this app.                                                                                 | comma separated string                                       |
 
 ##### Access Groups
-You can create access groups to control what user roles can access parts of the ui. Each
+You can create access groups to control what user roles can access parts of the ui. Access groups are just a collection of roles, and each user has an attribute 'role'. Each
 application can have an access group, if the user's role is not in the group, the app will be hidden.
 Also, in the settings entry you can specify `home_access_groups` and `settings_access_groups` to control
 which groups can access /home and /settings
 ```ini
-[public]
-roles = admin, user, public_user
+[admin_only]
+roles = admin
 ```
-
-> **Note:** if no access groups are defined in the config, the application will create a default group called 'admin_only' with 'roles = admin'
 
 | Variable     | Required | Description                                                                    | Options                                                                          |
 |--------------|----------|--------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
 | [Group Name] | Yes      | Name for access group.                                                         | [Group Name]                                                                     |
 | roles        | Yes      | A comma separated list of user roles allowed to view apps in this access group | Roles defined in your config. If not defined, defaults are admin and public_user |
+
+> Say we wanted to create a limited user that still has a login, but can only access `/home` and certain apps we would first create a group:
+>```ini
+>[users]
+>roles = admin, user
+>```
+>then we would change in the `[Settings]` entry:
+>```ini
+>home_access_groups = users
+>```
+>By default here, the `user` user could access `/home`, but would see no apps. To allow access, we would add to apps:
+>```ini
+>groups = users
+>```
+>Say we then wanted to allow some access for users without a login (`public_user`), we would add:
+>```ini
+>[public]
+>roles = admin, user, public_user
+>```
+>then we would change in the `[Settings]` entry:
+>```ini
+>home_access_groups = public
+>```
+>By default here, the `public_user` user could access `/home`, but would see no apps. To allow access, we would add to apps:
+>```ini
+>groups = public
+>```
+
+
+>It’s also important to note, when setting up roles in `[Settings]`, say we had roles set like this:
+>```ini
+>roles = my_people
+>```
+>Dashmachine will automatically add `admin,user,public_user`, so really you would have 4 roles: `my_people,admin,user,public_user`. Also, the `admin_only` group is required and added by default if omitted.
 
 #### Data Source Platforms
 DashMachine includes several different 'platforms' for displaying data on your dash applications.
