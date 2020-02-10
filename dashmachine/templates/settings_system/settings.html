@@ -26,7 +26,7 @@
         <div class="container">
             <div class="row">
                 <div class="col s12 m12 l6">
-                    <div class="card scrollbar settings-page-card">
+                    <div class="card scrollbar settings-page-card-left">
                         <div class="card-content">
                                 <div class="row">
                                     <div class="col s12">
@@ -56,7 +56,7 @@
                 </div>
 
                 <div class="col s12 m12 l6">
-                    <div class="card scrollbar settings-page-card">
+                    <div class="card">
                         <div class="card-content">
 
                             <div class="row">
@@ -80,11 +80,11 @@
                                     </ul>
                                 </div>
 
-                                <div id="images" class="col s12">
+                                <div id="images" class="col s12 scrollbar settings-page-card-right">
                                     {{ FilesTab() }}
                                 </div>
 
-                                <div id="apps" class="col s12">
+                                <div id="apps" class="col s12 scrollbar settings-page-card-right">
                                     <h5>App Templates</h5>
                                     <div class="row card-filter-container">
                                         <div class="col s12 input-field">
@@ -99,18 +99,18 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col s12">
+                                        <div class="col s12 scrollbar settings-page-card-right">
                                             <div id="template-div" class="selectable-all code"></div>
                                         </div>
                                     </div>
 
                                 </div>
 
-                                <div id="config-readme" class="col s12">
+                                <div id="config-readme" class="col s12 scrollbar settings-page-card-right">
                                     {{ config_readme|safe }}
                                 </div>
 
-                                <div id="user" class="col s12">
+                                <div id="user" class="col s12 scrollbar settings-page-card-right">
                                     {{ UserTab() }}
                                 </div>
 

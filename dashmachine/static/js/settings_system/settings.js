@@ -2,6 +2,7 @@ var d = document.getElementById("settings-sidenav");
 d.className += " active theme-primary";
 
 $( document ).ready(function() {
+    $("#config-readme table").addClass('responsive-table');
     initTCdrop('#images-tcdrop');
     $("#user-modal").modal({
         onCloseEnd: function () {

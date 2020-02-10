@@ -6,7 +6,18 @@
     }
 }
 
-.settings-page-card {
+@media (max-width: 990px)
+{
+    body {
+        max-height: 200vh !important;
+    }
+}
+
+.settings-page-card-right {
+    max-height: calc(100vh - 142px) !important;
+    min-height: calc(100vh - 142px) !important;
+}
+.settings-page-card-left {
     max-height: calc(100vh - 30px);
     min-height: calc(100vh - 30px);
 }
