@@ -7,7 +7,7 @@ RUN apt-get update -q \
 
 COPY [ "requirements.txt", "/DashMachine/" ]
 
-WORKDIR /dashmachine
+WORKDIR /DashMachine
 
 RUN pip install --no-cache-dir --progress-bar off -r requirements.txt
 
