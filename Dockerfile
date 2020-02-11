@@ -5,15 +5,15 @@ RUN apt-get update -q \
     inetutils-ping \
   && rm -rf /var/lib/apt/lists/*
 
-COPY [ "requirements.txt", "/dashmachine/" ]
+COPY [ "requirements.txt", "/Dashmachine/" ]
 
-WORKDIR /dashmachine
+WORKDIR /Dashmachine
 
 RUN pip install --no-cache-dir --progress-bar off -r requirements.txt
 
-COPY [ ".", "/dashmachine/" ]
+COPY [ ".", "/Dashmachine/" ]
 
 ENV PRODUCTION=true
 EXPOSE 5000
-VOLUME /dashmachine/dashmachine/user_data
+VOLUME /Dashmachine/dashmachine/user_data
 CMD [ "gunicorn", "--bind", "0.0.0.0:5000", "wsgi:app" ]
