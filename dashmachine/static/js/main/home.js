@@ -3,6 +3,7 @@ d.className += " active theme-primary";
 
 
 $( document ).ready(function() {
+    $(".tooltipped").tooltip();
     $("#apps-filter").on('keyup', function(e) {
         var value = $(this).val().toLowerCase();
         $(".app-a").each(function(i, e) {

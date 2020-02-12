@@ -18,8 +18,8 @@
     min-height: calc(100vh - 142px) !important;
 }
 .settings-page-card-left {
-    max-height: calc(100vh - 30px);
-    min-height: calc(100vh - 30px);
+    max-height: calc(100vh - 130px) !important;
+    min-height: calc(100vh - 130px) !important;
 }
 
 #apps .dropdown-content {

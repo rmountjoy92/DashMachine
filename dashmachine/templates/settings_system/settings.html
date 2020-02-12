@@ -26,31 +26,33 @@
         <div class="container">
             <div class="row">
                 <div class="col s12 m12 l6">
-                    <div class="card scrollbar settings-page-card-left">
+                    <div class="card">
                         <div class="card-content">
-                                <div class="row">
-                                    <div class="col s12">
-                                        <h5>Config.ini</h5>
+                            <div class="row">
+                                <div class="col s12">
+                                    <span>
+                                        <span style="font-size: 2rem; position: relative; top: 8px;">Config.ini</span>
                                         {{ button(
                                         icon="save",
                                         id="save-config-btn",
-                                        float="left",
+                                        float="right",
                                         class="ml-0 mt-1 mb-1",
                                         data={'url': url_for('settings_system.save_config')},
                                         text="save"
                                         ) }}
-                                    </div>
-
-                                    <div class="divider"></div>
-                                    <form id="config-form">
-                                        {{ input(
-                                        size="s12",
-                                        class="materialize-textarea code",
-                                        form_obj=config_form.config,
-                                        id="config-textarea"
-                                        ) }}
-                                    </form>
+                                    </span>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="card-action scrollbar settings-page-card-left">
+                            <form id="config-form">
+                                {{ input(
+                                size="s12",
+                                class="materialize-textarea code",
+                                form_obj=config_form.config,
+                                id="config-textarea"
+                                ) }}
+                            </form>
                         </div>
                     </div>
                 </div>

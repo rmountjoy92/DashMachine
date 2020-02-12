@@ -620,7 +620,7 @@ input:disabled {
 .sidenav {
     background-color: var(--theme-surface);
     top: unset;
-    overflow: scroll;
+    overflow-y: scroll;
     scrollbar-width: none;
 }
 

@@ -2,6 +2,7 @@ import os
 import glob
 from secrets import token_hex
 from htmlmin.main import minify
+from configparser import ConfigParser
 from flask import render_template, url_for, redirect, request, Blueprint, jsonify
 from flask_login import current_user
 from dashmachine.main.models import Files, Apps, DataSources, Tags
@@ -12,7 +13,7 @@ from dashmachine.main.utils import (
     get_data_source,
 )
 from dashmachine.settings_system.models import Settings
-from dashmachine.paths import cache_folder
+from dashmachine.paths import cache_folder, user_data_folder
 from dashmachine import app, db
 
 
@@ -57,7 +58,7 @@ def check_valid_login():
 # ------------------------------------------------------------------------------
 @public_route
 @main.route("/")
-@main.route("/home", methods=["GET", "POST"])
+@main.route("/home", methods=["GET"])
 def home():
     tags_form = TagsForm()
     tags_form.tags.choices += [
@@ -86,6 +87,20 @@ def load_data_source():
     data_source = DataSources.query.filter_by(id=request.args.get("id")).first()
     data = get_data_source(data_source)
     return data
+
+
+@public_route
+@main.route("/change_home_view_mode?<mode>", methods=["GET"])
+def change_home_view_mode(mode):
+    config = ConfigParser()
+    config.read(os.path.join(user_data_folder, "config.ini"))
+    config.set("Settings", "home_view_mode", mode)
+    config.write(open(os.path.join(user_data_folder, "config.ini"), "w"))
+    settings = Settings.query.first()
+    settings.home_view_mode = mode
+    db.session.merge(settings)
+    db.session.commit()
+    return redirect(url_for("main.home"))
 
 
 # ------------------------------------------------------------------------------

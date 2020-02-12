@@ -56,14 +56,6 @@ def public_route(decorated_function):
 def dashmachine_init():
     db.create_all()
     db.session.commit()
-    migrate_cmd = "python " + os.path.join(root_folder, "manage_db.py db stamp head")
-    subprocess.run(migrate_cmd, stderr=subprocess.PIPE, shell=True, encoding="utf-8")
-
-    migrate_cmd = "python " + os.path.join(root_folder, "manage_db.py db migrate")
-    subprocess.run(migrate_cmd, stderr=subprocess.PIPE, shell=True, encoding="utf-8")
-
-    upgrade_cmd = "python " + os.path.join(root_folder, "manage_db.py db upgrade")
-    subprocess.run(upgrade_cmd, stderr=subprocess.PIPE, shell=True, encoding="utf-8")
 
     read_template_apps()
     user_data_folder = os.path.join(dashmachine_folder, "user_data")

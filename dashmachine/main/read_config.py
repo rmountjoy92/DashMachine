@@ -36,20 +36,12 @@ def read_config():
         # Settings creation
         if section == "Settings":
             settings = Settings()
-            if "theme" in config["Settings"]:
-                settings.theme = config["Settings"]["theme"]
-            else:
-                settings.theme = "light"
 
-            if "accent" in config["Settings"]:
-                settings.accent = config["Settings"]["accent"]
-            else:
-                settings.accent = "orange"
+            settings.theme = config["Settings"].get("theme", "light")
 
-            if "background" in config["Settings"]:
-                settings.background = config["Settings"]["background"]
-            else:
-                settings.background = "None"
+            settings.accent = config["Settings"].get("accent", "orange")
+
+            settings.background = config["Settings"].get("background", "None")
 
             if "roles" in config["Settings"]:
                 settings.roles = config["Settings"]["roles"]
@@ -62,17 +54,14 @@ def read_config():
             else:
                 settings.roles = "admin,user,public_user"
 
-            if "home_access_groups" in config["Settings"]:
-                settings.home_access_groups = config["Settings"]["home_access_groups"]
-            else:
-                settings.home_access_groups = "admin_only"
+            settings.home_access_groups = config["Settings"].get(
+                "home_access_groups", "admin_only"
+            )
 
-            if "settings_access_groups" in config["Settings"]:
-                settings.settings_access_groups = config["Settings"][
-                    "settings_access_groups"
-                ]
-            else:
-                settings.settings_access_groups = "admin_only"
+            settings.settings_access_groups = config["Settings"].get(
+                "settings_access_groups", "admin_only"
+            )
+            settings.home_view_mode = config["Settings"].get("home_view_mode", "grid")
 
             db.session.add(settings)
             db.session.commit()
