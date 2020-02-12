@@ -69,9 +69,17 @@
                                 {% endif %}
                             </div>
                             <div class="card-action center-align scrollbar" style="max-height: 127px; min-height: 127px; scrollbar-width: none;">
-                                <h5>{{ app.name }}
+                                <h5 class="app-name-{{ app.id }}">{{ app.name }}
                                 </h5>
-                                <span class="theme-secondary-text">{{ app.description }}</span>
+                                {% if app.description %}
+                                    <span class="theme-secondary-text">{{ app.description }}</span>
+                                {% else %}
+                                    <style>
+                                        .app-name-{{ app.id }} {
+                                            margin-top: 35px;
+                                        }
+                                    </style>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
