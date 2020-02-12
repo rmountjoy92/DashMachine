@@ -31,11 +31,11 @@
                         {% if current_user.role == "admin" %}
                             {% if settings.home_view_mode == "list" %}
                                 <a href="{{ url_for('main.change_home_view_mode', mode="grid") }}">
-                                <i class="material-icons right filter-action pointer tooltipped" data-position="top" data-tooltip="List view">apps</i>
+                                <i class="material-icons right filter-action pointer">apps</i>
                             </a>
                             {% else %}
                                 <a href="{{ url_for('main.change_home_view_mode', mode="list") }}">
-                                <i class="material-icons right filter-action pointer tooltipped" data-position="top" data-tooltip="List view">list</i>
+                                <i class="material-icons right filter-action pointer">list</i>
                             </a>
                             {% endif %}
                         {% endif %}
