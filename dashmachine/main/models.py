@@ -30,17 +30,6 @@ class Apps(db.Model):
     tags = db.Column(db.String())
 
 
-class TemplateApps(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String())
-    prefix = db.Column(db.String())
-    url = db.Column(db.String())
-    icon = db.Column(db.String())
-    sidebar_icon = db.Column(db.String())
-    description = db.Column(db.String())
-    open_in = db.Column(db.String())
-
-
 class DataSources(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String())

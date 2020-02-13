@@ -1,13 +1,14 @@
 import os
 from shutil import move
+from configparser import ConfigParser
 from flask_login import current_user
 from flask import render_template, request, Blueprint, jsonify, redirect, url_for
 from dashmachine.user_system.forms import UserForm
 from dashmachine.user_system.utils import add_edit_user
 from dashmachine.user_system.models import User
-from dashmachine.main.utils import row2dict, public_route, check_groups
+from dashmachine.main.utils import public_route, check_groups
 from dashmachine.main.read_config import read_config
-from dashmachine.main.models import Files, TemplateApps
+from dashmachine.main.models import Files
 from dashmachine.settings_system.forms import ConfigForm
 from dashmachine.settings_system.utils import load_files_html, get_config_html
 from dashmachine.settings_system.models import Settings
@@ -15,6 +16,7 @@ from dashmachine.paths import (
     backgrounds_images_folder,
     icons_images_folder,
     user_data_folder,
+    template_apps_folder,
 )
 from dashmachine.version import version
 from dashmachine import db
@@ -35,10 +37,13 @@ def settings():
     with open(os.path.join(user_data_folder, "config.ini"), "r") as config_file:
         config_form.config.data = config_file.read()
     files_html = load_files_html()
+
     template_apps = []
-    t_apps = TemplateApps.query.all()
-    for t_app in t_apps:
-        template_apps.append(f"{t_app.name}&&{t_app.icon}")
+    config = ConfigParser()
+    for template_app_ini in os.listdir(template_apps_folder):
+        config.read(os.path.join(template_apps_folder, template_app_ini))
+        entry = config[template_app_ini.replace(".ini", "")]
+        template_apps.append(f"{template_app_ini.replace('.ini', '')}&&{entry['icon']}")
 
     users = User.query.all()
     config_readme = get_config_html()
@@ -87,11 +92,15 @@ def delete_file():
 
 @settings_system.route("/settings/get_app_template", methods=["GET"])
 def get_app_template():
-    template_app = TemplateApps.query.filter_by(name=request.args.get("name")).first()
-    template = f"[{template_app.name}]<br>"
-    for key, value in row2dict(template_app).items():
-        if key not in ["id", "name"]:
-            template += f"{key} = {value}<br>"
+    # template_app = TemplateApps.query.filter_by(name=request.args.get("name")).first()
+    # template = f"[{template_app.name}]<br>"
+    # for key, value in row2dict(template_app).items():
+    #     if key not in ["id", "name"]:
+    #         template += f"{key} = {value}<br>"
+
+    fn = os.path.join(template_apps_folder, f"{request.args.get('name')}.ini")
+    with open(fn, "r") as template_app_ini:
+        template = template_app_ini.read().replace("\n", "<br>")
     return template
 
 

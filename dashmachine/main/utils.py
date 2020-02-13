@@ -1,11 +1,8 @@
 import os
-import subprocess
 import importlib
 from shutil import copyfile
-from requests import get
-from configparser import ConfigParser
 from dashmachine.paths import dashmachine_folder, images_folder, root_folder
-from dashmachine.main.models import TemplateApps, Groups
+from dashmachine.main.models import Groups
 from dashmachine.main.read_config import read_config
 from dashmachine.settings_system.models import Settings
 from dashmachine.user_system.models import User
@@ -21,31 +18,6 @@ def row2dict(row):
     return d
 
 
-def read_template_apps():
-    config = ConfigParser()
-    try:
-        config.read("app_templates.ini")
-    except Exception as e:
-        return {"msg": f"Invalid Config: {e}."}
-
-    TemplateApps.query.delete()
-
-    for section in config.sections():
-        template_app = TemplateApps()
-        template_app.name = section
-        template_app.prefix = config[section]["prefix"]
-        template_app.url = config[section]["url"]
-        template_app.icon = config[section]["icon"]
-        if "sidebar_icon" in config[section]:
-            template_app.sidebar_icon = config[section]["sidebar_icon"]
-        else:
-            template_app.sidebar_icon = template_app.icon
-        template_app.description = config[section]["description"]
-        template_app.open_in = config[section]["open_in"]
-        db.session.add(template_app)
-        db.session.commit()
-
-
 # establishes routes decorated w/ @public_route as accessible while not signed
 # in. See login and register routes for usage
 def public_route(decorated_function):
@@ -57,7 +29,6 @@ def dashmachine_init():
     db.create_all()
     db.session.commit()
 
-    read_template_apps()
     user_data_folder = os.path.join(dashmachine_folder, "user_data")
 
     # create the user_data subdirectories, link them to static
