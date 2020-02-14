@@ -15,7 +15,7 @@ def add_edit_user(username, password, user_id=None, role=None):
         return "You must have at least one admin user"
 
     hashed_password = bcrypt.generate_password_hash(password).decode("utf-8")
-    user.username = username
+    user.username = username.lower()
     user.password = hashed_password
     user.role = role
     db.session.merge(user)
