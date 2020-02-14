@@ -10,3 +10,5 @@
 - [ ] I looked at the other platform examples and followed a very similar methodology.
 - [ ] I added a docstring at the top of my platform file that is formatted exactly like rest.py
 - [ ] I added sample code to any template app that this platform works for, look at deluge.ini in /template_apps/ for an example
+- [ ] I have thoroughly tested this platform and it works
+- [ ] I am committed to updating this platform if something breaks it in the future
