@@ -57,6 +57,10 @@ The user data folder is located at DashMachine/dashmachine/user_data. This is wh
 ### Note
 If you change the config.ini file, you either have to restart the container (or python script) or click the 'save' button in the config section of settings for the config to be applied. Pictures added to the backgrounds/icons folders are available immediately.
 
+## Want to contribute?
+Check out the pull request template!
+https://git.wolf-house.net/ross/DashMachine/src/branch/master/pull_request_template.md
+
 ## Tech used
 * Flask
 * SQLalchemy w/ SQLite
