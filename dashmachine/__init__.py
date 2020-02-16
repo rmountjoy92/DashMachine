@@ -11,8 +11,8 @@ from dashmachine.paths import user_data_folder
 if not os.path.isdir(user_data_folder):
     os.mkdir(user_data_folder)
 
-
-app = Flask(__name__)
+context_path = os.getenv('CONTEXT_PATH', '')
+app = Flask(__name__, static_url_path=context_path + '/static')
 cache = Cache(app, config={"CACHE_TYPE": "simple"})
 api = Api(app)
 
@@ -32,10 +32,10 @@ from dashmachine.error_pages.routes import error_pages
 from dashmachine.settings_system.routes import settings_system
 from dashmachine import sources
 
-app.register_blueprint(main)
-app.register_blueprint(user_system)
-app.register_blueprint(error_pages)
-app.register_blueprint(settings_system)
+app.register_blueprint(main, url_prefix=context_path)
+app.register_blueprint(user_system, url_prefix=context_path)
+app.register_blueprint(error_pages, url_prefix=context_path)
+app.register_blueprint(settings_system, url_prefix=context_path)
 
 
 from dashmachine.rest_api.resources import *

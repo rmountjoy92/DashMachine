@@ -30,7 +30,16 @@ docker create \
   --restart unless-stopped \
   rmountjoy/dashmachine:latest
 ```
-
+To run in a subfolder, use a CONTEXT_PATH environment variable. For example, to run at localhost:5000/dash:
+```
+docker create \
+  --name=dashmachine \
+  -p 5000:5000 \
+  -e CONTEXT_PATH=/dash
+  -v path/to/data:/dashmachine/dashmachine/user_data \
+  --restart unless-stopped \
+  rmountjoy/dashmachine:latest
+```
 ### Python
 Instructions are for linux.
 ```
