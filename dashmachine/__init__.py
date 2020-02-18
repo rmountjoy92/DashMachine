@@ -11,8 +11,8 @@ from dashmachine.paths import user_data_folder
 if not os.path.isdir(user_data_folder):
     os.mkdir(user_data_folder)
 
-context_path = os.getenv('CONTEXT_PATH', '')
-app = Flask(__name__, static_url_path=context_path + '/static')
+context_path = os.getenv("CONTEXT_PATH", "")
+app = Flask(__name__, static_url_path=context_path + "/static")
 cache = Cache(app, config={"CACHE_TYPE": "simple"})
 api = Api(app)
 
