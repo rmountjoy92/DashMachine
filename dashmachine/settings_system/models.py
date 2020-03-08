@@ -10,3 +10,4 @@ class Settings(db.Model):
     home_access_groups = db.Column(db.String())
     settings_access_groups = db.Column(db.String())
     home_view_mode = db.Column(db.String())
+    custom_app_title = db.Column(db.String())

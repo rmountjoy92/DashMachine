@@ -63,6 +63,10 @@ def read_config():
             )
             settings.home_view_mode = config["Settings"].get("home_view_mode", "grid")
 
+            settings.custom_app_title = config["Settings"].get(
+                "custom_app_title", "DashMachine"
+            )
+
             db.session.add(settings)
             db.session.commit()
 
@@ -143,7 +147,14 @@ def read_config():
                         db.session.add(tag_db)
                         db.session.commit()
             else:
-                app.tags = None
+                if Tags.query.first():
+                    app.tags = "Untagged"
+                    if not Tags.query.filter_by(name="Untagged").first():
+                        tag_db = Tags(name="Untagged")
+                        db.session.add(tag_db)
+                        db.session.commit()
+                else:
+                    app.tags = None
 
             db.session.add(app)
             db.session.commit()

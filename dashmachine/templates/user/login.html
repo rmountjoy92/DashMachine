@@ -9,7 +9,7 @@
                         <img width="120px" src="static/images/logo/logo.svg" alt="DashMachine Logo">
                     </div>
                     <div class="row">
-                        <form class="login-form" method="POST">
+                        <form class="login-form" method="POST" data-url="{{ url_for('user_system.check_login') }}">
                             {{ form.hidden_tag() }}
 
                             <div class="input-field col s12">
@@ -44,3 +44,7 @@
         </div>
     </div>
 {% endblock content %}
+
+{% block page_lvl_js %}
+    {{ process_js_sources(src="main/login.js")|safe }}
+{% endblock page_lvl_js %}

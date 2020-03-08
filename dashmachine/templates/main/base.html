@@ -21,9 +21,9 @@
     content="Another web application bookmark dashboard, with fun features.">
   <meta name="author" content="rmountjoy">
   {% if title %}
-  <title>{{ title }} - DashMachine</title>
+  <title>{{ title }} - {{ settings.custom_app_title }}</title>
   {% else %}
-  <title>DashMachine</title>
+  <title>{{ settings.custom_app_title }}</title>
   {% endif %}
   <link rel="apple-touch-icon" href="static/images/favicon/apple-touch-icon-152x152.png">
   <link rel="shortcut icon" type="image/x-icon" href="static/images/favicon/favicon-32x32.png">

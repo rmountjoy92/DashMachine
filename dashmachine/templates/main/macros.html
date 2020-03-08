@@ -54,39 +54,33 @@
     {# </a> This closes AppAnchor() #}
 {% endmacro %}
 
-{% macro ListViewApp(apps) %}
-    <div class="col s12 m12 l8">
-        <div id="list-view-collection" class="collection">
-            {% for app in apps %}
-                {{ AppAnchor(app, classes="collection-item") }}
-                <div class="row">
-                    <div class="col s12
-                        {% if app.data_sources.count() > 0 %}
-                            l6
-                        {% else %}
-                            l12
-                        {% endif %}">
-                        <img src="{{ app.icon }}" class="app-icon">
-                        <span class="theme-muted-text app-name">{{ app.name }}</span>
-                        {% if app.description %}
-                            <i class="material-icons-outlined tooltipped" data-position="top" data-tooltip="{{ app.description }}">info</i>
-                        {% endif %}
-                    </div>
-                    <div class="col s12 l6 right-align">
-                        {% if app.data_sources.count() > 0 %}
-                            <span class="data-source-loading">{{ preload_circle() }}</span>
-                            {% for data_source in app.data_sources %}
-                                <span class="data-source-container theme-primary-text"
-                                   data-url="{{ url_for('main.load_data_source') }}"
-                                   data-id="{{ data_source.id }}">
-                                </span>
-                            {% endfor %}
-                        {% endif %}
-                    </div>
-                </div>
-                </a>
-                {# </a> This closes AppAnchor() #}
-            {% endfor %}
+{% macro ListViewApp(app) %}
+    {{ AppAnchor(app, classes="collection-item") }}
+    <div class="row">
+        <div class="col s12
+            {% if app.data_sources.count() > 0 %}
+                l6
+            {% else %}
+                l12
+            {% endif %}">
+            <img src="{{ app.icon }}" class="app-icon">
+            <span class="theme-muted-text app-name">{{ app.name }}</span>
+            {% if app.description %}
+                <i class="material-icons-outlined tooltipped" data-position="top" data-tooltip="{{ app.description }}">info</i>
+            {% endif %}
+        </div>
+        <div class="col s12 l6 right-align">
+            {% if app.data_sources.count() > 0 %}
+                <span class="data-source-loading">{{ preload_circle() }}</span>
+                {% for data_source in app.data_sources %}
+                    <span class="data-source-container theme-primary-text"
+                       data-url="{{ url_for('main.load_data_source') }}"
+                       data-id="{{ data_source.id }}">
+                    </span>
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
+    </a>
+    {# </a> This closes AppAnchor() #}
 {% endmacro %}

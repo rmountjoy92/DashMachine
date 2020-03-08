@@ -49,14 +49,70 @@
             </div>
             <div class="row">
                 {% if apps %}
+                    {# If tags are enabled, render the apps like this #}
+                    {% if tags_form.tags.choices|count > 1 %}
+                        {% if settings.home_view_mode == "list" %}
 
-                    {% if settings.home_view_mode == "list" %}
-                        {{ ListViewApp(apps) }}
+                            <div class="col s12 m12 l8">
+                                <div id="list-view-collection" class="collection">
+                                    {% for tag in tags_form.tags.choices %}
+                                        {% if tag[0] != 'All tags' %}
+                                            <div class="tag-group" data-tag="{{ tag[0] }}">
+                                                <a class="collection-item font-weight-600 theme-on-primary-text theme-primary" style="font-size: 1.2em">{{ tag[0] }}</a>
+                                                {% for app in apps %}
+                                                    {% if app.tags and tag[0] in app.tags %}
+                                                        {{ ListViewApp(app) }}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                        {% else %}
+                            {% for tag in tags_form.tags.choices %}
+                                {% if tag[0] != 'All tags' %}
+                                    <div class="tag-group" data-tag="{{ tag[0] }}">
+                                        <div class="row">
+                                            <div class="col s12 m6 l2">
+                                                <div class="card center-align theme-primary">
+                                                    <h5 class="theme-on-primary-text">{{ tag[0] }}</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            {% for app in apps %}
+                                                {% if app.tags and tag[0] in app.tags %}
+                                                    {{ GridViewApp(app) }}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                        <div class="divider"></div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+
                     {% else %}
-                        {% for app in apps %}
-                            {{ GridViewApp(app) }}
-                        {% endfor %}
+                        {# otherwise, render the apps like this #}
+                        {% if settings.home_view_mode == "list" %}
+
+                            <div class="col s12 m12 l8">
+                                <div id="list-view-collection" class="collection">
+                                    {% for app in apps %}
+                                        {{ ListViewApp(app) }}
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                        {% else %}
+                            {% for app in apps %}
+                                {{ GridViewApp(app) }}
+                            {% endfor %}
+                        {% endif %}
                     {% endif %}
+
 
                 {% else %}
                     <a href="{{ url_for('settings_system.settings') }}">

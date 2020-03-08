@@ -14,6 +14,19 @@ $( document ).ready(function() {
                 $(this).addClass('hide');
             }
         });
+        $(".tag-group").each(function(i, e) {
+            var x = 0
+            $(this).find('.app-a').each(function(i, e) {
+                if ($(this).hasClass("hide") === false){
+                    x = x + 1
+                }
+            });
+            if (x === 0){
+                $(this).addClass('hide');
+            } else {
+                $(this).removeClass('hide');
+            }
+        });
     });
 
     $(".data-source-container").each(function(e) {
@@ -31,8 +44,8 @@ $( document ).ready(function() {
 
     $("#tags-select").on('change', function(e) {
         var value = $(this).val();
-        $(".app-a").each(function(i, e) {
-            if ($(this).attr("data-tags").indexOf(value) > -1 || value === "All tags") {
+        $(".tag-group").each(function(i, e) {
+            if ($(this).attr("data-tag").indexOf(value) > -1 || value === "All tags") {
                 $(this).removeClass('filtered');
             } else {
                 $(this).addClass('filtered');

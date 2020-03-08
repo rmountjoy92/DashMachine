@@ -1,4 +1,4 @@
-from flask import render_template, url_for, redirect, Blueprint
+from flask import render_template, url_for, redirect, Blueprint, jsonify
 from flask_login import login_user, logout_user
 from dashmachine.user_system.forms import LoginForm
 from dashmachine.user_system.models import User
@@ -14,25 +14,30 @@ user_system = Blueprint("user_system", __name__)
 # ------------------------------------------------------------------------------
 # login page
 @public_route
-@user_system.route("/login", methods=["GET", "POST"])
+@user_system.route("/login", methods=["GET"])
 def login():
-    user = User.query.first()
-
     form = LoginForm()
+    return render_template("user/login.html", title="Login", form=form)
 
+
+@public_route
+@user_system.route("/check_login", methods=["POST"])
+def check_login():
+    form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data.lower()).first()
+        if not user:
+            response = {"err": "User not found"}
 
-        if user and bcrypt.check_password_hash(user.password, form.password.data):
+        elif bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
-
-            return redirect(url_for("main.home"))
-
+            response = {"url": url_for("main.home")}
         else:
-            print("password was wrong")
-            return redirect(url_for("user_system.login"))
+            response = {"err": "Password is wrong"}
+    else:
+        response = {"err": str(form.errors)}
 
-    return render_template("user/login.html", title="Login", form=form)
+    return jsonify(data=response)
 
 
 # this logs the user out and redirects to the login page

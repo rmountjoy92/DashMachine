@@ -12,7 +12,7 @@
             <input name="files" id="add-images-input" class="hide">
         </form>
         <div class="col s12">
-            {{ tcdrop(allowed_types='jpg,jpeg,png,gif', id="images-tcdrop", max_files="30") }}
+            {{ tcdrop(allowed_types='apng,bmp,gif,ico,cur,jpg,jpeg,jfif,pjpeg,pjp,png,svg,tif,tiff,webp', id="images-tcdrop", max_files="30") }}
             {{ button(text="save", icon="save", id="save-images-btn", float="left", data={"url": url_for('settings_system.add_images')}) }}
         </div>
     </div>

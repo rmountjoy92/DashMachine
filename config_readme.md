@@ -14,6 +14,7 @@ background = None
 roles = admin,user,public_user
 home_access_groups = admin_only
 settings_access_groups = admin_only
+custom_app_title = DashMachine
 ```
 
 | Variable               | Required | Description                                              | Options                                                                                                                                                                        |
@@ -25,6 +26,7 @@ settings_access_groups = admin_only
 | roles                  | No       | User roles for access groups.                            | comma separated string, if not defined, this is set to 'admin,user,public_user'. Note: admin, user, public_user roles are required and will be added automatically if omitted. |
 | home_access_groups     | No       | Define which access groups can access the /home page     | Groups defined in your config. If not defined, default is admin_only                                                                                                           |
 | settings_access_groups | No       | Define which access groups can access the /settings page | Groups defined in your config. If not defined, default is admin_only                                                                                                           |
+| custom_app_title       | No       | Change the title of the app for browser tabs             | string                                                                                                                                                                         |
 
 ##### Apps
 These entries are the cards that you see one the home page, as well as the sidenav. Entries

@@ -1,7 +1,8 @@
 import os
 import importlib
 from shutil import copyfile
-from dashmachine.paths import dashmachine_folder, images_folder, root_folder
+from PIL import Image, ImageOps
+from dashmachine.paths import dashmachine_folder, images_folder
 from dashmachine.main.models import Groups
 from dashmachine.main.read_config import read_config
 from dashmachine.settings_system.models import Settings
@@ -26,6 +27,7 @@ def public_route(decorated_function):
 
 
 def dashmachine_init():
+    resize_template_app_images()
     db.create_all()
     db.session.commit()
 
@@ -100,3 +102,12 @@ def get_data_source(data_source):
     )
     platform = module.Platform(data_source, **data_source_args)
     return platform.process()
+
+
+def resize_template_app_images():
+    folder = os.path.join(images_folder, "apps")
+    for file in os.listdir(folder):
+        fp = os.path.join(folder, file)
+        image = Image.open(fp)
+        image.thumbnail((64, 64))
+        image.save(fp)

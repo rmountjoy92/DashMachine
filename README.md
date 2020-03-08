@@ -2,9 +2,11 @@
 # DashMachine
 ### Another web application bookmark dashboard, with fun features.
 
-![screenshot](https://i.ibb.co/chbBkzk/2020-02-02-09-46.png)
+![screenshot](https://i.ibb.co/HxS4SPd/2020-03-08-10-40.png)
 
-![screenshot](https://i.ibb.co/HXbfhnp/2020-02-02-09-47.png)
+![screenshot](https://i.ibb.co/7nmJR3J/2020-03-08-10-43.png)
+
+![screenshot](https://i.ibb.co/y8Gr4C7/2020-03-08-10-45.png)
 
 ### Features
 * creates a dashboard to view web pages
@@ -60,6 +62,10 @@ Password: adminadmin
 ## Updating
 For python, use git. For docker, just pull the latest image and recreate the container.
 
+**Note:** if you update DashMachine and it fails to start, it's possible something is messed up
+with your database file. Backup your files in the user_data folder, delete the contents and
+restart DashMachine. This will reset your user table, so log in with the default user/pass.
+
 ## Configuration
 The user data folder is located at DashMachine/dashmachine/user_data. This is where the config.ini, custom backgrounds/icons, and the database file live. A reference for what can go into the config.ini file can be found on the settings page of the dashmachine by clicking the info icon next to 'Config'. 
 
@@ -67,8 +73,11 @@ The user data folder is located at DashMachine/dashmachine/user_data. This is wh
 If you change the config.ini file, you either have to restart the container (or python script) or click the 'save' button in the config section of settings for the config to be applied. Pictures added to the backgrounds/icons folders are available immediately.
 
 ## Want to contribute?
-Check out the pull request template!
-https://git.wolf-house.net/ross/DashMachine/src/branch/master/pull_request_template.md
+Please use the pull request template at:
+https://github.com/rmountjoy92/DashMachine/blob/master/pull_request_template.md
+
+See this link for how to create a pull request:
+https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request
 
 ## Tech used
 * Flask
@@ -77,3 +86,7 @@ https://git.wolf-house.net/ross/DashMachine/src/branch/master/pull_request_templ
 * Materialize css
 * JavaScript/jQuery/jQueryUI
 * Requests (python)
+
+## FAQs
+1. <application> does not work in iframe
+see https://github.com/rmountjoy92/DashMachine/issues/6
