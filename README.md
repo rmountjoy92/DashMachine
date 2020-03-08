@@ -93,5 +93,5 @@ https://www.reddit.com/r/DashMachine
 * Requests (python)
 
 ## FAQs
-1. <application> does not work in iframe
+1. application does not work in iframe
 see https://github.com/rmountjoy92/DashMachine/issues/6
