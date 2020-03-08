@@ -1,12 +1,12 @@
-![dashmachine logo](https://i.ibb.co/PMGkhdz/logo.png)
+![dashmachine logo](https://raw.githubusercontent.com/rmountjoy92/DashMachine/master/logo.png)
 # DashMachine
 ### Another web application bookmark dashboard, with fun features.
 
-![screenshot](https://i.ibb.co/HxS4SPd/2020-03-08-10-40.png)
+![screenshot](https://raw.githubusercontent.com/rmountjoy92/DashMachine/master/screenshot1.png)
 
-![screenshot](https://i.ibb.co/7nmJR3J/2020-03-08-10-43.png)
+![screenshot](https://raw.githubusercontent.com/rmountjoy92/DashMachine/master/screenshot2.png)
 
-![screenshot](https://i.ibb.co/y8Gr4C7/2020-03-08-10-45.png)
+![screenshot](https://raw.githubusercontent.com/rmountjoy92/DashMachine/master/screenshot3.png)
 
 ### Features
 * creates a dashboard to view web pages
