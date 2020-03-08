@@ -1,4 +1,3 @@
-![dashmachine logo](https://raw.githubusercontent.com/rmountjoy92/DashMachine/master/logo.png)
 # DashMachine
 ### Another web application bookmark dashboard, with fun features.
 
