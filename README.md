@@ -78,6 +78,9 @@ https://github.com/rmountjoy92/DashMachine/blob/master/pull_request_template.md
 See this link for how to create a pull request:
 https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request
 
+## Subreddit 
+https://www.reddit.com/r/DashMachine
+
 ## Tech used
 * Flask
 * SQLalchemy w/ SQLite
