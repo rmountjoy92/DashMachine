@@ -40,6 +40,7 @@ response_type = json
 import requests
 from flask import render_template_string
 
+
 class Platform:
     def __init__(self, *args, **kwargs):
         # parse the user's options from the config entries

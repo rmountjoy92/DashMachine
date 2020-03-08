@@ -22,6 +22,7 @@ Jinja2
 jsmin
 Mako
 MarkupSafe
+Pillow
 pycparser
 python-dateutil
 python-editor
