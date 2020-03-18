@@ -18,7 +18,7 @@ payload = {"var1": "hi", "var2": 1}
 | Variable        | Required | Description                                                     | Options           |
 |-----------------|----------|-----------------------------------------------------------------|-------------------|
 | [variable_name] | Yes      | Name for the data source.                                       | [variable_name]   |
-| plaform         | Yes      | Name of the platform.                                           | rest              |
+| platform        | Yes      | Name of the platform.                                           | rest              |
 | resource        | Yes      | Url of rest api resource.                                       | url               |
 | value_template  | Yes      | Jinja template for how the returned data from api is displayed. | jinja template    |
 | method          | No       | Method for the api call, default is GET                         | GET,POST          |
