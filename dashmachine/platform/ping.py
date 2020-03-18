@@ -12,7 +12,7 @@ resource = 192.168.1.1
 | Variable        | Required | Description                                                     | Options           |
 |-----------------|----------|-----------------------------------------------------------------|-------------------|
 | [variable_name] | Yes      | Name for the data source.                                       | [variable_name]   |
-| plaform         | Yes      | Name of the platform.                                           | rest              |
+| platform        | Yes      | Name of the platform.                                           | rest              |
 | resource        | Yes      | Url of whatever you want to ping                                | url               |
 
 
