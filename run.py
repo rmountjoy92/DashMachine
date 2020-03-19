@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 
 import os
-from dashmachine.paths import root_folder
 
-os.system("python " + os.path.join(root_folder, "manage_db.py db stamp head"))
+root_folder = os.path.dirname(__file__)
 
 os.system("python " + os.path.join(root_folder, "manage_db.py db migrate"))
 
