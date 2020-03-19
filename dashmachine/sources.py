@@ -86,6 +86,10 @@ def context_processor():
             tags += app_db.tags.split(",")
 
     tags_form = TagsForm()
+    tags = [tag.strip() for tag in tags]
+    for tag in tags:
+        if tags.count(tag) > 1:
+            tags.remove(tag)
     tags_form.tags.choices += [(tag, tag) for tag in tags]
     settings = Settings.query.first()
     if settings.background == "random":
