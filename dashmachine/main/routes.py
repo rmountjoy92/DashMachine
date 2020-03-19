@@ -60,14 +60,10 @@ def check_valid_login():
 @main.route("/")
 @main.route("/home", methods=["GET"])
 def home():
-    tags_form = TagsForm()
-    tags_form.tags.choices += [
-        (tag.name, tag.name) for tag in Tags.query.order_by(Tags.name).all()
-    ]
     settings = Settings.query.first()
     if not check_groups(settings.home_access_groups, current_user):
         return redirect(url_for("error_pages.unauthorized"))
-    return render_template("main/home.html", tags_form=tags_form)
+    return render_template("main/home.html")
 
 
 @public_route
