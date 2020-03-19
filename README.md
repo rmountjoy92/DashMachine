@@ -82,7 +82,16 @@ https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/cr
 https://www.reddit.com/r/DashMachine
 
 ## Want to buy me a coffee?
+recurring:
 <a href="https://liberapay.com/rmountjoy/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a>
+
+recurring or one-time:
+https://www.bountysource.com/teams/dashmachine-app
+
+## Want a feature to be added faster?
+Open a bounty on https://www.bountysource.com/
+
+Bountysource faq: https://github.com/bountysource/core/wiki/Frequently-Asked-Questions
 
 ## Tech used
 * Flask
