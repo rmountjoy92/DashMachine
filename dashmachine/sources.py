@@ -87,7 +87,6 @@ def context_processor():
 
     tags_form = TagsForm()
     tags_form.tags.choices += [(tag, tag) for tag in tags]
-    print(tags_form.tags.choices)
     settings = Settings.query.first()
     if settings.background == "random":
         if len(os.listdir(backgrounds_images_folder)) < 1:

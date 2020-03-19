@@ -36,6 +36,10 @@
     overflow-y: scroll !important;
     overflow-x: hidden !important;
 }
+.scrollbar-x {
+    overflow-y: scroll !important;
+    overflow-x: scroll !important;
+}
 
 /* ELEMENT STLYES */
 body {

@@ -32,6 +32,7 @@ $( document ).ready(function() {
     $(".data-source-container").each(function(e) {
         var el = $(this);
         $.ajax({
+            async: true,
             url: el.attr('data-url'),
             type: 'GET',
             data: {id: el.attr('data-id')},
@@ -52,4 +53,5 @@ $( document ).ready(function() {
             }
         });
     });
+
 });
