@@ -14,7 +14,7 @@ password = MySecretPassword
 | Variable        | Required | Description                                                     | Options           |
 |-----------------|----------|-----------------------------------------------------------------|-------------------|
 | [variable_name] | Yes      | Name for the data source.                                       | [variable_name]   |
-| plaform         | Yes      | Name of the platform.                                           | rest              |
+| platform        | Yes      | Name of the platform.                                           | rest              |
 | resource        | Yes      | Url of your deluge instance + '/json'                           | url               |
 | value_template  | Yes      | Jinja template for how the returned data from api is displayed. | jinja template    |
 | password        | No       | Password to use for auth.                                       | string            |
