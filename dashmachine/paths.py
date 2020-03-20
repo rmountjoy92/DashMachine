@@ -13,6 +13,8 @@ root_folder = get_root_folder()
 
 dashmachine_folder = os.path.join(root_folder, "dashmachine")
 
+auth_cache = os.path.join(dashmachine_folder, "auth_cache")
+
 template_apps_folder = os.path.join(root_folder, "template_apps")
 
 platform_folder = os.path.join(dashmachine_folder, "platform")

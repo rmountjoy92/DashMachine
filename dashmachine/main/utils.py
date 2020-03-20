@@ -1,13 +1,10 @@
 import os
 import importlib
 from shutil import copyfile
-from PIL import Image, ImageOps
+from PIL import Image
 from dashmachine.paths import dashmachine_folder, images_folder
 from dashmachine.main.models import Groups
 from dashmachine.main.read_config import read_config
-from dashmachine.settings_system.models import Settings
-from dashmachine.user_system.models import User
-from dashmachine.user_system.utils import add_edit_user
 from dashmachine import db
 
 
@@ -53,20 +50,6 @@ def dashmachine_init():
         copyfile("default_config.ini", config_file)
 
     read_config()
-
-    user = User.query.first()
-    if not user:
-        settings = Settings.query.first()
-        add_edit_user(
-            username="admin",
-            password="adminadmin",
-            role=settings.roles.split(",")[0].strip(),
-        )
-
-    users = User.query.all()
-    for user in users:
-        if not user.role:
-            user.role = "admin"
 
 
 def check_groups(groups, current_user):

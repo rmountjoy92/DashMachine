@@ -1,7 +1,6 @@
 {% extends "main/layout.html" %}
 {% from 'global_macros.html' import input, button, select %}
 {% from 'main/tcdrop.html' import tcdrop %}
-{% from 'settings_system/user.html' import UserTab with context %}
 {% from 'settings_system/files.html' import FilesTab with context %}
 {% block page_vendor_css %}
 {% endblock page_vendor_css %}
@@ -76,8 +75,8 @@
                                             <i class="material-icons-outlined">apps</i>
                                         </a></li>
 
-                                        <li class="tab col s3"><a href="#user">
-                                            <i class="material-icons-outlined">person</i>
+                                        <li class="tab col s3"><a href="#about">
+                                            <i class="material-icons-outlined">security</i>
                                         </a></li>
                                     </ul>
                                 </div>
@@ -112,8 +111,40 @@
                                     {{ config_readme|safe }}
                                 </div>
 
-                                <div id="user" class="col s12 scrollbar settings-page-card-right">
-                                    {{ UserTab() }}
+                                <div id="about" class="col s12 scrollbar settings-page-card-right">
+                                    <div class="row">
+                                        <div class="card theme-surface-1">
+                                            <div class="card-content center-align">
+                                                <img src="static/images/logo/full.svg">
+                                                <h5>DashMachine</h5>
+                                                <div class="divider"></div>
+                                                <p class="font-weight-900 mb-2">Version:</p>
+                                                <p class="mb-2">{{ version }}</p>
+
+                                                <div class="divider"></div>
+                                                <p class="font-weight-900 mb-2">Author:</p>
+                                                <p class="mb-2">Ross Mountjoy (<a href="https://github.com/rmountjoy92" target="_blank"> Github </a>)</p>
+
+                                                <div class="divider"></div>
+                                                <p class="font-weight-900 mb-2">Source code:</p>
+                                                <p class="mb-2"><a href="https://github.com/rmountjoy92/DashMachine" target="_blank"> Repo</a></p>
+
+                                                <div class="divider"></div>
+                                                <p class="font-weight-900 mb-2">Reddit:</p>
+                                                <p class="mb-2"><a href="https://www.reddit.com/r/DashMachine/" target="_blank"> r/DashMachine</a>
+
+                                                <div class="divider"></div>
+                                                <p class="font-weight-900 mb-2">Donations:</p>
+                                                <p class="mb-2"><a href="https://liberapay.com/rmountjoy/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a></p>
+                                                <p class="mb-2"><a href="https://www.bountysource.com/teams/dashmachine-app" target="_blank"> Bountysource donation link</a></p>
+
+                                                <div class="divider"></div>
+                                                <p class="font-weight-900 mb-2">Bounties for new features:</p>
+                                                <p class="mb-2"><a href="https://www.bountysource.com/" target="_blank"> Bountysource link</a></p>
+                                                <p class="mb-2"><a href="https://github.com/bountysource/core/wiki/Frequently-Asked-Questions" target="_blank"> Bountysource faqs</a></p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
                             </div>

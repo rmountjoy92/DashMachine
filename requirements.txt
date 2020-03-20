@@ -9,7 +9,6 @@ Flask
 Flask-Bcrypt
 Flask-Caching
 Flask-Login
-Flask-Migrate
 Flask-RESTful
 Flask-Script
 Flask-SQLAlchemy

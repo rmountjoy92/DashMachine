@@ -1,6 +1,12 @@
 import os
 from configparser import ConfigParser
 from dashmachine.main.models import Apps, Groups, DataSources, DataSourcesArgs, Tags
+from dashmachine.user_system.models import User
+from dashmachine.user_system.utils import (
+    hash_and_cache_password,
+    get_cached_password,
+    clean_auth_cache,
+)
 from dashmachine.settings_system.models import Settings
 from dashmachine.paths import user_data_folder
 from dashmachine import db
@@ -30,6 +36,7 @@ def read_config():
     Settings.query.delete()
     Groups.query.delete()
     Tags.query.delete()
+    User.query.delete()
 
     for section in config.sections():
 
@@ -69,6 +76,41 @@ def read_config():
 
             db.session.add(settings)
             db.session.commit()
+
+        # User creation
+        elif "role" in config[section]:
+            user = User()
+            user.username = section
+            user.role = config[section]["role"]
+            user.password = ""
+            if not User.query.filter_by(role="admin").first() and user.role != "admin":
+                print(
+                    f"Invalid Config: admin user not specified, or not specified first. {user.username} role set to admin"
+                )
+                user.role = "admin"
+                config.set(section, "role", "admin")
+                config.write(open(os.path.join(user_data_folder, "config.ini"), "w"))
+            db.session.add(user)
+            db.session.commit()
+            new_password = config[section].get("password", None)
+            if new_password:
+                if new_password == config[section].get("confirm_password", None):
+                    password = hash_and_cache_password(new_password, user.id)
+                    user.password = password
+                    db.session.merge(user)
+                    db.session.commit()
+            else:
+                password = get_cached_password(user.id)
+                if password == "error":
+                    print(
+                        f"Invalid Config: Password for {user.username} must be specified. Using 'admin' by default"
+                    )
+                user.password = password
+                db.session.merge(user)
+                db.session.commit()
+            config.set(section, "password", "")
+            config.set(section, "confirm_password", "")
+            config.write(open(os.path.join(user_data_folder, "config.ini"), "w"))
 
         # Groups creation
         elif "roles" in config[section]:
@@ -177,5 +219,17 @@ def read_config():
         group.name = "admin_only"
         group.roles = "admin"
         db.session.add(group)
+        db.session.commit()
+
+    clean_auth_cache()
+    if not User.query.first():
+        user = User()
+        user.username = "admin"
+        user.role = "admin"
+        user.password = ""
+        db.session.add(user)
+        db.session.commit()
+        user.password = hash_and_cache_password("admin", user.id)
+        db.session.merge(user)
         db.session.commit()
     return {"msg": "success", "settings": row2dict(settings)}
