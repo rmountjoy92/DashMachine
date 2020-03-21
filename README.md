@@ -1,6 +1,9 @@
 # DashMachine
 ### Another web application bookmark dashboard, with fun features.
 
+## Before Installing
+Please read the latest update post: https://redd.it/flubzn
+
 ![screenshot](https://raw.githubusercontent.com/rmountjoy92/DashMachine/master/screenshot1.png)
 
 ![screenshot](https://raw.githubusercontent.com/rmountjoy92/DashMachine/master/screenshot2.png)
@@ -46,7 +49,7 @@ Instructions are for linux.
 ```
 virtualenv --python=python3 DashMachineEnv
 cd DashMachineEnv && source bin/activate
-git clone https://git.wolf-house.net/ross/DashMachine.git
+git clone https://github.com/rmountjoy92/DashMachine.git
 cd DashMachine && pip install -r requirements.txt
 python3 run.py
 ```
