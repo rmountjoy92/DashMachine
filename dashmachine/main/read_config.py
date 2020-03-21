@@ -74,6 +74,8 @@ def read_config():
                 "custom_app_title", "DashMachine"
             )
 
+            settings.sidebar_default = config["Settings"].get("sidebar_default", "open")
+
             db.session.add(settings)
             db.session.commit()
 
@@ -82,6 +84,10 @@ def read_config():
             user = User()
             user.username = section
             user.role = config[section]["role"]
+            user.sidebar_default = config[section].get("sidebar_default", None)
+            user.home_view_mode = config[section].get("home_view_mode", "grid")
+            user.theme = config[section].get("theme", None)
+            user.accent = config[section].get("accent", None)
             user.password = ""
             if not User.query.filter_by(role="admin").first() and user.role != "admin":
                 print(

@@ -47,6 +47,7 @@
     -ms-user-select: all;
     user-select: all;
     cursor: text;
+    white-space: pre-wrap;
 }
 #config-readme th {
     color: var(--theme-primary);

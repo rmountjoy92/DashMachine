@@ -4,7 +4,7 @@ from jsmin import jsmin
 from flask_login import current_user
 from dashmachine import app
 from dashmachine.main.models import Apps
-from dashmachine.main.utils import check_groups
+from dashmachine.main.utils import check_groups, get_update_message_html
 from dashmachine.main.forms import TagsForm
 from dashmachine.settings_system.models import Settings
 from dashmachine.paths import static_folder, backgrounds_images_folder
@@ -100,6 +100,7 @@ def context_processor():
                 f"static/images/backgrounds/"
                 f"{random.choice(os.listdir(backgrounds_images_folder))}"
             )
+    update_message = get_update_message_html()
     return dict(
         test_key="test",
         process_js_sources=process_js_sources,
@@ -107,4 +108,5 @@ def context_processor():
         apps=apps,
         settings=settings,
         tags_form=tags_form,
+        update_message=update_message,
     )

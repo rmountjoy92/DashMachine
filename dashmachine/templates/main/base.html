@@ -1,3 +1,4 @@
+{% from 'global_macros.html' import button %}
 
 <!DOCTYPE html>
 <html id="html" class="loading" lang="en" data-textdirection="ltr">
@@ -47,18 +48,44 @@
   data-menu="vertical-dark-menu" data-col="2-columns">
   <input id="copy-input" style="white-space: pre" class="hide">
 
+  {#  System settings from database  #}
   <input id="settings-theme" class="hide" value="{{ settings.theme }}">
   <input id="settings-accent" class="hide" value="{{ settings.accent }}">
+  <input id="settings-sidebar_default" class="hide" value="{{ settings.sidebar_default }}">
+
+  {#  User settings from database  #}
+  <input id="user-name" class="hide" value="{{ current_user.username }}">
+  <input id="user-theme" class="hide" value="{{ current_user.theme }}">
+  <input id="user-accent" class="hide" value="{{ current_user.accent }}">
+  <input id="user-sidebar_default" class="hide" value="{{ current_user.sidebar_default }}">
 
   <script src="static/js/vendors/jquery.min.js"></script>
 
+  <div id="update-message-modal" class="modal">
+      <div id="update-message-content" class="modal-content">
+          {{ update_message|safe }}
+      </div>
+      <div class="modal-footer">
+          {{ button(
+          id="update-message-read-btn",
+          data={"url": url_for('main.update_message_read')},
+          icon="check_circle",
+          text="read"
+          ) }}
+
+          {{ button(
+          class="modal-close",
+          icon="restore",
+          text="later"
+          ) }}
+      </div>
+  </div>
 
   {% block header %}{% endblock header %}
 
   {% block sidenav %}{% endblock sidenav %}
 
-  {% block content %}
-  {% endblock content %}
+  {% block content %}{% endblock content %}
 
   {% block footer %}{% endblock footer %}
 
@@ -85,13 +112,6 @@
       }
     </style>
   </noscript>
-
-  <!-- GLOBAL DOCUMENT VIEWER -->
-  <div id="pdf-viewer-modal" class="modal full-height-modal" style="overflow: hidden;">
-    <div class="modal-content p-0">
-      <embed id="pdf-viewer-modal-embed" src="" style="width: 100%; min-height: 99.4vh;">
-    </div>
-  </div>
 
 </body>
 

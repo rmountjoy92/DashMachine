@@ -67,6 +67,13 @@ function hide_sidenav() {
     localStorage.setItem('sidenav_hidden', 'true');
 }
 
+function no_sidebar() {
+    $("#main-sidenav").remove();
+    $("#main.main-full").css('padding-left', 0);
+    $("#no-sidenav").removeClass('hide');
+    localStorage.setItem('sidenav_hidden', 'no_sidebar');
+}
+
 function show_sidenav(){
     $("#main-sidenav").removeClass('hide');
     $("#main.main-full").css('padding-left', 64);
@@ -74,26 +81,80 @@ function show_sidenav(){
     localStorage.setItem('sidenav_hidden', null);
 }
 
-function apply_settings(settings_theme, settings_accent){
-    localStorage.setItem('mode', settings_theme);
-    document.documentElement.setAttribute('data-theme', settings_theme);
-    localStorage.setItem('accent', settings_accent);
-    document.documentElement.setAttribute('data-accent', settings_accent);
+function apply_settings(settings){
+    // theme
+    if (settings['user_theme'] != "None" && settings['user_theme'].length > 1) {
+        console.log(settings['user_theme'].length)
+        localStorage.setItem('mode', settings['user_theme']);
+        document.documentElement.setAttribute('data-theme', settings['user_theme']);
+    } else {
+        localStorage.setItem('mode', settings['settings_theme']);
+        document.documentElement.setAttribute('data-theme', settings['settings_theme']);
+    }
+    // accent
+    if (settings['user_accent'] != "None" && settings['user_accent'].length > 1) {
+        localStorage.setItem('accent', settings['user_accent']);
+        document.documentElement.setAttribute('data-accent', settings['user_accent']);
+    } else {
+        localStorage.setItem('accent', settings['settings_accent']);
+        document.documentElement.setAttribute('data-accent', settings['settings_accent']);
+    }
+    if (settings['settings_sidebar_default'] == "closed"){
+        localStorage.setItem('sidenav_hidden', 'true');
+    } else if (settings['settings_sidebar_default'] == "open"){
+        localStorage.setItem('sidenav_hidden', 'false');
+    } else if (settings['settings_sidebar_default'] == "no_sidebar"){
+        localStorage.setItem('sidenav_hidden', 'no_sidebar');
+    }
+    if (settings['user_sidebar_default'] == "closed"){
+        localStorage.setItem('sidenav_hidden', 'true');
+    } else if (settings['user_sidebar_default'] == "open"){
+        localStorage.setItem('sidenav_hidden', 'false');
+    } else if (settings['user_sidebar_default'] == "no_sidebar"){
+        localStorage.setItem('sidenav_hidden', 'no_sidebar');
+    }
+    if (localStorage.getItem('sidenav_hidden') === 'true'){
+        hide_sidenav();
+    } else if (localStorage.getItem('sidenav_hidden') === 'no_sidebar'){
+        no_sidebar();
+    } else if (settings['user_name'].length < 1) {
+        no_sidebar();
+    }
 }
 
 //--------------------------------------------------------------------------------------
 // Document ready function
 //--------------------------------------------------------------------------------------
 $(document).ready(function () {
-    apply_settings($("#settings-theme").val(), $("#settings-accent").val());
     "use strict";
+    apply_settings({
+        settings_theme: $("#settings-theme").val(),
+        settings_accent: $("#settings-accent").val(),
+        settings_sidebar_default: $("#settings-sidebar_default").val(),
+        user_name: $("#user-name").val(),
+        user_theme: $("#user-theme").val(),
+        user_accent: $("#user-accent").val(),
+        user_sidebar_default: $("#user-sidebar_default").val(),
+    });
 
     //  INITS
     init_select();
 
-    if (localStorage.getItem('sidenav_hidden') === 'true'){
-        hide_sidenav();
+    $("#update-message-modal").modal({
+        dismissible: false
+    });
+    if ($("#update-message-content").text().length > 1){
+        $("#update-message-modal").modal('open');
     }
+    $("#update-message-read-btn").on('click', function(e) {
+       $.ajax({
+           url: $(this).attr('data-url'),
+           type: 'GET',
+           success: function(data){
+               $("#update-message-modal").modal('close');
+           }
+       });
+    });
 
     $("#hide-sidenav").on('click', function(e) {
         hide_sidenav();

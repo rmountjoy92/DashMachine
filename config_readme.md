@@ -1,11 +1,7 @@
 #### Config.ini Readme
 
 ##### Settings
-This is the configuration entry for DashMachine's settings. DashMachine will not work if
-this is missing. As for all config entries, [Settings] can only appear once in the config.
-If you change the config.ini file, you either have to restart the container 
-(or python script) or click the ‘save’ button in the config section of settings for the 
-config to be applied.
+This is the configuration entry for DashMachine's settings. DashMachine will not work if this is missing. As for all config entries, [Settings] can only appear once in the config. If you change the config.ini file, you either have to restart the container (or python script) or click the ‘save’ button in the config section of settings for the config to be applied.
 ```ini
 [Settings]
 theme = light
@@ -14,7 +10,9 @@ background = None
 roles = admin,user,public_user
 home_access_groups = admin_only
 settings_access_groups = admin_only
+home_view_mode = grid
 custom_app_title = DashMachine
+sidebar_default = open
 ```
 
 | Variable               | Required | Description                                              | Options                                                                                                                                                                        |
@@ -26,36 +24,32 @@ custom_app_title = DashMachine
 | roles                  | No       | User roles for access groups.                            | comma separated string, if not defined, this is set to 'admin,user,public_user'. Note: admin, user, public_user roles are required and will be added automatically if omitted. |
 | home_access_groups     | No       | Define which access groups can access the /home page     | Groups defined in your config. If not defined, default is admin_only                                                                                                           |
 | settings_access_groups | No       | Define which access groups can access the /settings page | Groups defined in your config. If not defined, default is admin_only                                                                                                           |
+| home_view_mode         | No       | Choose the default for view mode on /home                | grid, list                                                                                                                                                                     |
 | custom_app_title       | No       | Change the title of the app for browser tabs             | string                                                                                                                                                                         |
+| sidebar_default        | No       | Select the default state for the sidebar                 | open, closed, no_sidebar                                                                                                                                                       |
 
 ##### Users
-Each user requires a config entry, and there must be at least one user in the config
-(otherwise the default user is added). Each user has a username, a role for configuring
-access groups, and a password. By default there is one user, named 'admin', with role
-'admin' and password 'admin'. To change this user's name, password or role,
-just modify the config entry's variables and press save. To add a new user, add another
-user config entry UNDER all existing user config entries. A user with role 'admin' must
-appear first in the config. Do not change the order of users in the config
-once they have been defined, otherwise their passwords will not match the next time the
-config is applied. When users are removed from the config, they are deleted and their
-cached password is also deleted when the config is applied.
+Each user requires a config entry, and there must be at least one user in the config (otherwise the default user is added). Each user has a username, a role for configuring access groups, and a password. By default there is one user, named 'admin', with role 'admin' and password 'admin'. To change this user's name, password or role, just modify the config entry's variables and press save. To add a new user, add another user config entry UNDER all existing user config entries. A user with role 'admin' must appear first in the config. Do not change the order of users in the config once they have been defined, otherwise their passwords will not match the next time the config is applied. When users are removed from the config, they are deleted and their cached password is also deleted when the config is applied.
 ```ini
-[Username]
+[admin]
 role = admin
 password = admin
 confirm_password = admin
 ```
 
-| Variable         | Required | Description                                                                                                                                                                                                                            | Options     |
-|------------------|----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
-| [Username]       | Yes      | The user's name for logging in                                                                                                                                                                                                         | [Username]  |
-| role             | Yes      | The user's role. This is used for access groups and controlling who can view /home and /settings. There must be at least one 'admin' user, and it must be defined first in the config. Otherwise, the first user will be set to admin. | string      |
-| password         | No       | Add a password to this variable to change the password for this user. The password will be hashed, cached and removed from the config. When adding a new user, specify the password, otherwise 'admin' will be used.                   | string      |
-| confirm_password | No       | When adding a new user or changing an existing user's password you must confirm the password in this variable                                                                                                                          | string      |
+| Variable         | Required | Description                                                                                                                                                                                                                            | Options          |
+|------------------|----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------|
+| [Username]       | Yes      | The user's name for logging in                                                                                                                                                                                                         | [Username]       |
+| role             | Yes      | The user's role. This is used for access groups and controlling who can view /home and /settings. There must be at least one 'admin' user, and it must be defined first in the config. Otherwise, the first user will be set to admin. | string           |
+| password         | No       | Add a password to this variable to change the password for this user. The password will be hashed, cached and removed from the config. When adding a new user, specify the password, otherwise 'admin' will be used.                   | string           |
+| confirm_password | No       | When adding a new user or changing an existing user's password you must confirm the password in this variable                                                                                                                          | string           |
+| theme            | No       | Override the theme from Settings for this user                                                                                                                                                                                         | same as Settings |
+| accent           | No       | Override the accent from Settings for this user                                                                                                                                                                                        | same as Settings |
+| sidebar_default  | No       | Override the sidebar_default from Settings for this user                                                                                                                                                                               | same as Settings |
+| home_view_mode   | No       | Override the home_view_mode from Settings for this user                                                                                                                                                                                | same as Settings |
 
 ##### Apps
-These entries are the cards that you see one the home page, as well as the sidenav. Entries
-must be unique. They are displayed in the order that they appear in config.ini
+These entries are the cards that you see one the home page, as well as the sidenav. Entries must be unique. They are displayed in the order that they appear in config.ini
 ```ini
 [App Name]
 prefix = https://
@@ -83,10 +77,7 @@ groups = admin_only
 | groups       | No       | Optionally the access groups that can see this app.                                                                                 | comma separated string                                       |
 
 ##### Access Groups
-You can create access groups to control what user roles can access parts of the ui. Access groups are just a collection of roles, and each user has an attribute 'role'. Each
-application can have an access group, if the user's role is not in the group, the app will be hidden.
-Also, in the settings entry you can specify `home_access_groups` and `settings_access_groups` to control
-which groups can access /home and /settings
+You can create access groups to control what user roles can access parts of the ui. Access groups are just a collection of roles, and each user has an attribute 'role'. Each application can have an access group, if the user's role is not in the group, the app will be hidden. Also, in the settings entry you can specify `home_access_groups` and `settings_access_groups` to control which groups can access /home and /settings
 ```ini
 [admin_only]
 roles = admin
@@ -132,12 +123,7 @@ roles = admin
 >Dashmachine will automatically add `admin,user,public_user`, so really you would have 4 roles: `my_people,admin,user,public_user`. Also, the `admin_only` group is required and added by default if omitted.
 
 #### Data Source Platforms
-DashMachine includes several different 'platforms' for displaying data on your dash applications.
-Platforms are essentially plugins. All data source config entries require the `platform` variable,
-which tells DashMachine which platform file in the platform folder to load. **Note:** you are able to
-load your own platform files by placing them in the platform folder and referencing them in the config.
-However currently they will be deleted if you update the application, if you would like to make them
-permanent, submit a pull request for it to be added by default!
+DashMachine includes several different 'platforms' for displaying data on your dash applications. Platforms are essentially plugins. All data source config entries require the `platform` variable, which tells DashMachine which platform file in the platform folder to load. **Note:** you are able to load your own platform files by placing them in the platform folder and referencing them in the config. However currently they will be deleted if you update the application, if you would like to make them permanent, submit a pull request for it to be added by default!
 
 > To add a data source to your app, add a data source config entry from one of the samples below
 **above** the application entry in config.ini, then add the following to your app config entry:

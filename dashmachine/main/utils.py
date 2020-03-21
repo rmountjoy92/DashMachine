@@ -2,9 +2,16 @@ import os
 import importlib
 from shutil import copyfile
 from PIL import Image
-from dashmachine.paths import dashmachine_folder, images_folder
+from markdown2 import markdown
+from dashmachine.paths import (
+    dashmachine_folder,
+    images_folder,
+    root_folder,
+    user_data_folder,
+)
 from dashmachine.main.models import Groups
 from dashmachine.main.read_config import read_config
+from dashmachine.version import version as dashmachine_version
 from dashmachine import db
 
 
@@ -94,3 +101,35 @@ def resize_template_app_images():
         image = Image.open(fp)
         image.thumbnail((64, 64))
         image.save(fp)
+
+
+def get_update_message_html():
+    try:
+        with open(os.path.join(user_data_folder, ".has_read_update"), "r") as has_read:
+            has_read_version = has_read.read()
+    except FileNotFoundError:
+        has_read_version = None
+    if not has_read_version or has_read_version.strip() != dashmachine_version:
+        with open(
+            os.path.join(root_folder, "update_message.md"), "r"
+        ) as update_message:
+            md = update_message.read()
+
+        config_html = markdown(
+            md,
+            extras=[
+                "tables",
+                "fenced-code-blocks",
+                "break-on-newline",
+                "header-ids",
+                "code-friendly",
+            ],
+        )
+        return config_html
+    else:
+        return ""
+
+
+def mark_update_message_read():
+    with open(os.path.join(user_data_folder, ".has_read_update"), "w") as has_read:
+        has_read.write(dashmachine_version)
