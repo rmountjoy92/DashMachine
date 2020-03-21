@@ -73,7 +73,7 @@ groups = admin_only
 | sidebar_icon | No       | Icon for the sidenav.                                                                                                               | /static/images/icons/yourpicture.png, external link to image |
 | description  | No       | A short description for the app.                                                                                                    | string                                                       |
 | data_sources | No       | Data sources to be included on the app's card.*Note: you must have a data source set up in the config above this application entry. | comma separated string                                       |
-| tags         | No       | Optionally specify tags for organization on /home                                                                                   | comma separated string                                       |
+| tags         | No       | Optionally specify tags for organization on /home. You can prepend the tag with "!" to preserve case (e.g., !MEDIA), otherwise the tag will default to normal capitalization (e.g., Media)                                                                                   | comma separated string                                       |
 | groups       | No       | Optionally the access groups that can see this app.                                                                                 | comma separated string                                       |
 
 ##### Access Groups
