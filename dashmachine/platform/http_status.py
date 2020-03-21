@@ -20,7 +20,7 @@ return_codes = 2xx,3xx
 | [variable_name] | Yes      | Name for the data source.                                       | [variable_name]   |
 | platform        | Yes      | Name of the platform.                                           | rest              |
 | resource        | Yes      | Url of rest api resource.                                       | url               |
-| method          | No       | Method for the api call, default is GET                         | GET,POST          |
+| method          | No       | Method for the api call, default is GET                         | GET,HEAD,OPTIONS,TRACE|
 | authentication  | No       | Authentication for the api call, default is None                | None,basic,digest |
 | username        | No       | Username to use for auth.                                       | string            |
 | password        | No       | Password to use for auth.                                       | string            |
