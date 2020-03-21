@@ -12,6 +12,8 @@ authentication = basic
 username = my_username
 password = my_password
 payload = {"var1": "hi", "var2": 1}
+headers = {"Content-Type": "application/json"}
+verify = false
 ```
 > **Returns:** `value_template` as rendered string
 
@@ -26,6 +28,8 @@ payload = {"var1": "hi", "var2": 1}
 | username        | No       | Username to use for auth.                                       | string            |
 | password        | No       | Password to use for auth.                                       | string            |
 | payload         | No       | Payload for post request.                                       | json              |
+| headers         | No       | Custom headers for get or post                                  | json              |
+| verify          | No       | Turn TLS verification on or off, default is True                | true,false        |
 
 > **Working example:**
 >```ini
@@ -62,6 +66,10 @@ class Platform:
             self.method = "GET"
         if not hasattr(self, "authentication"):
             self.authentication = None
+        if not hasattr(self, "headers"):
+            self.headers = None
+        if not hasattr(self, "verify"):
+            self.verify = True
 
     def process(self):
         if self.authentication:
@@ -72,14 +80,16 @@ class Platform:
         else:
             auth = None
 
+        verify = False if str(self.verify).lower() == "false" else True
+
         if self.method.upper() == "GET":
             try:
-                value = get(self.resource, auth=auth).json()
+                value = get(self.resource, auth=auth, headers=self.headers, verify=verify).json()
             except Exception as e:
                 value = f"{e}"
 
         elif self.method.upper() == "POST":
             payload = json.loads(self.payload.replace("'", '"'))
-            value = post(self.resource, data=payload, auth=auth)
+            value = post(self.resource, data=payload, auth=auth, headers=self.headers, verify=verify)
         value_template = render_template_string(self.value_template, value=value)
         return value_template
