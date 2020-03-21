@@ -89,15 +89,6 @@ class Platform:
                 value = f"{e}"
 
         elif self.method.upper() == "POST":
-
-
-        if self.method.upper() == "GET":
-            try:
-                value = get(self.resource, auth=auth).json()
-            except Exception as e:
-                value = f"{e}"
-
-        elif self.method.upper() == "POST":
             payload = json.loads(self.payload.replace("'", '"'))
             value = post(self.resource, data=payload, auth=auth, headers=self.headers, verify=verify)
         value_template = render_template_string(self.value_template, value=value)
