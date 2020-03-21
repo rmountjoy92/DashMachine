@@ -72,22 +72,32 @@ class Platform:
             self.verify = True
 
     def process(self):
+        if self.authentication:
+            if self.authentication.lower() == "digest":
+                auth = HTTPDigestAuth(self.username, self.password)
+            else:
+                auth = HTTPBasicAuth(self.username, self.password)
+        else:
+            auth = None
+
         verify = False if str(self.verify).lower() == "false" else True
+
         if self.method.upper() == "GET":
             try:
-                value = get(self.resource, headers=self.headers, verify=verify).json()
+                value = get(self.resource, auth=auth, headers=self.headers, verify=verify).json()
             except Exception as e:
                 value = f"{e}"
 
         elif self.method.upper() == "POST":
-            if self.authentication:
-                if self.authentication.lower() == "digest":
-                    auth = HTTPDigestAuth(self.username, self.password)
-                else:
-                    auth = HTTPBasicAuth(self.username, self.password)
-            else:
-                auth = None
 
+
+        if self.method.upper() == "GET":
+            try:
+                value = get(self.resource, auth=auth).json()
+            except Exception as e:
+                value = f"{e}"
+
+        elif self.method.upper() == "POST":
             payload = json.loads(self.payload.replace("'", '"'))
             value = post(self.resource, data=payload, auth=auth, headers=self.headers, verify=verify)
         value_template = render_template_string(self.value_template, value=value)
