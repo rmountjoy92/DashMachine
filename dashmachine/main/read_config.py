@@ -1,4 +1,5 @@
 import os
+import json
 from configparser import ConfigParser
 from dashmachine.main.models import Apps, Groups, DataSources, DataSourcesArgs, Tags
 from dashmachine.user_system.models import User
@@ -68,13 +69,14 @@ def read_config():
             settings.settings_access_groups = config["Settings"].get(
                 "settings_access_groups", "admin_only"
             )
-            settings.home_view_mode = config["Settings"].get("home_view_mode", "grid")
 
             settings.custom_app_title = config["Settings"].get(
                 "custom_app_title", "DashMachine"
             )
 
             settings.sidebar_default = config["Settings"].get("sidebar_default", "open")
+
+            settings.tags_expanded = config["Settings"].get("tags_expanded", "True")
 
             db.session.add(settings)
             db.session.commit()
@@ -85,9 +87,9 @@ def read_config():
             user.username = section
             user.role = config[section]["role"]
             user.sidebar_default = config[section].get("sidebar_default", None)
-            user.home_view_mode = config[section].get("home_view_mode", "grid")
             user.theme = config[section].get("theme", None)
             user.accent = config[section].get("accent", None)
+            user.tags_expanded = config[section].get("tags_expanded", None)
             user.password = ""
             if not User.query.filter_by(role="admin").first() and user.role != "admin":
                 print(
@@ -146,35 +148,25 @@ def read_config():
             # App creation
             app = Apps()
             app.name = section
-            if "prefix" in config[section]:
-                app.prefix = config[section]["prefix"]
-            else:
+            app.type = config[section].get("type", "app")
+
+            app.prefix = config[section].get("prefix", None)
+            if app.type == "app" and not app.prefix:
                 return {"msg": f"Invalid Config: {section} does not contain prefix."}
 
-            if "url" in config[section]:
-                app.url = config[section]["url"]
-            else:
+            app.url = config[section].get("url", None)
+            if app.type == "app" and not app.url:
                 return {"msg": f"Invalid Config: {section} does not contain url."}
 
-            if "icon" in config[section]:
-                app.icon = config[section]["icon"]
-            else:
-                app.icon = None
+            app.icon = config[section].get("icon", None)
 
-            if "sidebar_icon" in config[section]:
-                app.sidebar_icon = config[section]["sidebar_icon"]
-            else:
-                app.sidebar_icon = app.icon
+            app.sidebar_icon = config[section].get("sidebar_icon", None)
 
-            if "description" in config[section]:
-                app.description = config[section]["description"]
-            else:
-                app.description = None
+            app.description = config[section].get("description", None)
 
-            if "open_in" in config[section]:
-                app.open_in = config[section]["open_in"]
-            else:
-                app.open_in = "this_tab"
+            app.open_in = config[section].get("open_in", "this_tab")
+
+            app.urls = config[section].get("urls", None)
 
             if "groups" in config[section]:
                 for group_name in config[section]["groups"].split(","):
@@ -186,13 +178,17 @@ def read_config():
             else:
                 app.groups = None
 
+            # Tags creation
             if "tags" in config[section]:
-                app.tags = config[section]["tags"].title()
+                app.tags = config[section]["tags"]
                 for tag in app.tags.split(","):
-                    tag = tag.strip().title()
+                    tag = tag.strip()
                     if not Tags.query.filter_by(name=tag).first():
                         tag_db = Tags(name=tag)
                         db.session.add(tag_db)
+                        db.session.commit()
+                        tag_db.sort_pos = tag_db.id
+                        db.session.merge(tag_db)
                         db.session.commit()
             else:
                 if Tags.query.first():
@@ -226,6 +222,23 @@ def read_config():
         group.roles = "admin"
         db.session.add(group)
         db.session.commit()
+
+    tags_settings = config["Settings"].get("tags", None)
+    if tags_settings:
+        tags_settings = tags_settings.replace("},{", "}%,%{").split("%,%")
+
+        for tag_setting in tags_settings:
+            tag_json = json.loads(tag_setting)
+            tag = Tags.query.filter_by(name=tag_json.get("name", None)).first()
+            if tag:
+                icon = tag_json.get("icon", None)
+                if icon:
+                    tag.icon = icon
+                sort_pos = tag_json.get("sort_pos", None)
+                if icon:
+                    tag.sort_pos = sort_pos
+                db.session.merge(tag)
+                db.session.commit()
 
     clean_auth_cache()
     if not User.query.first():

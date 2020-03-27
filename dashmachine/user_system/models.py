@@ -15,5 +15,5 @@ class User(db.Model, UserMixin):
     theme = db.Column(db.String())
     background = db.Column(db.String())
     accent = db.Column(db.String())
-    home_view_mode = db.Column(db.String(), default="grid")
     sidebar_default = db.Column(db.String())
+    tags_expanded = db.Column(db.String())

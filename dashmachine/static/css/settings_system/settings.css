@@ -28,18 +28,18 @@
     background: var(--theme-surface-1);
 }
 
-#config-readme h5 {
+#settings-readme h5, #cards-readme h5, #data-sources-readme h5 {
     color: var(--theme-primary);
     margin-top: 5%;
 }
-#config-readme h4 {
+#settings-readme h4, #cards-readme h4, #data-sources-readme h4 {
     color: var(--theme-color-font-muted);
     margin-top: 5%;
 }
 #configini-readme {
     margin-top: 2% !important;
 }
-#config-readme code {
+#settings-readme code, #cards-readme code, #data-sources-readme code {
     -webkit-touch-callout: all;
     -webkit-user-select: all;
     -khtml-user-select: all;
@@ -49,10 +49,10 @@
     cursor: text;
     white-space: pre-wrap;
 }
-#config-readme th {
+#settings-readme th, #cards-readme th, #data-sources-readme th {
     color: var(--theme-primary);
 }
-#config-readme td {
+#settings-readme td, #cards-readme td, #data-sources-readme td {
     -webkit-touch-callout: text !important;
     -webkit-user-select: text !important;
     -khtml-user-select: text !important;
@@ -61,6 +61,6 @@
     user-select: text !important;
     cursor: text;
 }
-#config-readme strong {
+#settings-readme strong, #cards-readme strong, #data-sources-readme strong {
     font-weight: 900;
 }

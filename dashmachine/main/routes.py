@@ -48,14 +48,20 @@ def home():
 
 
 @main.route("/app_view?<app_id>", methods=["GET"])
-def app_view(app_id):
+@main.route("/app_view?<url>", methods=["GET"])
+def app_view(app_id, url=None):
     settings = Settings.query.first()
     if not check_groups(settings.home_access_groups, current_user):
         return redirect(url_for("user_system.login"))
-    app_db = Apps.query.filter_by(id=app_id).first()
-    return render_template(
-        "main/app-view.html", url=f"{app_db.prefix}{app_db.url}", title=app_db.name
-    )
+
+    if url:
+        title = url
+
+    if not url:
+        app_db = Apps.query.filter_by(id=app_id).first()
+        url = f"{app_db.prefix}{app_db.url}"
+        title = app_db.name
+    return render_template("main/app-view.html", url=url, title=title)
 
 
 @main.route("/load_data_source", methods=["GET"])
@@ -63,19 +69,6 @@ def load_data_source():
     data_source = DataSources.query.filter_by(id=request.args.get("id")).first()
     data = get_data_source(data_source)
     return data
-
-
-@main.route("/change_home_view_mode?<mode>%<user_id>", methods=["GET"])
-def change_home_view_mode(mode, user_id):
-    user = User.query.filter_by(id=user_id).first()
-    config = ConfigParser()
-    config.read(os.path.join(user_data_folder, "config.ini"))
-    config.set(user.username, "home_view_mode", mode)
-    config.write(open(os.path.join(user_data_folder, "config.ini"), "w"))
-    user.home_view_mode = mode
-    db.session.merge(user)
-    db.session.commit()
-    return redirect(url_for("main.home"))
 
 
 @main.route("/update_message_read", methods=["GET"])

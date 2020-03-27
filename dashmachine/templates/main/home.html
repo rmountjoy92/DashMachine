@@ -1,6 +1,6 @@
 {% extends "main/layout.html" %}
 {% from 'global_macros.html' import data, preload_circle, select %}
-{% from 'main/macros.html' import GridViewApp, ListViewApp %}
+{% from 'main/macros.html' import App, Collection, Custom %}
 
 {% block page_vendor_css %}
 {% endblock page_vendor_css %}
@@ -23,26 +23,16 @@
     <div id="main" class="main-full">
         <div class="container">
             <div class="row card-filter-container">
-                <div class="col s12 l4 input-field">
+                <div class="col s12 m12 l6 xl4 input-field">
                     <span>
                         <i class="material-icons prefix card-search-icon">search</i>
                         <input type="text" id="apps-filter" class="card-filter theme-surface-transparent" placeholder="Search apps" autofocus>
 
-                        {% if current_user.is_authenticated %}
-                            {% if current_user.home_view_mode == "list" %}
-                                <a href="{{ url_for('main.change_home_view_mode', mode="grid", user_id=current_user.id) }}">
-                                <i class="material-icons right filter-action pointer">apps</i>
-                            </a>
-                            {% else %}
-                                <a href="{{ url_for('main.change_home_view_mode', mode="list", user_id=current_user.id) }}">
-                                <i class="material-icons right filter-action pointer">list</i>
-                            </a>
-                            {% endif %}
-                        {% endif %}
+                        <i id="toggle-tag-expand-all-btn" class="material-icons right filter-action pointer">unfold_less</i>
                     </span>
                 </div>
                 {% if tags_form.tags.choices|count > 1 %}
-                    <div class="input-field col s12 l2 tags-select-col theme-surface-transparent">
+                    <div class="input-field col s6 m4 l2 offset-s3 offset-m4 tags-select-col theme-surface-transparent">
                         {{ tags_form.tags(id='tags-select') }}
                     </div>
                 {% endif %}
@@ -50,69 +40,47 @@
             <div class="row">
                 {% if apps %}
                     {# If tags are enabled, render the apps like this #}
-                    {% if tags_form.tags.choices|count > 1 %}
-                        {% if settings.home_view_mode == "list" or current_user.home_view_mode == "list" %}
-
-                            <div class="col s12 m12 l8">
-                                <div id="list-view-collection" class="collection">
-                                    {% for tag in tags_form.tags.choices %}
-                                        {% if tag[0] != 'All tags' %}
-                                            <div class="tag-group" data-tag="{{ tag[0] }}">
-                                                <a class="collection-item font-weight-600 theme-on-primary-text theme-primary" style="font-size: 1.2em">{{ tag[0] }}</a>
-                                                {% for app in apps %}
-                                                    {% if app.tags and tag[0] in app.tags %}
-                                                        {{ ListViewApp(app) }}
+                    {% if tags|count > 1 %}
+                        {% for tag in tags %}
+                            <div class="tag-group" data-tag="{{ tag.name }}">
+                                <div class="divider"></div>
+                                <div class="row">
+                                    <div class="col s12 m12 l6 xl4">
+                                        <div class="card theme-surface-transparent">
+                                            <div class="card-content pt-1 pb-1">
+                                                <h5 class="">
+                                                    {% if tag.icon %}
+                                                        <i class="material-icons-outlined mr-2 theme-primary-text" style="position: relative; top: .2rem">{{ tag.icon }}</i>
                                                     {% endif %}
-                                                {% endfor %}
+                                                    {{ tag.name }}
+                                                    <i class="material-icons-outlined theme-secondary-text icon-btn toggle-tag-expand-btn right" data-expanded="true">keyboard_arrow_up</i>
+                                                </h5>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row tag-apps-row">
+                                    {% for app in apps %}
+                                        {% if app.tags and tag.name in app.tags %}
+                                            {% if app.type == "app" %}
+                                                {{ App(app) }}
+                                            {% elif app.type == "collection" %}
+                                                {{ Collection(app) }}
+                                            {% elif app.type == "custom" %}
+                                                {{ Custom(app) }}
+                                            {% endif %}
+
                                         {% endif %}
                                     {% endfor %}
                                 </div>
                             </div>
-
-                        {% else %}
-                            {% for tag in tags_form.tags.choices %}
-                                {% if tag[0] != 'All tags' %}
-                                    <div class="tag-group" data-tag="{{ tag[0] }}">
-                                        <div class="row">
-                                            <div class="col s12 m6 l2">
-                                                <div class="card center-align theme-primary">
-                                                    <h5 class="theme-on-primary-text">{{ tag[0] }}</h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            {% for app in apps %}
-                                                {% if app.tags and tag[0] in app.tags %}
-                                                    {{ GridViewApp(app) }}
-                                                {% endif %}
-                                            {% endfor %}
-                                        </div>
-                                        <div class="divider"></div>
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
-                        {% endif %}
-
+                        {% endfor %}
                     {% else %}
                         {# otherwise, render the apps like this #}
-                        {% if settings.home_view_mode == "list" or current_user.home_view_mode == "list" %}
-                            <div class="col s12 m12 l8">
-                                <div id="list-view-collection" class="collection">
-                                    {% for app in apps %}
-                                        {{ ListViewApp(app) }}
-                                    {% endfor %}
-                                </div>
-                            </div>
-
-                        {% else %}
-                            {% for app in apps %}
-                                {{ GridViewApp(app) }}
-                            {% endfor %}
-                        {% endif %}
+                        {% for app in apps %}
+                            {{ GridViewApp(app) }}
+                        {% endfor %}
                     {% endif %}
-
-
                 {% else %}
                     <a href="{{ url_for('settings_system.settings') }}">
                         <div class="col s12 m6 l3">

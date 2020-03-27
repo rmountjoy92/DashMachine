@@ -43,11 +43,13 @@
             </a></li>
 
             {% for app in apps %}
-                <li class="bold">
-                    {{ AppAnchor(app) }}
-                    <img src="{{ app.sidebar_icon }}" style="position: relative; top: 5px; left: 2px; margin-right: 18px; height: 24px">
-                    <span class="menu-title" data-i18n="">{{ app.name }}</span>
-                </a></li>
+                {% if app.type == "app" and app.sidebar_icon %}
+                    <li class="bold">
+                        {{ AppAnchor(app) }}
+                        <img src="{{ app.sidebar_icon }}" style="position: relative; top: 5px; left: 2px; margin-right: 18px; height: 24px">
+                        <span class="menu-title" data-i18n="">{{ app.name }}</span>
+                        </a></li>
+                {% endif %}
             {% endfor %}
 
         </ul>

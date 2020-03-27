@@ -399,7 +399,10 @@ input:disabled {
     border-radius: 8px;
     background: var(--theme-surface);
 }
-
+.card .card-reveal {
+    border-radius: 8px;
+    background: var(--theme-surface);
+}
 
 /* TABS */
 .tabs {

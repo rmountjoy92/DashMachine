@@ -63,16 +63,20 @@
                             <div class="row">
                                 <div class="col s12 mb-2">
                                     <ul class="tabs tabs-fixed-width">
-                                        <li class="tab col s3"><a href="#config-readme">
-                                            <i class="material-icons-outlined">info</i>
+                                        <li class="tab col s3"><a href="#settings-readme">
+                                            <i class="material-icons-outlined">settings</i>
+                                        </a></li>
+
+                                        <li class="tab col s3"><a href="#cards-readme">
+                                            <i class="material-icons-outlined">aspect_ratio</i>
+                                        </a></li>
+
+                                        <li class="tab col s3"><a href="#data-sources-readme">
+                                            <i class="material-icons-outlined">language</i>
                                         </a></li>
 
                                         <li class="tab col s3"><a href="#images">
                                             <i class="material-icons-outlined">photo_library</i>
-                                        </a></li>
-
-                                        <li class="tab col s3"><a href="#apps">
-                                            <i class="material-icons-outlined">apps</i>
                                         </a></li>
 
                                         <li class="tab col s3"><a href="#about">
@@ -85,8 +89,14 @@
                                     {{ FilesTab() }}
                                 </div>
 
-                                <div id="apps" class="col s12 scrollbar settings-page-card-right">
-                                    <h5>App Templates</h5>
+                                <div id="settings-readme" class="col s12 scrollbar settings-page-card-right scrollbar-x">
+                                    {{ config_readme['settings']|safe }}
+                                </div>
+
+                                <div id="cards-readme" class="col s12 scrollbar settings-page-card-right scrollbar-x">
+                                    <h4>Cards</h4>
+                                    <h5>Card Templates</h5>
+                                    <span>Search for preconfigured cards included with DashMachine.</span>
                                     <div class="row card-filter-container">
                                         <div class="col s12 input-field">
                                             <span>
@@ -105,10 +115,11 @@
                                         </div>
                                     </div>
 
+                                    {{ config_readme['cards']|safe }}
                                 </div>
 
-                                <div id="config-readme" class="col s12 scrollbar settings-page-card-right scrollbar-x">
-                                    {{ config_readme|safe }}
+                                <div id="data-sources-readme" class="col s12 scrollbar settings-page-card-right scrollbar-x">
+                                    {{ config_readme['data_sources']|safe }}
                                 </div>
 
                                 <div id="about" class="col s12 scrollbar settings-page-card-right">
