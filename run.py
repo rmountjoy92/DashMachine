@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 
 import os
+import pathlib
 
-root_folder = os.path.dirname(__file__)
+
+root_folder = pathlib.Path().absolute()
+if not os.path.isdir(os.path.join(root_folder, "dashmachine", "user_data")):
+    os.mkdir(os.path.join(root_folder, "dashmachine", "user_data"))
 db_file_path = os.path.join(root_folder, "dashmachine", "user_data", "site.db")
 try:
     os.remove(db_file_path)
