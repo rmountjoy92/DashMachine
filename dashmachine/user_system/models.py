@@ -12,3 +12,8 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
     role = db.Column(db.String())
+    theme = db.Column(db.String())
+    background = db.Column(db.String())
+    accent = db.Column(db.String())
+    sidebar_default = db.Column(db.String())
+    tags_expanded = db.Column(db.String())

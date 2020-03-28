@@ -10,6 +10,8 @@ Please read the latest update post: https://redd.it/flubzn
 
 ![screenshot](https://raw.githubusercontent.com/rmountjoy92/DashMachine/master/screenshot3.png)
 
+![screenshot](https://raw.githubusercontent.com/rmountjoy92/DashMachine/master/screenshot4.png)
+
 ### Features
 * creates a dashboard to view web pages
 * uses a single .ini file for configuration
@@ -21,6 +23,7 @@ Please read the latest update post: https://redd.it/flubzn
 * user login system
 * 'app templates' which are sample config entries for popular self hosted apps
 * powerful plugin system for adding data from various sources to display on cards
+* multiple card types including collections and custom cards
 * multiple users, access groups, access settings
 * tagging system
 
@@ -58,15 +61,11 @@ Then open a web browser and go to localhost:5000
 ## Default user/password
 ```
 User: admin
-Password: adminadmin
+Password: admin
 ```
 
 ## Updating
 For python, use git. For docker, just pull the latest image and recreate the container.
-
-**Note:** if you update DashMachine and it fails to start, it's possible something is messed up
-with your database file. Backup your files in the user_data folder, delete the contents and
-restart DashMachine. This will reset your user table, so log in with the default user/pass.
 
 ## Configuration
 The user data folder is located at DashMachine/dashmachine/user_data. This is where the config.ini, custom backgrounds/icons, and the database file live. A reference for what can go into the config.ini file can be found on the settings page of the dashmachine by clicking the info icon next to 'Config'. 
@@ -102,7 +101,6 @@ Bountysource faq: https://github.com/bountysource/core/wiki/Frequently-Asked-Que
 * Jinja2
 * Materialize css
 * JavaScript/jQuery/jQueryUI
-* Requests (python)
 
 ## FAQs
 1. application does not work in iframe

@@ -2,7 +2,6 @@ from flask import render_template, url_for, redirect, Blueprint, jsonify
 from flask_login import login_user, logout_user
 from dashmachine.user_system.forms import LoginForm
 from dashmachine.user_system.models import User
-from dashmachine.user_system.utils import add_edit_user
 from dashmachine import bcrypt
 from dashmachine.main.utils import public_route
 
@@ -46,13 +45,3 @@ def logout():
 
     logout_user()
     return redirect(url_for("user_system.login"))
-
-
-@user_system.route("/edit_user", methods=["POST"])
-def edit_user():
-    form = UserForm()
-
-    if form.validate_on_submit():
-        add_edit_user(username=form.username.data, password=form.password.data)
-
-    return "ok"

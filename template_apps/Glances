@@ -1,0 +1,6 @@
+[Glances]
+prefix = https://
+url = your-website.com
+icon = static/images/apps/glances.png
+description = A cross-platform system monitoring tool 
+open_in = this_tab

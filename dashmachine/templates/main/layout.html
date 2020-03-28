@@ -31,23 +31,25 @@
                     <span class="menu-title" data-i18n="">Logout</span>
                 </a></li>
             {% else %}
-                <li class="bold"><a id="logout-sidenav" class="waves-effect waves-cyan" href="{{ url_for('user_system.login') }}">
+                <li class="bold"><a id="login-sidenav" class="waves-effect waves-cyan" href="{{ url_for('user_system.login') }}">
                     <i class="material-icons-outlined">account_circle</i>
                     <span class="menu-title" data-i18n="">Login</span>
                 </a></li>
             {% endif %}
 
-            <li class="bold"><a id="hide-sidenav" class="waves-effect waves-cyan" href="#">
+            <li class="bold"><a id="hide-sidenav" class="waves-effect waves-cyan hide-on-med-and-down" href="#">
                 <i class="material-icons-outlined">menu_open</i>
                 <span class="menu-title" data-i18n="">Hide Sidenav</span>
             </a></li>
 
             {% for app in apps %}
-                <li class="bold">
-                    {{ AppAnchor(app) }}
-                    <img src="{{ app.sidebar_icon }}" style="position: relative; top: 5px; left: 2px; margin-right: 18px; height: 24px">
-                    <span class="menu-title" data-i18n="">{{ app.name }}</span>
-                </a></li>
+                {% if app.type == "app" and app.sidebar_icon %}
+                    <li class="bold">
+                        {{ AppAnchor(app) }}
+                        <img src="{{ app.sidebar_icon }}" style="position: relative; top: 5px; left: 2px; margin-right: 18px; height: 24px">
+                        <span class="menu-title" data-i18n="">{{ app.name }}</span>
+                        </a></li>
+                {% endif %}
             {% endfor %}
 
         </ul>
@@ -62,6 +64,27 @@
 {% endblock sidenav%}
 
 {% block footer %}
+    <div id="no-sidenav" class="card theme-surface-transparent hide" style="position: fixed; bottom: 0; right: 10px;">
+        <div class="card-content p-1">
+            <span>
+                {% if current_user.is_authenticated %}
+                    <a class="waves-effect waves-cyan" href="{{ url_for('user_system.logout') }}">
+                        <i class="material-icons-outlined icon-btn">exit_to_app</i>
+                    </a>
+                {% else %}
+                    <a class="waves-effect waves-cyan" href="{{ url_for('user_system.login') }}">
+                        <i class="material-icons-outlined icon-btn">account_circle</i>
+                    </a>
+                {% endif %}
+                <a class="waves-effect waves-cyan" href="{{ url_for('settings_system.settings') }}">
+                    <i class="material-icons-outlined icon-btn">settings</i>
+                </a>
+                <a class="waves-effect waves-cyan" href="{{ url_for('main.home') }}">
+                    <i class="material-icons-outlined icon-btn">dashboard</i>
+                </a>
+            </span>
+        </div>
+    </div>
     <!-- BEGIN: Footer-->
     <!-- <footer class="page-footer footer footer-static footer-light navbar-border navbar-shadow">
       <div class="footer-copyright">

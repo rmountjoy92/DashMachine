@@ -1,58 +1,51 @@
 """
 
-##### rest
-Make a call on a REST API and display the results as a jinja formatted string.
+##### http_status
+Make a http call on a given URL and display if the service is online.
 ```ini
 [variable_name]
-platform = rest
+platform = http_status
 resource = https://your-website.com/api
-value_template = {{value}}
-method = post
+method = get
 authentication = basic
 username = my_username
 password = my_password
-payload = {"var1": "hi", "var2": 1}
 headers = {"Content-Type": "application/json"}
-verify = false
+return_codes = 2xx,3xx
 ```
-> **Returns:** `value_template` as rendered string
+> **Returns:** a right-aligned colored bullet point on the app card.
 
 | Variable        | Required | Description                                                     | Options           |
 |-----------------|----------|-----------------------------------------------------------------|-------------------|
 | [variable_name] | Yes      | Name for the data source.                                       | [variable_name]   |
 | platform        | Yes      | Name of the platform.                                           | rest              |
 | resource        | Yes      | Url of rest api resource.                                       | url               |
-| value_template  | Yes      | Jinja template for how the returned data from api is displayed. | jinja template    |
-| method          | No       | Method for the api call, default is GET                         | GET,POST          |
+| method          | No       | Method for the api call, default is GET                         | GET,HEAD,OPTIONS,TRACE|
 | authentication  | No       | Authentication for the api call, default is None                | None,basic,digest |
 | username        | No       | Username to use for auth.                                       | string            |
 | password        | No       | Password to use for auth.                                       | string            |
-| payload         | No       | Payload for post request.                                       | json              |
-| headers         | No       | Custom headers for get or post                                  | json              |
-| verify          | No       | Turn TLS verification on or off, default is True                | true,false        |
+| headers         | No       | Request headers                                                 | json              |
+| return_codes    | No       | Acceptable http status codes, x is handled as wildcard          | string            |
 
 > **Working example:**
 >```ini
->[test]
->platform = rest
->resource = https://pokeapi.co/api/v2/pokemon
->value_template = Pokemon: {{value['count']}}
+>[http_status_test]
+>platform = http_status
+>resource = https://google.com
+>return_codes = 2xx,3xx
 >
->[Pokemon]
+>[Google]
 >prefix = https://
->url = pokemon.com
+>url = google.com
 >icon = static/images/apps/default.png
->description = Data sources example
 >open_in = this_tab
->data_sources = test
+>data_sources = http_status_test
 >```
 
 """
 
-import json
-from requests import get, post
+from requests import Request, Session
 from requests.auth import HTTPBasicAuth, HTTPDigestAuth
-from flask import render_template_string
 
 
 class Platform:
@@ -68,10 +61,16 @@ class Platform:
             self.authentication = None
         if not hasattr(self, "headers"):
             self.headers = None
-        if not hasattr(self, "verify"):
-            self.verify = True
+        if not hasattr(self, "return_codes"):
+            self.return_codes = "2xx,3xx"
 
     def process(self):
+        # Check if method is within allowed methods for http_status
+        if self.method.upper() not in ["GET", "HEAD", "OPTIONS", "TRACE"]:
+            raise NotImplementedError
+
+        s = Session()
+        # prepare Authentication mechanism
         if self.authentication:
             if self.authentication.lower() == "digest":
                 auth = HTTPDigestAuth(self.username, self.password)
@@ -80,24 +79,18 @@ class Platform:
         else:
             auth = None
 
-        verify = False if str(self.verify).lower() == "false" else True
+        # Send request
+        req = Request(
+            self.method.upper(), self.resource, headers=self.headers, auth=auth
+        )
+        prepped = req.prepare()
+        resp = s.send(prepped)
 
-        if self.method.upper() == "GET":
-            try:
-                value = get(
-                    self.resource, auth=auth, headers=self.headers, verify=verify
-                ).json()
-            except Exception as e:
-                value = f"{e}"
+        return_codes = tuple([x.replace("x", "") for x in self.return_codes.split(",")])
 
-        elif self.method.upper() == "POST":
-            payload = json.loads(self.payload.replace("'", '"'))
-            value = post(
-                self.resource,
-                data=payload,
-                auth=auth,
-                headers=self.headers,
-                verify=verify,
-            )
-        value_template = render_template_string(self.value_template, value=value)
-        return value_template
+        if str(resp.status_code).startswith(return_codes):
+            icon_class = "theme-success-text"
+        else:
+            icon_class = "theme-failure-text"
+
+        return f"<i class='material-icons right {icon_class}'>fiber_manual_record </i>"

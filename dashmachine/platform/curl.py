@@ -14,7 +14,7 @@ response_type = json
 | Variable        | Required | Description                                                     | Options           |
 |-----------------|----------|-----------------------------------------------------------------|-------------------|
 | [variable_name] | Yes      | Name for the data source.                                       | [variable_name]   |
-| plaform         | Yes      | Name of the platform.                                           | curl              |
+| platform        | Yes      | Name of the platform.                                           | curl              |
 | resource        | Yes      | Url to curl                                                     | url               |
 | value_template  | Yes      | Jinja template for how the returned data from api is displayed. | jinja template    |
 | response_type   | No       | Response type. Use json if response is a JSON. Default is plain.| plain,json        |
