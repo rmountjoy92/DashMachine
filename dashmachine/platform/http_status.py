@@ -80,11 +80,13 @@ class Platform:
             auth = None
 
         # Send request
-        req = Request(self.method.upper(), self.resource, headers=self.headers, auth=auth)
+        req = Request(
+            self.method.upper(), self.resource, headers=self.headers, auth=auth
+        )
         prepped = req.prepare()
         resp = s.send(prepped)
 
-        return_codes = tuple([x.replace('x', '') for x in self.return_codes.split(',')])
+        return_codes = tuple([x.replace("x", "") for x in self.return_codes.split(",")])
 
         if str(resp.status_code).startswith(return_codes):
             icon_class = "theme-success-text"

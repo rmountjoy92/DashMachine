@@ -9,4 +9,14 @@
 - added update message
 - performance fixes
 - added setting for hiding sidebar by default
-- fixes #41
+- broke up config readme into 3 tabs, and 3 .md files
+- changed 'app templates' to 'card templates'
+- added 'collection' cards
+- added 'custom' cards
+- added options for setting tag icons and sort position
+- removed list view to focus on different card types on /home
+- added ability to collapse/expand tags on /home
+- added setting for having tags default to collapsed state
+- created a public user view with no sidebar
+- added sidebar default overrides for users
+- fixes #57, #55, #45, #41, #40 
