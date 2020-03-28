@@ -2,7 +2,7 @@
 ### Another web application bookmark dashboard, with fun features.
 
 ## Before Installing
-Please read the latest update post: https://redd.it/flubzn
+Please read the latest update post: https://www.reddit.com/r/DashMachine/comments/fqk8gl/version_05/
 
 ![screenshot](https://raw.githubusercontent.com/rmountjoy92/DashMachine/master/screenshot1.png)
 
