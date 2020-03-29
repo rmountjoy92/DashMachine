@@ -40,7 +40,7 @@
             </a>
             <div class="card-action center-align scrollbar pr-0" style="max-height: 60px; min-height: 60px; scrollbar-width: none;">
                 <span class="app-name-{{ app.id }} font-weight-900 card-title theme-primary-text searchable" style="font-size: 1.2rem">{{ app.name }}
-                    <i class="material-icons activator right theme-secondary-text">more_vert</i>
+                    <i class="material-icons activator right theme-secondary-text" style="margin-left: 0px;">more_vert</i>
                     {% if app.data_sources.count() > 0 %}
                         <i class="material-icons pointer right theme-secondary-text refresh-data-source-btn">refresh</i>
                     {% endif %}

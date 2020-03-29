@@ -17,7 +17,7 @@ from dashmachine.paths import (
     user_data_folder,
     template_apps_folder,
 )
-from dashmachine.version import version
+from dashmachine.version import version, revision_number
 
 settings_system = Blueprint("settings_system", __name__)
 
@@ -52,6 +52,7 @@ def settings():
         user_form=user_form,
         template_apps=",".join(template_apps),
         version=version,
+        revision_number=revision_number,
         users=users,
         config_readme=config_readme,
     )

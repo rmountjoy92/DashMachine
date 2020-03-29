@@ -33,7 +33,7 @@ These entries provide a card on the dashboard containing a list of links.
 [Collection Name]
 type = collection
 icon = collections_bookmark
-urls = {"url": "google.com", "icon": "static/images/apps/default.png", "name": "Google", "open_in": "new_tab"},{"url": "duckduckgo.com", "icon": "static/images/apps/default.png", "name": "DuckDuckGo", "open_in": "iframe"}
+urls = {"url": "google.com", "icon": "static/images/apps/default.png", "name": "Google", "open_in": "new_tab"},{"url": "duckduckgo.com", "icon": "static/images/apps/default.png", "name": "DuckDuckGo", "open_in": "this_tab"}
 ```
 
 | Variable          | Required | Description                                                                                  | Options                             |
@@ -57,5 +57,6 @@ data_sources = my_data_source
 |-------------------|----------|----------------------------------------------------------------------------------------------|-------------------------------------|
 | [Collection Name] | Yes      | Name for the collection                                                                      | [Collection Name]                   |
 | type              | Yes      | This tells DashMachine what type of card this is.                                            | custom                              |
+| data_sources      | Yes      | What data sources to display on the card.                                                    | comma separated string              |
 | tags              | No       | Optionally specify tags for organization on /home                                            | comma separated string              |
 | groups            | No       | Optionally specify the access groups that can see this app.                                  | comma separated string              |
