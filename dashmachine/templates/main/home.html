@@ -78,7 +78,13 @@
                     {% else %}
                         {# otherwise, render the apps like this #}
                         {% for app in apps %}
-                            {{ App(app) }}
+                            {% if app.type == "app" %}
+                                {{ App(app) }}
+                            {% elif app.type == "collection" %}
+                                {{ Collection(app) }}
+                            {% elif app.type == "custom" %}
+                                {{ Custom(app) }}
+                            {% endif %}
                         {% endfor %}
                     {% endif %}
                 {% else %}

@@ -1,4 +1,5 @@
 {% extends "main/base.html" %}
+{% from 'global_macros.html' import button %}
 
 
 {% block content %}
@@ -6,6 +7,20 @@
         <div class="col s12">
             <i class="material-icons-outlined theme-failure-text" style="font-size: 8rem">warning</i>
             <h4>Unauthorized</h4>
+
+            <p>This user account is not in the access group allowed to view this page.</p> 
+
+            {{ button(
+            float="center",
+            href=url_for('user_system.login'),
+            text="Go to login"
+            ) }}
+
+            {{ button(
+            float="center",
+            href="javascript:history.back()",
+            text="Go back"
+            ) }}
         </div>
     </div>
 {% endblock content %}
