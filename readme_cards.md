@@ -33,7 +33,7 @@ These entries provide a card on the dashboard containing a list of links.
 [Collection Name]
 type = collection
 icon = collections_bookmark
-urls = {"url": "google.com", "icon": "static/images/apps/default.png", "name": "Google", "open_in": "new_tab"},{"url": "duckduckgo.com", "icon": "static/images/apps/default.png", "name": "DuckDuckGo", "open_in": "this_tab"}
+urls = {"url": "https://google.com", "icon": "static/images/apps/default.png", "name": "Google", "open_in": "new_tab"},{"url": "https://duckduckgo.com", "icon": "static/images/apps/default.png", "name": "DuckDuckGo", "open_in": "this_tab"}
 ```
 
 | Variable          | Required | Description                                                                                  | Options                             |
