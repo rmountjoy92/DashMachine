@@ -75,6 +75,8 @@ def process_css_sources(process_bundle=None, src=None, app_global=False):
 
 
 def tag_sort_func(e):
+    if not e.sort_pos:
+        e.sort_pos = 99999
     return e.sort_pos
 
 
