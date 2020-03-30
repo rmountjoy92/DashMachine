@@ -48,20 +48,14 @@ def home():
 
 
 @main.route("/app_view?<app_id>", methods=["GET"])
-@main.route("/app_view?<url>", methods=["GET"])
-def app_view(app_id, url=None):
+def app_view(app_id):
     settings = Settings.query.first()
     if not check_groups(settings.home_access_groups, current_user):
         return redirect(url_for("user_system.login"))
-
-    if url:
-        title = url
-
-    if not url:
-        app_db = Apps.query.filter_by(id=app_id).first()
-        url = f"{app_db.prefix}{app_db.url}"
-        title = app_db.name
-    return render_template("main/app-view.html", url=url, title=title)
+    app_db = Apps.query.filter_by(id=app_id).first()
+    return render_template(
+        "main/app-view.html", url=f"{app_db.prefix}{app_db.url}", title=app_db.name
+    )
 
 
 @main.route("/load_data_source", methods=["GET"])
