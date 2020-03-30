@@ -22,7 +22,7 @@ groups = admin_only
 | open_in      | Yes      | open the app in the current tab, an iframe or a new tab                                                                             | iframe, new_tab, this_tab                                    |
 | icon         | Yes      | Icon for the dashboard.                                                                                                             | /static/images/icons/yourpicture.png, external link to image |
 | sidebar_icon | No       | Icon for the sidenav.                                                                                                               | /static/images/icons/yourpicture.png, external link to image |
-| description  | No       | A short description for the app.                                                                                                    | string                                                       |
+| description  | No       | A short description for the app.                                                                                                    | HTML                                                       |
 | data_sources | No       | Data sources to be included on the app's card.*Note: you must have a data source set up in the config above this application entry. | comma separated string                                       |
 | tags         | No       | Optionally specify tags for organization on /home                                                                                   | comma separated string                                       |
 | groups       | No       | Optionally specify the access groups that can see this app.                                                                         | comma separated string                                       |
@@ -60,3 +60,17 @@ data_sources = my_data_source
 | data_sources      | Yes      | What data sources to display on the card.                                                    | comma separated string              |
 | tags              | No       | Optionally specify tags for organization on /home                                            | comma separated string              |
 | groups            | No       | Optionally specify the access groups that can see this app.                                  | comma separated string              |
+
+
+> **Working example:**
+>```ini
+>[test]
+>platform = curl
+>resource = https://api.myip.com
+>value_template = <div class="row center-align"><div class="col s12"><h5><i class="material-icons-outlined" style="position:relative; top: 4px;">dns</i> My IP Address</h5><span class="theme-primary-text">{{value.ip}}</span></div></div>
+>response_type = json
+>
+>[MyIp.com]
+>type = custom
+>data_sources = test
+>```
