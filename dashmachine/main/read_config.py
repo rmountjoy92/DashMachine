@@ -22,7 +22,7 @@ def row2dict(row):
 
 
 def read_config():
-    config = ConfigParser()
+    config = ConfigParser(interpolation=None)
     try:
         config.read(os.path.join(user_data_folder, "config.ini"))
     except Exception as e:
