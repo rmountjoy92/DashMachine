@@ -191,14 +191,11 @@ def read_config():
                         db.session.merge(tag_db)
                         db.session.commit()
             else:
-                if Tags.query.first():
-                    app.tags = "Untagged"
-                    if not Tags.query.filter_by(name="Untagged").first():
-                        tag_db = Tags(name="Untagged")
-                        db.session.add(tag_db)
-                        db.session.commit()
-                else:
-                    app.tags = None
+                app.tags = "Untagged"
+                if not Tags.query.filter_by(name="Untagged").first():
+                    tag_db = Tags(name="Untagged")
+                    db.session.add(tag_db)
+                    db.session.commit()
 
             db.session.add(app)
             db.session.commit()
