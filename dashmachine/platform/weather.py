@@ -68,7 +68,7 @@ class Platform:
             </div>
         </div>
         <div class="row">
-            <h6 class="font-weight-900 center theme-muted-text">{{ value.parent.title }}</h6>
+            <h6 class="font-weight-900 center theme-muted-text">{{ value.title }}</h6>
         </div>
         <div class="row center-align">
             <i class="material-icons-outlined">keyboard_arrow_down</i>
