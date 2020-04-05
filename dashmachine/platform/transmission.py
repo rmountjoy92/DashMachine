@@ -19,8 +19,8 @@ value_template = {{ value_template }}
 | platform        | Yes      | Name of the platform.                                           | transmission      |
 | host            | Yes      | Host of Transmission Web UI                                     | host              |
 | port            | Yes      | Port of Transmission Web UI                                     | port              |
-| user            | No       | Username for Transmission Web UI                                | username          |
-| password        | No       | Password for Transmission Web UI                                | password          |
+| user            | Yes      | Username for Transmission Web UI                                | username          |
+| password        | Yes      | Password for Transmission Web UI                                | password          |
 | value_template  | Yes      | Jinja template for how the returned data from API is displayed. | jinja template    |
 
 <br />

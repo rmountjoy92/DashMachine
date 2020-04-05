@@ -47,6 +47,8 @@ docker create \
   --restart unless-stopped \
   rmountjoy/dashmachine:latest
 ```
+### Synology
+Check out this awesome guide: https://nashosted.com/manage-your-self-hosted-applications-using-dashmachine/
 ### Python
 Instructions are for linux.
 ```

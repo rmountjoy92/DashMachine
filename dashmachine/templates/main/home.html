@@ -28,10 +28,12 @@
                         <i class="material-icons prefix card-search-icon">search</i>
                         <input type="text" id="apps-filter" class="card-filter theme-surface-transparent" placeholder="Search apps" autofocus>
 
-                        <i id="toggle-tag-expand-all-btn" class="material-icons right filter-action pointer">unfold_less</i>
+                        {% if tags_form.tags.choices|count > 2 %}
+                            <i id="toggle-tag-expand-all-btn" class="material-icons right filter-action pointer">unfold_less</i>
+                        {% endif %}
                     </span>
                 </div>
-                {% if tags_form.tags.choices|count > 1 %}
+                {% if tags_form.tags.choices|count > 2 %}
                     <div class="input-field col s6 m4 l2 offset-s3 offset-m4 tags-select-col theme-surface-transparent">
                         {{ tags_form.tags(id='tags-select') }}
                     </div>

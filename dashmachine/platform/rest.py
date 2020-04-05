@@ -59,6 +59,8 @@ class Platform:
     def __init__(self, *args, **kwargs):
         # parse the user's options from the config entries
         for key, value in kwargs.items():
+            if key == "headers":
+                value = json.loads(value)
             self.__dict__[key] = value
 
         # set defaults for omitted options
