@@ -80,8 +80,8 @@ class Platform:
                     <div class="collection-item"><span class="font-weight-900">Min: </span>{{ value.consolidated_weather[0].min_temp|round(1, 'floor') }}&deg; <span class="font-weight-900">Max: </span>{{ value.consolidated_weather[0].max_temp|round(1, 'floor') }}&deg;</div>
                     <div class="collection-item"><span class="font-weight-900">Wind: </span>{{ value.consolidated_weather[0].wind_direction_compass }} at {{ value.consolidated_weather[0].wind_speed|round(1, 'floor') }} {{ wind_speed_unit }}</div>
                     <div class="collection-item"><span class="font-weight-900">Humidity: </span>{{ value.consolidated_weather[0].humidity }}%</div>
-                    <div class="collection-item"><span class="font-weight-900">Air Pressure: </span>{{ value.consolidated_weather[0].air_pressure|round(1, 'floor') }}</div>
-                    <div class="collection-item"><span class="font-weight-900">Visibility: </span>{{ value.consolidated_weather[0].visibility|round(1, 'floor') }}</div>
+                    <div class="collection-item"><span class="font-weight-900">Air Pressure: </span>{{ value.consolidated_weather[0].air_pressure|round(1, 'floor') }} {{ air_pressure_unit }}</div>
+                    <div class="collection-item"><span class="font-weight-900">Visibility: </span>{{ value.consolidated_weather[0].visibility|round(1, 'floor') }} {{ visibility_unit }} </div>
                     <div class="collection-item"><span class="font-weight-900">Predictability: </span>{{ value.consolidated_weather[0].predictability }}%</div>
                 </div>
             </div>
@@ -125,6 +125,15 @@ class Platform:
                 value["consolidated_weather"][0]["air_pressure"] / 33.864
             )
 
+        if self.visibility_unit.lower() == "mi":
+            value["consolidated_weather"][0]["visibility"] = (
+                value["consolidated_weather"][0]["visibility"] / 1.609
+            )
+
         return render_template_string(
-            self.html_template, value=value, wind_speed_unit=self.wind_speed_unit
+            self.html_template,
+            value=value,
+            wind_speed_unit=self.wind_speed_unit,
+            air_pressure_unit=self.air_pressure_unit,
+            visibility_unit=self.visibility_unit,
         )
