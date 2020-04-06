@@ -1,7 +1,7 @@
 [Synology DSM]
 prefix = https://
 url = your-website.com
-icon = static/images/apps/synologydsm.png
-sidebar_icon = static/images/apps/synologydsm.png
+icon = static/images/apps/synology-dsm.png
+sidebar_icon = static/images/apps/synology-dsm.png
 description = DiskStation Manager (DSM) is an intuitive web-based operating system for every Synology NAS, designed to help you manage your digital assets across home and office.
 open_in = this_tab 
