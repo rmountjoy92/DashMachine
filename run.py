@@ -4,7 +4,8 @@ import os
 import pathlib
 
 
-root_folder = pathlib.Path().absolute()
+file_path = os.path.abspath(__file__)
+root_folder = os.path.dirname(file_path)
 if not os.path.isdir(os.path.join(root_folder, "dashmachine", "user_data")):
     os.mkdir(os.path.join(root_folder, "dashmachine", "user_data"))
 db_file_path = os.path.join(root_folder, "dashmachine", "user_data", "site.db")
