@@ -47,6 +47,24 @@ docker create \
   --restart unless-stopped \
   rmountjoy/dashmachine:latest
 ```
+### Docker Compose
+
+```yml
+version: "2"
+
+services:
+   dashmachine:
+    image: rmountjoy/dashmachine:latest
+    container_name: dashmachine
+    restart: unless-stopped
+    environment:
+        - CONTEXT_PATH: /dash #Optional, only if you want to run dashmachine in a subfolder
+    volumes:
+        - /path/to/data:/dashmachine/dashmachine/user_data
+    ports:
+        - 5000:5000 #You can change the port on the left (host) it's already in use, e.g. Synology NAS
+```
+
 ### Synology
 Check out this awesome guide: https://nashosted.com/manage-your-self-hosted-applications-using-dashmachine/
 ### Python
