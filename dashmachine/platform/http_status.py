@@ -93,4 +93,4 @@ class Platform:
         else:
             icon_class = "theme-failure-text"
 
-        return f"<i class='material-icons right {icon_class}'>fiber_manual_record </i>"
+        return f"<i class='material-icons right {icon_class}' style='margin-left:-20%;position: absolute;'>fiber_manual_record </i>"
