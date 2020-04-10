@@ -141,7 +141,10 @@ $(document).ready(function () {
     init_select();
 
     $("#update-message-modal").modal({
-        dismissible: false
+        dismissible: false,
+        onCloseEnd: function() {
+            $("#username").focus();
+        }
     });
     if ($("#update-message-content").text().length > 1){
         $("#update-message-modal").modal('open');
