@@ -117,6 +117,7 @@ scheduler.db
 scheduler.db
 
 .idea/
+.vscode/
 
 dashmachine/user_data/
 dashmachine/static/images/icons
