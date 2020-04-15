@@ -1570,6 +1570,19 @@ li.home:before
 {
     margin-bottom: 0;
 }
+
+.row-right { clear: both;}
+.row-right .app-card{float: right;}
+.card-filter-right {float: right;}
+.card-filter-right .col{width: max-content !important;}
+
+
+.row-center { width: max-content;}
+.row-center .app-card{ width: 25vw !important;}
+.card-filter-center {width: min-content;}
+.card-filter-center .col{width: max-content !important;}
+
+
 .row .col
 {
     padding: 0 1rem;
