@@ -27,6 +27,41 @@
 
 }
 
+.card-content-appcard{
+    max-height: 86px;
+    scrollbar-width: none;
+}
+
+.card-image{
+    height: 64px;
+}
+
+.small-card {
+    max-height: initial;
+    text-align: initial;
+    width: min-content;
+}
+.small-card-image{
+    height: 50px;
+}
+.small-card-text {
+    text-align: initial;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 100%;
+    padding-left: 0 !important;
+    background-color: transparent !important;
+    border-top: transparent !important;
+}
+.small-card-container {
+    display: flex
+}
+.small-card-container a{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+
 #list-view-collection .app-a {
     background: rgba(var(--theme-surface-rgb), 0.8);
 }

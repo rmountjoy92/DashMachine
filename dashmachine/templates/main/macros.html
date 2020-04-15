@@ -12,9 +12,9 @@
 
 {% macro App(app) %}
     <div class="col s12 m6 l4 xl3 app-card">
-        <div class="card theme-surface-transparent">
+        <div class="card theme-surface-transparent {% if app.size=='small' %}small-card-container{% endif %}">
             {{ AppAnchor(app) }}
-                <div class="card-content center-align scrollbar pt-3 pb-0" style="max-height: 86px; min-height: 86px; scrollbar-width: none;">
+                <div class="card-content card-content-appcard center-align scrollbar pt-3 pb-0  {% if app.size=='small' %}small-card{% endif %}">
                     {% if app.data_sources.count() > 0 %}
                         <div class="row">
                             <div class="col s6 center-align">
@@ -34,11 +34,11 @@
                             </div>
                         </div>
                     {% else %}
-                        <img src="{{ app.icon }}" height="64px">
+                        <img src="{{ app.icon }}" class="card-image {% if app.size=='small' %}small-card-image{% endif %}">
                     {% endif %}
                 </div>
             </a>
-            <div class="card-action center-align scrollbar pr-0" style="max-height: 60px; min-height: 60px; scrollbar-width: none;">
+            <div class="card-action center-align scrollbar pr-0 {% if app.size=='small' %}small-card-text{% endif %}" style="max-height: 60px; min-height: 60px; scrollbar-width: none;">
                 <span class="app-name-{{ app.id }} font-weight-900 card-title theme-primary-text searchable" style="font-size: 1.2rem">{{ app.name }}
                     <i class="material-icons activator right theme-secondary-text" style="margin-left: 0px;">more_vert</i>
                     {% if app.data_sources.count() > 0 %}

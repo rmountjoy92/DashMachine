@@ -167,6 +167,7 @@ def read_config():
             app.open_in = config[section].get("open_in", "this_tab")
 
             app.urls = config[section].get("urls", None)
+            app.size = config[section].get("size", None)
 
             if "groups" in config[section]:
                 for group_name in config[section]["groups"].split(","):

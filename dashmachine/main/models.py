@@ -30,6 +30,7 @@ class Apps(db.Model):
     tags = db.Column(db.String())
     type = db.Column(db.String())
     urls = db.Column(db.String())
+    size = db.Column(db.String())
 
 
 class DataSources(db.Model):
