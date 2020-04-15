@@ -198,6 +198,18 @@ input:disabled {
     max-height: 30px;
 }
 
+.input-field ::-webkit-input-placeholder { /* Edge */
+    line-height: 3em !important;
+}
+
+.input-field :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    line-height: 3em !important;
+}
+
+.input-field ::placeholder {
+    line-height: 3em !important;
+}
+
 .input-field > label {
     font-size: .9rem;
     webkit-transform: unset;
