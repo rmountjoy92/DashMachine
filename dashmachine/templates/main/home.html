@@ -22,7 +22,7 @@
 {% block content %}
     <div id="main" class="main-full">
         <div class="container">
-            <div class="row card-filter-container">
+            <div class="row card-filter-{{ settings.layout }} card-filter-container">
                 <div class="col s12 m12 l6 xl4 input-field">
                     <span>
                         <i class="material-icons prefix card-search-icon">search</i>
@@ -39,7 +39,7 @@
                     </div>
                 {% endif %}
             </div>
-            <div class="row">
+            <div class="row row-{{ settings.layout }}">
                 {% if apps %}
                     {# If tags are enabled, render the apps like this #}
                     {% if tags|count > 1 %}
