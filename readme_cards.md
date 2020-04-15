@@ -22,10 +22,11 @@ groups = admin_only
 | open_in      | Yes      | open the app in the current tab, an iframe or a new tab                                                                             | iframe, new_tab, this_tab                                    |
 | icon         | Yes      | Icon for the dashboard.                                                                                                             | /static/images/icons/yourpicture.png, external link to image |
 | sidebar_icon | No       | Icon for the sidenav.                                                                                                               | /static/images/icons/yourpicture.png, external link to image |
-| description  | No       | A short description for the app.                                                                                                    | HTML                                                       |
+| description  | No       | A short description for the app.                                                                                                    | HTML                                                         |
 | data_sources | No       | Data sources to be included on the app's card.*Note: you must have a data source set up in the config above this application entry. | comma separated string                                       |
 | tags         | No       | Optionally specify tags for organization on /home                                                                                   | comma separated string                                       |
 | groups       | No       | Optionally specify the access groups that can see this app.                                                                         | comma separated string                                       |
+| size         | No       | Reduces the height of the card                                                                                                      | small                                                        |
 
 ##### Collection
 These entries provide a card on the dashboard containing a list of links.
