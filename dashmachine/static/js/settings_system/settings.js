@@ -48,8 +48,8 @@ $( document ).ready(function() {
     });
 
     $("#templates-filter").autocomplete({
-        limit: 16,
         data: autocomplete_data,
+        minLength: 0,
         onAutocomplete: function () {
             $.ajax({
                 url: $("#templates-filter").attr('data-url'),
