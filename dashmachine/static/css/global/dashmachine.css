@@ -43,7 +43,7 @@
 
 /* ELEMENT STLYES */
 body {
-    overflow: scroll;
+    overflow: auto;
     overflow-x: hidden !important;
     min-height: 100%;
     color: var(--theme-color-font);
