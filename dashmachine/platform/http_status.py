@@ -63,7 +63,9 @@ class Platform:
             self.headers = None
         if not hasattr(self, "return_codes"):
             self.return_codes = "2xx,3xx"
-
+        if not hasattr(self, "ssl_ignore"):
+            self.ssl_ignore = "No"
+            
     def process(self):
         # Check if method is within allowed methods for http_status
         if self.method.upper() not in ["GET", "HEAD", "OPTIONS", "TRACE"]:
@@ -84,6 +86,10 @@ class Platform:
             self.method.upper(), self.resource, headers=self.headers, auth=auth
         )
         prepped = req.prepare()
+        if self.ssl_ignore == "yes":
+            resp = s.send(prepped,verify=False)
+        else:
+            resp = s.send(prepped)
         resp = s.send(prepped)
 
         return_codes = tuple([x.replace("x", "") for x in self.return_codes.split(",")])
