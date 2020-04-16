@@ -1,5 +1,6 @@
 import os
 import json
+import socket
 from configparser import ConfigParser
 from dashmachine.main.models import Apps, Groups, DataSources, DataSourcesArgs, Tags
 from dashmachine.user_system.models import User
@@ -12,6 +13,13 @@ from dashmachine.settings_system.models import Settings
 from dashmachine.paths import user_data_folder
 from dashmachine import db
 
+def host_ip():
+    try: 
+        host_name = socket.gethostname() 
+        host_ip = socket.gethostbyname(host_name) 
+        return(host_ip)
+    except: 
+        print("Unable to get Hostname and IP")
 
 def row2dict(row):
     d = {}
@@ -155,6 +163,11 @@ def read_config():
                 return {"msg": f"Invalid Config: {section} does not contain prefix."}
 
             app.url = config[section].get("url", None)
+            host_list = ["127.0.0.1", "localhost"]
+            for val in host_list[:]:
+                if app.url.startswith(val):
+                    app.url = host_ip() + app.url.lstrip(val)
+
             if app.type == "app" and not app.url:
                 return {"msg": f"Invalid Config: {section} does not contain url."}
 
