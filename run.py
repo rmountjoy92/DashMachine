@@ -5,7 +5,7 @@ import pathlib
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-p", "--port", help='port to listen to (default "0")', type=int)
+parser.add_argument("-p", "--port", help='port to listen to (default "5000")', type=int)
 args = parser.parse_args()
 host_port = args.port
 if host_port == None: host_port = 5000
