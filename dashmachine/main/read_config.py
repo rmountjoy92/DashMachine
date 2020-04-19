@@ -78,6 +78,8 @@ def read_config():
 
             settings.tags_expanded = config["Settings"].get("tags_expanded", "True")
 
+            settings.font_awesome = config["Settings"].get("font_awesome", "None")
+
             db.session.add(settings)
             db.session.commit()
 
