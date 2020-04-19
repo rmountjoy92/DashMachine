@@ -32,6 +32,11 @@
   <link href="static/css/vendors/google-fonts.css" rel="stylesheet">
   <!-- BEGIN: VENDOR CSS-->
   <link rel="stylesheet" href="static/css/vendors/materialize.min.css">
+  {% if settings.font_awesome == "CSS" %}
+  <link rel="stylesheet" href="static/vendors/fontawesome/css/all.min.css" >
+  {% elif settings.font_awesome == "SVG" %}
+  <script defer src="static/vendors/fontawesome/js/all.min.js"></script>
+  {% endif %}
   {% block page_vendor_css %}{% endblock page_vendor_css %}
   <!-- END: VENDOR CSS-->
   <!-- BEGIN: Page Level CSS-->
