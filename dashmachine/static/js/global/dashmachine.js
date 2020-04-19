@@ -121,7 +121,7 @@ function apply_settings(settings){
         no_sidebar();
     }
     // fontawesome
-    if (settings['font_awesome'] == "None" || settings['font_awesome'] == "svg" || settings['font_awesome'] == "css") {
+    if (settings['font_awesome'] == "None" || settings['font_awesome'] == "SVG" || settings['font_awesome'] == "CSS") {
         localStorage.setItem('font_awesome', settings['font_awesome']);
     } else {
         localStorage.setItem('font_awesome', 'None');
