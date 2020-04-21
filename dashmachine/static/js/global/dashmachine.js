@@ -120,6 +120,13 @@ function apply_settings(settings){
     } else if (settings['user_name'].length < 1) {
         no_sidebar();
     }
+    // fontawesome
+    if (settings['font_awesome'] == "None" || settings['font_awesome'] == "SVG" || settings['font_awesome'] == "CSS") {
+        localStorage.setItem('font_awesome', settings['font_awesome']);
+    } else {
+        localStorage.setItem('font_awesome', 'None');
+    }
+
 }
 
 //--------------------------------------------------------------------------------------
@@ -135,6 +142,7 @@ $(document).ready(function () {
         user_theme: $("#user-theme").val(),
         user_accent: $("#user-accent").val(),
         user_sidebar_default: $("#user-sidebar_default").val(),
+        font_awesome: $("#font-awesome").val(),
     });
 
     //  INITS

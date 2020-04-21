@@ -13,6 +13,7 @@ settings_access_groups = admin_only
 custom_app_title = DashMachine
 sidebar_default = open
 tags_expanded = True
+font_awesome = None
 ```
 
 | Variable               | Required | Description                                              | Options                                                                                                                                                                        |
@@ -28,6 +29,8 @@ tags_expanded = True
 | sidebar_default        | No       | Select the default state for the sidebar                                      | open, closed, no_sidebar                                                                                                                                                       |
 | tags                   | No       | Set custom options for your tags. Json options are "name", "icon", "sort_pos" | comma separated json dicts. For "icon" use material design icons: https://material.io/resources/icons                                                                          |
 | tags_expanded          | No       | Set to False to have your tags collapsed by default                           | True, False                                                                                                                                                   |
+| font_awesome           | No       | Enable FontAwesome feature. Can be used with SVG or CSS fonts icons           | None, SVG, CSS                                                                                                                                                                 |
+
 
 ##### Users
 Each user requires a config entry, and there must be at least one user in the config (otherwise the default user is added). Each user has a username, a role for configuring access groups, and a password. By default there is one user, named 'admin', with role 'admin' and password 'admin'. To change this user's name, password or role, just modify the config entry's variables and press save. To add a new user, add another user config entry UNDER all existing user config entries. A user with role 'admin' must appear first in the config. Do not change the order of users in the config once they have been defined, otherwise their passwords will not match the next time the config is applied. When users are removed from the config, they are deleted and their cached password is also deleted when the config is applied.

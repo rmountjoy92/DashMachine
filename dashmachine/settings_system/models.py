@@ -12,3 +12,4 @@ class Settings(db.Model):
     custom_app_title = db.Column(db.String())
     sidebar_default = db.Column(db.String())
     tags_expanded = db.Column(db.String())
+    font_awesome = db.Column(db.String())
