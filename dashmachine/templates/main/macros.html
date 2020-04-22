@@ -63,9 +63,9 @@
 
 {% macro Collection(app) %}
     <div class="col s12 m6 l4 xl3 app-card">
-        <div class="card theme-surface-transparent scrollbar" style="max-height: 146px; min-height: 146px;">
+        <div class="card theme-surface-transparent scrollbar" style="max-height: 146px; min-height: 146px; {% if app.color %}background: rgba({{ app.color }},0.7) !important;{% endif %}">
             <div class="card-content">
-                <span class="font-weight-900 card-title theme-primary-text">
+                <span class="font-weight-900 card-title theme-primary-text" {% if app.color.startswith("var") %}style="color: var(--theme-on-primary) !important;"{% endif %}>
                     {% if app.icon %}
                         <i class="material-icons-outlined right">{{app.icon}}</i>
                     {% endif %}
