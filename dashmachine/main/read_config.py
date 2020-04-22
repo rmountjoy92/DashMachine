@@ -49,6 +49,8 @@ def read_config():
 
             settings.accent = config["Settings"].get("accent", "orange")
 
+            settings.cardcolor = config["Settings"].get("cardcolor", False)
+
             settings.background = config["Settings"].get("background", "None")
 
             if "roles" in config["Settings"]:
@@ -167,6 +169,20 @@ def read_config():
             app.open_in = config[section].get("open_in", "this_tab")
 
             app.urls = config[section].get("urls", None)
+
+            app.color = config[section].get("color", None)
+
+            if app.color is not None:
+                app.colorR = int(app.color[1:3], 16)
+                app.colorG = int(app.color[3:5], 16)
+                app.colorB = int(app.color[5:7], 16)
+                app.color = str(app.colorR)+","+str(app.colorG)+","+str(app.colorB)
+
+            if app.color is None and settings.cardcolor == "True":
+                app.color = "var(--theme-primary-rgb)"
+
+            if app.color is None:
+                app.color = ""
 
             if "groups" in config[section]:
                 for group_name in config[section]["groups"].split(","):

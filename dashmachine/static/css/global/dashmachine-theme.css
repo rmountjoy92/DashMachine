@@ -6,6 +6,7 @@
   --theme-surface-1: #fcfcfc;
   --theme-surface-2: #e0e0e0;
   --theme-primary: #FF9966;
+  --theme-primary-rgb: 255, 153, 102;
   --theme-secondary: #9e9e9e;
   --theme-accent: #3399FF;
   --theme-color-font: #2c2f3a;
@@ -28,65 +29,83 @@
 }
 [data-accent="red"] {
   --theme-primary: #f44336;
+  --theme-primary-rgb: 244, 67, 54;
 }
 [data-accent="pink"] {
   --theme-primary: #e91e63;
+  --theme-primary-rgb: 233, 30, 99;
 }
 [data-accent="purple"] {
   --theme-primary: #9c27b0;
+  --theme-primary-rgb: 156, 39, 176;
 }
 [data-accent="deepPurple"] {
   --theme-primary: #673ab7;
+  --theme-primary-rgb: 103, 58, 183;
 }
 [data-accent="indigo"] {
   --theme-primary: #3f51b5;
+  --theme-primary-rgb: 63, 81, 181;
 }
 [data-accent="blue"] {
   --theme-primary: #2196f3;
+  --theme-primary-rgb: 33, 150, 243;
 }
 [data-accent="lightBlue"] {
   --theme-primary: #03a9f4;
+  --theme-primary-rgb: 3, 169, 244;
   --theme-on-primary: #2c2f3a;
 }
 [data-accent="cyan"] {
   --theme-primary: #00bcd4;
+  --theme-primary-rgb: 0, 188, 212;
   --theme-on-primary: #2c2f3a;
 }
 [data-accent="teal"] {
   --theme-primary: #009688;
+  --theme-primary-rgb: 0, 150, 136;
 }
 [data-accent="green"] {
   --theme-primary: #4caf50;
+  --theme-primary-rgb: 76, 175, 80;
   --theme-on-primary: #2c2f3a;
 }
 [data-accent="lightGreen"] {
   --theme-primary: #8bc34a;
+  --theme-primary-rgb: 139, 195, 74;
   --theme-on-primary: #2c2f3a;
 }
 [data-accent="lime"] {
   --theme-primary: #cddc39;
+  --theme-primary-rgb: 205, 220, 57;
   --theme-on-primary: #2c2f3a;
 }
 [data-accent="yellow"] {
   --theme-primary: #ffeb3b;
+  --theme-primary-rgb: 255, 235, 59;
   --theme-on-primary: #2c2f3a;
 }
 [data-accent="amber"] {
   --theme-primary: #ffc107;
+  --theme-primary-rgb: 255, 193, 7;
   --theme-on-primary: #2c2f3a;
 }
 [data-accent="deepOrange"] {
   --theme-primary: #ff5722;
+  --theme-primary-rgb: 255, 87, 34;
 }
 [data-accent="brown"] {
   --theme-primary: #795548;
+  --theme-primary-rgb: 121, 85, 72;
 }
 [data-accent="grey"] {
   --theme-primary: #9e9e9e;
+  --theme-primary-rgb: 158, 158, 158;
   --theme-on-primary: #2c2f3a;
 }
 [data-accent="blueGrey"] {
   --theme-primary: #607d8b;
+  --theme-primary-rgb: 96, 125, 139;
 }
 /* THEME CLASSES */
 .theme-surface {
