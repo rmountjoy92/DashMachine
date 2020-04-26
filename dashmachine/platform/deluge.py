@@ -19,6 +19,20 @@ password = MySecretPassword
 | value_template  | Yes      | Jinja template for how the returned data from api is displayed. | jinja template    |
 | password        | No       | Password to use for auth.                                       | string            |
 
+<br />
+###### **Available fields for value_template**
+* upload_rate
+* download_rate
+* max_upload
+* max_download
+* upload_protocol_rate
+* download_protocol_rate
+* num_connections
+* max_num_connections
+* dht_nodes
+* free_space
+* has_incoming_connections
+
 > **Working example:**
 >```
 >[deluge]
