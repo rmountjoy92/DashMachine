@@ -1,16 +1,8 @@
 # DashMachine
-### Another web application bookmark dashboard, with fun features.
+##### Another web application bookmark dashboard, with fun features.
 
-## Before Installing
-Please read the latest update post: https://www.reddit.com/r/DashMachine/comments/fqk8gl/version_05/
-
-![screenshot](https://raw.githubusercontent.com/rmountjoy92/DashMachine/master/screenshot1.png)
-
-![screenshot](https://raw.githubusercontent.com/rmountjoy92/DashMachine/master/screenshot2.png)
-
-![screenshot](https://raw.githubusercontent.com/rmountjoy92/DashMachine/master/screenshot3.png)
-
-![screenshot](https://raw.githubusercontent.com/rmountjoy92/DashMachine/master/screenshot4.png)
+### Demo 
+* [Go to live demo](#)
 
 ### Features
 * creates a dashboard to view web pages
@@ -27,83 +19,27 @@ Please read the latest update post: https://www.reddit.com/r/DashMachine/comment
 * multiple users, access groups, access settings
 * tagging system
 
-## Installation
-### Docker
-```
-docker create \
-  --name=dashmachine \
-  -p 5000:5000 \
-  -v path/to/data:/dashmachine/dashmachine/user_data \
-  --restart unless-stopped \
-  rmountjoy/dashmachine:latest
-```
-To run in a subfolder, use a CONTEXT_PATH environment variable. For example, to run at localhost:5000/dash:
-```
-docker create \
-  --name=dashmachine \
-  -p 5000:5000 \
-  -e CONTEXT_PATH=/dash
-  -v path/to/data:/dashmachine/dashmachine/user_data \
-  --restart unless-stopped \
-  rmountjoy/dashmachine:latest
-```
-### Synology
-Check out this awesome guide: https://nashosted.com/manage-your-self-hosted-applications-using-dashmachine/
-### Python
-Instructions are for linux.
-```
-virtualenv --python=python3 DashMachineEnv
-cd DashMachineEnv && source bin/activate
-git clone https://github.com/rmountjoy92/DashMachine.git
-cd DashMachine && pip install -r requirements.txt
-python3 run.py
-```
-Then open a web browser and go to localhost:5000
 
-## Default user/password
-```
-User: admin
-Password: admin
-```
+### Want to contribute?
+* Please submit your pull request on the develop branch, not master.
+* Please use the [pull request template](https://github.com/rmountjoy92/DashMachine/blob/master/pull_request_template.md)
+* See this link for [how to create a pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request)
 
-## Updating
-For python, use git. For docker, just pull the latest image and recreate the container.
 
-## Configuration
-The user data folder is located at DashMachine/dashmachine/user_data. This is where the config.ini, custom backgrounds/icons, and the database file live. A reference for what can go into the config.ini file can be found on the settings page of the dashmachine by clicking the info icon next to 'Config'. 
+### Subreddit 
+* [Go to subreddit](https://www.reddit.com/r/DashMachine)
 
-### Note
-If you change the config.ini file, you either have to restart the container (or python script) or click the 'save' button in the config section of settings for the config to be applied. Pictures added to the backgrounds/icons folders are available immediately.
+### Want to buy me a coffee?
+* [Librepay](https://liberapay.com/rmountjoy/donate)
+* [Bountysource](https://www.bountysource.com/teams/dashmachine-app)
 
-## Want to contribute?
-Please use the pull request template at:
-https://github.com/rmountjoy92/DashMachine/blob/master/pull_request_template.md
+### Want a feature to be added faster?
+* [Open a bounty](https://www.bountysource.com/)
+* [Bountysource faq](https://github.com/bountysource/core/wiki/Frequently-Asked-Questions)
 
-See this link for how to create a pull request:
-https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request
-
-## Subreddit 
-https://www.reddit.com/r/DashMachine
-
-## Want to buy me a coffee?
-recurring:
-<a href="https://liberapay.com/rmountjoy/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a>
-
-recurring or one-time:
-https://www.bountysource.com/teams/dashmachine-app
-
-## Want a feature to be added faster?
-Open a bounty on https://www.bountysource.com/
-
-Bountysource faq: https://github.com/bountysource/core/wiki/Frequently-Asked-Questions
-
-## Tech used
+### Tech used
 * Flask
 * SQLalchemy w/ SQLite
 * Jinja2
 * Materialize css
 * JavaScript/jQuery/jQueryUI
-
-## FAQs
-1. application does not work in iframe
-see https://github.com/rmountjoy92/DashMachine/issues/6

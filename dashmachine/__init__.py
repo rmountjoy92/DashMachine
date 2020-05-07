@@ -31,12 +31,14 @@ from dashmachine.main.routes import main
 from dashmachine.user_system.routes import user_system
 from dashmachine.error_pages.routes import error_pages
 from dashmachine.settings_system.routes import settings_system
+from dashmachine.docs_system.routes import docs_system
 from dashmachine import sources
 
 app.register_blueprint(main, url_prefix=context_path)
 app.register_blueprint(user_system, url_prefix=context_path)
 app.register_blueprint(error_pages, url_prefix=context_path)
 app.register_blueprint(settings_system, url_prefix=context_path)
+app.register_blueprint(docs_system, url_prefix=context_path)
 
 
 from dashmachine.rest_api.resources import *

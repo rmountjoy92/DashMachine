@@ -1,0 +1,49 @@
+{% extends "docs_system/docs-base.html" %}
+
+{% block tabs %}
+    <li class="tab"><a class="active" href="#cards-apps">Apps</a></li>
+    <li class="tab"><a href="#cards-collection">Collections</a></li>
+    <li class="tab"><a href="#cards-custom">Custom</a></li>
+{% endblock tabs %}
+
+{% block tabs_content %}
+    <div id="cards-apps" class="col s12">
+        <div class="container">
+            <div class="row">
+                <div class="col s12">
+                    <div class="card">
+                        <div class="card-content">
+                            {{ apps_html|safe }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="cards-collection" class="col s12">
+        <div class="container">
+            <div class="row">
+                <div class="col s12">
+                    <div class="card">
+                        <div class="card-content">
+                            {{ collections_html|safe }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="cards-custom" class="col s12">
+        <div class="container">
+            <div class="row">
+                <div class="col s12">
+                    <div class="card">
+                        <div class="card-content">
+                            {{ custom_cards_html|safe }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock tabs_content %}

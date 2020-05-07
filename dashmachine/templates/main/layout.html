@@ -1,90 +1,131 @@
 {% extends "main/base.html" %}
-{% from 'main/macros.html' import AppAnchor %}
+{% from 'global_macros.html' import SidenavToggle, ActionBar %}
+{% from 'main/cards.html' import SidenavApps %}
 
 {% block header %}
     <!-- BEGIN: Header-->
-
+    {% if access_group.can_see_sidenav == "True" %}
+        <div id="sidenav-toggle" style="position: fixed; z-index: 8000">
+            {{SidenavToggle()}}
+        </div>
+    {% else %}
+        <div class="fixed-action-btn">
+            <a href="{{ url_for('user_system.login') }}" class="btn-floating theme-primary">
+                <i class="material-icons-outlined theme-on-primary-text">person</i>
+            </a>
+        </div>
+    {% endif %}
     <!-- END: Header-->
 {% endblock header %}
 
 {% block sidenav %}
-    <div id="show-sidenav" class="draggable z-depth-1 hide">
-        <i class="material-icons-outlined theme-on-primary-text pointer">chevron_right</i>
+    <div id="card-editor-sidenav" class="sidenav z-depth-4 theme-background">
+        <div class="row padding-2">
+            <div class="col s12">
+                <div id="card-editor-container" data-url="{{ url_for('main.load_card_editor') }}">
+                    <div class="progress">
+                        <div class="indeterminate"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- BEGIN: SideNav-->
-    <aside id="main-sidenav" class="sidenav-main nav-collapsed nav-collapsible sidenav-light sidenav-active-rounded z-depth-2">
-        <ul class="sidenav sidenav-collapsible leftside-navigation collapsible sidenav-fixed menu-shadow pt-2 theme-surface-transparent1" id="slide-out" data-menu="menu-navigation" data-collapsible="accordion">
 
-            <li class="bold"><a id="dashboard-sidenav" class="waves-effect waves-cyan" href="{{ url_for('main.home') }}">
-                <i class="material-icons-outlined">dashboard</i>
-                <span class="menu-title" data-i18n="">Dashboard</span>
-            </a></li>
+    <div id="config-editor-sidenav" class="sidenav z-depth-4 theme-background">
+        <div class="row padding-2">
+            <div class="col s12">
+                <div id="config-editor-container" data-url="{{ url_for('main.load_config_editor') }}">
+                    <div class="progress">
+                        <div class="indeterminate"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-            <li class="bold"><a id="settings-sidenav" class="waves-effect waves-cyan" href="{{ url_for('settings_system.settings') }}">
-                <i class="material-icons-outlined">settings</i>
-                <span class="menu-title" data-i18n="">Settings</span>
-            </a></li>
+    <div id="settings-editor-sidenav" class="sidenav z-depth-4 theme-background">
+        <div class="row padding-2">
+            <div class="col s12">
+                <div id="settings-editor-container" data-url="{{ url_for('main.load_settings_editor') }}">
+                    <div class="progress">
+                        <div class="indeterminate"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-            {% if current_user.is_authenticated %}
-                <li class="bold"><a id="logout-sidenav" class="waves-effect waves-cyan" href="{{ url_for('user_system.logout') }}">
-                    <i class="material-icons-outlined">exit_to_app</i>
-                    <span class="menu-title" data-i18n="">Logout</span>
-                </a></li>
-            {% else %}
-                <li class="bold"><a id="login-sidenav" class="waves-effect waves-cyan" href="{{ url_for('user_system.login') }}">
-                    <i class="material-icons-outlined">account_circle</i>
-                    <span class="menu-title" data-i18n="">Login</span>
-                </a></li>
+    <div id="main-sidenav" class="sidenav theme-background z-depth-5" style="z-index: 8001">
+        <div class="row mt-2 mr-2 ml-2">
+            <i class="material-icons-outlined icon-btn theme-secondary-text">toggle_off</i>
+
+            {% if page != "home" %}
+                <a href="{{ url_for('main.home') }}">
+                    <i class="material-icons-outlined icon-btn right">dashboard</i>
+                </a>
             {% endif %}
 
-            <li class="bold"><a id="hide-sidenav" class="waves-effect waves-cyan hide-on-med-and-down" href="#">
-                <i class="material-icons-outlined">menu_open</i>
-                <span class="menu-title" data-i18n="">Hide Sidenav</span>
-            </a></li>
+            {% if access_group.can_access_user_settings == "True" or access_group.can_access_main_settings == "True" or access_group.can_edit_images == "True" %}
+                <a id="settings-editor-open-btn" href="#"  data-target="settings-editor-sidenav" class="sidenav-trigger">
+                    <i class="material-icons-outlined icon-btn right">settings</i>
+                </a>
+            {% endif %}
 
-            {% for app in apps %}
-                {% if app.type == "app" and app.sidebar_icon %}
-                    <li class="bold">
-                        {{ AppAnchor(app) }}
-                        <img src="{{ app.sidebar_icon }}" style="position: relative; top: 5px; left: 2px; margin-right: 18px; height: 24px">
-                        <span class="menu-title" data-i18n="">{{ app.name }}</span>
-                        </a></li>
-                {% endif %}
-            {% endfor %}
+            {% if access_group.can_access_card_editor == "True"%}
+                <a id="card-editor-open-btn" href="#"  data-target="card-editor-sidenav" class="sidenav-trigger">
+                    <i class="material-icons-outlined icon-btn right">aspect_ratio</i>
+                </a>
+            {% endif %}
 
-        </ul>
-               <a id="sidenav-mobile-toggle-btn"
-                  class="sidenav-trigger btn-sidenav-toggle btn-floating btn-medium waves-effect waves-light hide-on-large-only theme-primary"
-                  href="#" data-target="slide-out">
-                   <i class="material-icons-outlined theme-on-primary-text">menu</i>
-               </a>
-    </aside>
+            {% if access_group.can_access_raw_config == "True"%}
+                <a id="config-editor-open-btn" href="#"  data-target="config-editor-sidenav" class="sidenav-trigger">
+                    <i class="material-icons-outlined icon-btn right">description</i>
+                </a>
+            {% endif %}
+
+            {% if access_group.can_access_docs == "True" %}
+                <a href="{{ url_for('docs_system.docs_home') }}">
+                    <i class="material-icons-outlined icon-btn right">info</i>
+                </a>
+            {% endif %}
+
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('user_system.logout') }}">
+                    <i class="material-icons-outlined icon-btn right">exit_to_app</i>
+                </a>
+            {% else %}
+                <a href="{{ url_for('user_system.login') }}">
+                    <i class="material-icons-outlined icon-btn right">account_circle</i>
+                </a>
+            {% endif %}
+        </div>
+        <div class="divider"></div>
+
+        {{ ActionBar(tags, location="sidenav") }}
+
+        <div class="row">
+            <div id="sidenav-cards-container"
+                 data-url="{{ url_for('main.load_apps', sidenav="true") }}"
+                 class="col s12">
+                {{ SidenavApps(apps, tags) }}
+            </div>
+        </div>
+    </div>
     <!-- END: SideNav-->
 
 {% endblock sidenav%}
 
+{% block modules %}
+    <script>
+        $( document ).ready(function() {
+            load_card_editor();
+            load_config_editor();
+            load_settings_editor();
+        });
+    </script>
+{% endblock modules %}
+
 {% block footer %}
-    <div id="no-sidenav" class="card theme-surface-transparent hide" style="position: fixed; bottom: 0; right: 10px;">
-        <div class="card-content p-1">
-            <span>
-                {% if current_user.is_authenticated %}
-                    <a class="waves-effect waves-cyan" href="{{ url_for('user_system.logout') }}">
-                        <i class="material-icons-outlined icon-btn">exit_to_app</i>
-                    </a>
-                {% else %}
-                    <a class="waves-effect waves-cyan" href="{{ url_for('user_system.login') }}">
-                        <i class="material-icons-outlined icon-btn">account_circle</i>
-                    </a>
-                {% endif %}
-                <a class="waves-effect waves-cyan" href="{{ url_for('settings_system.settings') }}">
-                    <i class="material-icons-outlined icon-btn">settings</i>
-                </a>
-                <a class="waves-effect waves-cyan" href="{{ url_for('main.home') }}">
-                    <i class="material-icons-outlined icon-btn">dashboard</i>
-                </a>
-            </span>
-        </div>
-    </div>
     <!-- BEGIN: Footer-->
     <!-- <footer class="page-footer footer footer-static footer-light navbar-border navbar-shadow">
       <div class="footer-copyright">

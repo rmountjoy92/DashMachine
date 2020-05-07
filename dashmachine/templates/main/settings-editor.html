@@ -1,0 +1,175 @@
+{% from 'global_macros.html' import DMLogo %}
+{% from 'main/ini-form.html' import INIForm %}
+{% from 'settings_system/files.html' import FilesTab with context %}
+
+{% macro SettingsEditor() %}
+    <style>
+        #settings-editor-sidenav .tabs a i {
+            color: var(--theme-primary);
+            margin: 0;
+            float: unset;
+            display: inline-block;
+        }
+    </style>
+
+    <div class="row">
+        <div class="col s12 mb-2">
+            <ul class="tabs theme-background">
+                {% if access_group.can_access_main_settings == "True"%}
+                    <li class="tab col s3 active"><a id="settings-gui-tab" href="#settings-gui">
+                        <i class="material-icons-outlined">settings</i>
+                    </a></li>
+                {% endif %}
+
+                {% if access_group.can_edit_users == "True"%}
+                    <li class="tab col s3 active"><a id="access-groups-gui-tab" href="#access-groups-gui">
+                        <i class="material-icons-outlined">lock</i>
+                    </a></li>
+                {% endif %}
+
+                {% if access_group.can_access_user_settings == "True"%}
+                    <li class="tab col s3"><a href="#users-gui">
+                        <i class="material-icons-outlined">people</i>
+                    </a></li>
+                {% endif %}
+
+                {% if access_group.can_edit_images == "True"%}
+                    <li class="tab col s3"><a href="#images">
+                        <i class="material-icons-outlined">photo_library</i>
+                    </a></li>
+                {% endif %}
+
+                <li class="tab col s3"><a href="#about">
+                    <i class="material-icons-outlined">security</i>
+                </a></li>
+            </ul>
+        </div>
+
+        {% if access_group.can_access_main_settings == "True"%}
+            <div id="settings-gui" class="col s12">
+                <h4>Settings</h4>
+                <div id="settings-editor-settings-form-container">
+                    {{ INIForm(settings_dict, settings_doc_dict, location="settings-editor") }}
+                </div>
+            </div>
+        {% endif %}
+
+        {% if access_group.can_edit_users == "True"%}
+            <div id="access-groups-gui" class="col s12">
+                <div id="settings-editor-ag-table">
+                    <h4>Access Groups
+                        <i class="material-icons-outlined icon-btn settings-editor-add-ag-btn"
+                           data-url="{{ url_for('main.get_settings_editor_ag_form') }}"
+                           style="position: relative; top: 2px">add
+                        </i>
+                    </h4>
+                    <table class="highlight centered">
+                        <thead class="mb-2">
+                        <tr class="theme-on-primary-text font-weight-900" style="font-size: 1.1rem; border: 0">
+                            <th class="theme-primary" style="border-radius: 10px 0 0 10px;">Name</th>
+                            <th class="theme-primary" style="border-radius: 0 10px 10px 0;">Roles</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        {% for ag in access_groups %}
+                            {% if ag.name %}
+                                <tr class="settings-editor-ag-row"
+                                    style="border: 0"
+                                    data-id="{{ ag.id }}"
+                                    data-url="{{ url_for('main.get_settings_editor_ag_form') }}">
+                                    <td style="border-radius: 10px 0 0 10px;">{{ ag.name }}</td>
+                                    <td style="border-radius: 0 10px 10px 0;">{{ ag.roles }}</td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div id="settings-editor-ag-form-container">
+                </div>
+                
+            </div>
+        {% endif %}
+
+        {% if access_group.can_access_user_settings == "True"%}
+            <div id="users-gui" class="col s12">
+                <div id="settings-editor-user-table">
+                    <h4>Users
+                        <i class="material-icons-outlined icon-btn settings-editor-add-user-btn"
+                           data-url="{{ url_for('main.get_settings_editor_user_form') }}"
+                           style="position: relative; top: 2px">add
+                        </i>
+                    </h4>
+
+                    <table class="highlight centered">
+                        <thead class="mb-2">
+                        <tr class="theme-on-primary-text font-weight-900" style="font-size: 1.1rem; border: 0">
+                            <th class="theme-primary" style="border-radius: 10px 0 0 10px;">Username</th>
+                            <th class="theme-primary" style="border-radius: 0 10px 10px 0;">Role</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        {% for user in users %}
+                            <tr class="settings-editor-user-row"
+                                style="border: 0"
+                                data-id="{{ user.id }}"
+                                data-url="{{ url_for('main.get_settings_editor_user_form') }}">
+                                <td style="border-radius: 10px 0 0 10px;">{{ user.username }}</td>
+                                <td style="border-radius: 0 10px 10px 0;">{{ user.role }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div id="settings-editor-user-form-container">
+                </div>
+            </div>
+        {% endif %}
+
+        {% if access_group.can_edit_images == "True"%}
+            <div id="images" class="col s12">
+                {{ FilesTab() }}
+            </div>
+        {% endif %}
+
+        <div id="about" class="col s12">
+            <div class="row">
+                <div class="card theme-surface">
+                    <div class="card-content center-align">
+                        {{ DMLogo(size="120px") }}
+                        <h5>DashMachine</h5>
+                        <div class="divider"></div>
+                        <p class="font-weight-900 mb-2">Version:</p>
+                        <p class="mb-2">{{ version }}-{{ revision_number }}</p>
+
+                        <div class="divider"></div>
+                        <p class="font-weight-900 mb-2">Author:</p>
+                        <p class="mb-2">Ross Mountjoy (<a href="https://github.com/rmountjoy92" target="_blank"> Github </a>)</p>
+
+                        <div class="divider"></div>
+                        <p class="font-weight-900 mb-2">Source code:</p>
+                        <p class="mb-2"><a href="https://github.com/rmountjoy92/DashMachine" target="_blank"> Repo</a></p>
+
+                        <div class="divider"></div>
+                        <p class="font-weight-900 mb-2">Reddit:</p>
+                        <p class="mb-2"><a href="https://www.reddit.com/r/DashMachine/" target="_blank"> r/DashMachine</a>
+
+                        <div class="divider"></div>
+                        <p class="font-weight-900 mb-2">Donations:</p>
+                        <p class="mb-2"><a href="https://liberapay.com/rmountjoy/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a></p>
+                        <p class="mb-2"><a href="https://www.bountysource.com/teams/dashmachine-app" target="_blank"> Bountysource donation link</a></p>
+
+                        <div class="divider"></div>
+                        <p class="font-weight-900 mb-2">Bounties for new features:</p>
+                        <p class="mb-2"><a href="https://www.bountysource.com/" target="_blank"> Bountysource link</a></p>
+                        <p class="mb-2"><a href="https://github.com/bountysource/core/wiki/Frequently-Asked-Questions" target="_blank"> Bountysource faqs</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    {{ process_js_sources(src="main/settings-editor.js")|safe }}
+{% endmacro %}

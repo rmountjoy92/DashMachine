@@ -1,61 +1,33 @@
 import os
 from shutil import move
-from configparser import ConfigParser
-from flask_login import current_user
-from flask import render_template, request, Blueprint, jsonify, redirect, url_for
-from dashmachine.user_system.forms import UserForm
-from dashmachine.user_system.models import User
-from dashmachine.main.utils import public_route, check_groups
+from flask import (
+    request,
+    Blueprint,
+    jsonify,
+    render_template_string,
+)
 from dashmachine.main.read_config import read_config
 from dashmachine.main.models import Files
-from dashmachine.settings_system.forms import ConfigForm
-from dashmachine.settings_system.utils import load_files_html, get_config_html
-from dashmachine.settings_system.models import Settings
+from dashmachine.settings_system.utils import load_files_html
 from dashmachine.paths import (
     backgrounds_images_folder,
     icons_images_folder,
     user_data_folder,
     template_apps_folder,
 )
-from dashmachine.version import version, revision_number
 
 settings_system = Blueprint("settings_system", __name__)
 
 
-@public_route
-@settings_system.route("/settings", methods=["GET"])
-def settings():
-    settings_db = Settings.query.first()
-    if not check_groups(settings_db.settings_access_groups, current_user):
-        return redirect(url_for("main.home"))
-
-    config_form = ConfigForm()
-    user_form = UserForm()
-    user_form.role.choices += [(role, role) for role in settings_db.roles.split(",")]
-    with open(os.path.join(user_data_folder, "config.ini"), "r") as config_file:
-        config_form.config.data = config_file.read()
-    files_html = load_files_html()
-
-    template_apps = []
-    config = ConfigParser()
-    for template_app_ini in os.listdir(template_apps_folder):
-        config.read(os.path.join(template_apps_folder, template_app_ini))
-        entry = config[template_app_ini.replace(".ini", "")]
-        template_apps.append(f"{template_app_ini.replace('.ini', '')}&&{entry['icon']}")
-
-    users = User.query.all()
-    config_readme = get_config_html()
-    return render_template(
-        "settings_system/settings.html",
-        config_form=config_form,
-        files_html=files_html,
-        user_form=user_form,
-        template_apps=",".join(template_apps),
-        version=version,
-        revision_number=revision_number,
-        users=users,
-        config_readme=config_readme,
+@settings_system.route("/get_settings_data", methods=["GET"])
+def get_settings_data():
+    html = render_template_string(
+        """
+        {% from "main/base.html" import SettingsData with context%}
+        {{ SettingsData() }}
+        """
     )
+    return html
 
 
 @settings_system.route("/settings/save_config", methods=["POST"])
@@ -63,6 +35,8 @@ def save_config():
     with open(os.path.join(user_data_folder, "config.ini"), "w") as config_file:
         config_file.write(request.form.get("config"))
     msg = read_config()
+    if msg["msg"] != "success":
+        read_config(from_backup=True)
     return jsonify(data=msg)
 
 

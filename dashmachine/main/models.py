@@ -6,6 +6,12 @@ rel_app_data_source = db.Table(
     db.Column("app_id", db.Integer, db.ForeignKey("apps.id")),
 )
 
+rel_apps_tags = db.Table(
+    "rel_apps_tags",
+    db.Column("tag_id", db.Integer, db.ForeignKey("tags.id")),
+    db.Column("app_id", db.Integer, db.ForeignKey("apps.id")),
+)
+
 
 class Files(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -26,8 +32,6 @@ class Apps(db.Model):
     description = db.Column(db.String())
     open_in = db.Column(db.String())
     data_template = db.Column(db.String())
-    groups = db.Column(db.String())
-    tags = db.Column(db.String())
     type = db.Column(db.String())
     urls = db.Column(db.String())
 
@@ -51,14 +55,11 @@ class DataSourcesArgs(db.Model):
     data_source_id = db.Column(db.Integer, db.ForeignKey("data_sources.id"))
 
 
-class Groups(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String())
-    roles = db.Column(db.String())
-
-
 class Tags(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String())
     icon = db.Column(db.String())
     sort_pos = db.Column(db.Integer)
+    apps = db.relationship(
+        "Apps", secondary=rel_apps_tags, backref=db.backref("tags", lazy="dynamic"),
+    )

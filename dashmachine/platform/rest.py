@@ -1,54 +1,3 @@
-"""
-
-##### rest
-Make a call on a REST API and display the results as a jinja formatted string.
-```ini
-[variable_name]
-platform = rest
-resource = https://your-website.com/api
-value_template = {{value}}
-method = post
-authentication = basic
-username = my_username
-password = my_password
-payload = {"var1": "hi", "var2": 1}
-headers = {"Content-Type": "application/json"}
-verify = false
-```
-> **Returns:** `value_template` as rendered string
-
-| Variable        | Required | Description                                                     | Options           |
-|-----------------|----------|-----------------------------------------------------------------|-------------------|
-| [variable_name] | Yes      | Name for the data source.                                       | [variable_name]   |
-| platform        | Yes      | Name of the platform.                                           | rest              |
-| resource        | Yes      | Url of rest api resource.                                       | url               |
-| value_template  | Yes      | Jinja template for how the returned data from api is displayed. | jinja template    |
-| method          | No       | Method for the api call, default is GET                         | GET,POST          |
-| authentication  | No       | Authentication for the api call, default is None                | None,basic,digest |
-| username        | No       | Username to use for auth.                                       | string            |
-| password        | No       | Password to use for auth.                                       | string            |
-| payload         | No       | Payload for post request.                                       | json              |
-| headers         | No       | Custom headers for get or post                                  | json              |
-| verify          | No       | Turn TLS verification on or off, default is True                | true,false        |
-
-> **Working example:**
->```ini
->[test]
->platform = rest
->resource = https://pokeapi.co/api/v2/pokemon
->value_template = Pokemon: {{value['count']}}
->
->[Pokemon]
->prefix = https://
->url = pokemon.com
->icon = static/images/apps/default.png
->description = Data sources example
->open_in = this_tab
->data_sources = test
->```
-
-"""
-
 import json
 from requests import get, post
 from requests.auth import HTTPBasicAuth, HTTPDigestAuth
@@ -56,6 +5,102 @@ from flask import render_template_string
 
 
 class Platform:
+    def docs(self):
+        documentation = {
+            "name": "rest",
+            "author": "RMountjoy",
+            "author_url": "https://github.com/rmountjoy92",
+            "version": 1.0,
+            "description": "Make a call on a REST API and display the results as a jinja formatted string.",
+            "returns": "`value_template` as rendered string",
+            "returns_json_keys": ["value"],
+            "example": """
+```ini
+[test]
+platform = rest
+resource = https://pokeapi.co/api/v2/pokemon
+value_template = Pokemon: {{value['count']}}
+
+[Pokemon]
+prefix = https://
+url = pokemon.com
+icon = static/images/apps/default.png
+description = Data sources example
+open_in = this_tab
+data_sources = test
+```
+            """,
+            "variables": [
+                {
+                    "variable": "[variable_name]",
+                    "description": "Name for the data source.",
+                    "default": "None, entry is required",
+                    "options": ".ini header",
+                },
+                {
+                    "variable": "platform",
+                    "description": "Name of the platform.",
+                    "default": "rest",
+                    "options": "rest",
+                },
+                {
+                    "variable": "resource",
+                    "description": "Url of rest api resource.",
+                    "default": "",
+                    "options": "url",
+                },
+                {
+                    "variable": "value_template",
+                    "description": "Jinja template for how the returned data from api is displayed.",
+                    "default": "{{value}}",
+                    "options": "jinja template",
+                },
+                {
+                    "variable": "method",
+                    "description": "Method for the api call",
+                    "default": "GET",
+                    "options": "GET,POST",
+                },
+                {
+                    "variable": "authentication",
+                    "description": "Authentication for the api call",
+                    "default": "",
+                    "options": "None,basic,digest",
+                },
+                {
+                    "variable": "username",
+                    "description": "Username to use for auth.",
+                    "default": "",
+                    "options": "string",
+                },
+                {
+                    "variable": "password",
+                    "description": "Password to use for auth.",
+                    "default": "",
+                    "options": "string",
+                },
+                {
+                    "variable": "payload",
+                    "description": "Payload for post request.",
+                    "default": "",
+                    "options": "json",
+                },
+                {
+                    "variable": "headers",
+                    "description": "Custom headers for get or post",
+                    "default": "",
+                    "options": "json",
+                },
+                {
+                    "variable": "verify",
+                    "description": "Turn TLS verification on or off",
+                    "default": "True",
+                    "options": "True, False",
+                },
+            ],
+        }
+        return documentation
+
     def __init__(self, *args, **kwargs):
         # parse the user's options from the config entries
         for key, value in kwargs.items():
@@ -64,6 +109,8 @@ class Platform:
             self.__dict__[key] = value
 
         # set defaults for omitted options
+        if not hasattr(self, "value_template"):
+            self.method = "{{value}}"
         if not hasattr(self, "method"):
             self.method = "GET"
         if not hasattr(self, "authentication"):

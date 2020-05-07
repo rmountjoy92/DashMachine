@@ -1,16 +1,22 @@
 import os
+import json
 import importlib
 from shutil import copyfile
 from PIL import Image
 from markdown2 import markdown
+from configparser import ConfigParser
+from flask import url_for
 from dashmachine.paths import (
-    dashmachine_folder,
     images_folder,
     root_folder,
     user_data_folder,
+    template_apps_folder,
+    custom_platforms_folder,
+    platform_folder,
 )
-from dashmachine.main.models import Groups
+from dashmachine.main.models import Tags
 from dashmachine.main.read_config import read_config
+from dashmachine.user_system.models import AccessGroups
 from dashmachine.version import version as dashmachine_version
 from dashmachine import db
 
@@ -35,8 +41,6 @@ def dashmachine_init():
     db.create_all()
     db.session.commit()
 
-    user_data_folder = os.path.join(dashmachine_folder, "user_data")
-
     # create the user_data subdirectories, link them to static
     user_backgrounds_folder = os.path.join(user_data_folder, "backgrounds")
     backgrounds_folder = os.path.join(images_folder, "backgrounds")
@@ -58,34 +62,78 @@ def dashmachine_init():
 
     read_config()
 
+    # delete broken links in platforms
+    for file in os.listdir(platform_folder):
+        path = os.path.join(platform_folder, file)
+        if os.path.islink(path) and not os.path.exists(os.readlink(path)):
+            os.unlink(path)
 
-def check_groups(groups, current_user):
-    if current_user.is_anonymous:
-        current_user.role = "public_user"
+    # link platforms in user_data/platforms
+    if os.path.isdir(custom_platforms_folder):
+        for file in os.listdir(custom_platforms_folder):
+            real_path = os.path.join(custom_platforms_folder, file)
+            link_path = os.path.join(platform_folder, f"custom_{file}")
+            if not os.path.exists(link_path):
+                os.symlink(real_path, link_path)
 
-    if groups:
-        groups_list = groups.split(",")
-        roles_list = []
-        for group in groups_list:
-            group = Groups.query.filter_by(name=group.strip()).first()
-            for group_role in group.roles.split(","):
-                roles_list.append(group_role.strip())
-        if current_user.role in roles_list:
-            return True
-        else:
-            return False
+    # run on_startup platform methods
+    for platform_file in os.listdir(platform_folder):
+        name, extension = os.path.splitext(platform_file)
+        if extension.lower() == ".py" and name not in ["__init__"]:
+            module = importlib.import_module(f"dashmachine.platform.{name}", ".")
+            platform = module.Platform()
+            if getattr(platform, "on_startup", None):
+                platform.on_startup()
+
+
+def get_access_group(user, page=None):
+    access_groups = []
+    if user.is_authenticated:
+        access_group = AccessGroups()
+
+        for ag in AccessGroups.query.all():
+            if user.role in ag.roles:
+                access_groups.append(ag)
+        for ag in access_groups:
+            for app in ag.apps:
+                access_group.apps.append(app)
+            for key, value in row2dict(ag).items():
+                if key.startswith("can_") and value == "True":
+                    setattr(access_group, key, value)
+
     else:
-        if current_user.role == "admin":
-            return True
-        else:
-            return False
+        access_group = AccessGroups.query.filter_by(name="public_users").first()
+
+    redirect_url = url_for("error_pages.unauthorized")
+    if page == "home" and access_group.can_access_home == "False":
+        pass
+    elif page == "docs" and access_group.can_access_docs == "False":
+        pass
+    else:
+        redirect_url = None
+
+    return access_group, redirect_url
+
+
+def get_apps_and_tags(access_group):
+    apps = access_group.apps
+    tags = Tags.query.order_by(Tags.sort_pos).all()
+
+    for app in apps:
+        if app.urls:
+            url_list = app.urls.replace("},{", "}%,%{").split("%,%")
+            app.urls_json = []
+            for url in url_list:
+                app.urls_json.append(json.loads(url))
+    return apps, tags
 
 
 def get_data_source(data_source):
     data_source_args = {}
     for arg in data_source.args:
         arg = row2dict(arg)
-        data_source_args[arg.get("key")] = arg.get("value")
+        if arg["value"] != "None":
+            data_source_args[arg.get("key")] = arg.get("value")
     data_source = row2dict(data_source)
     module = importlib.import_module(
         f"dashmachine.platform.{data_source['platform']}", "."
@@ -101,6 +149,25 @@ def resize_template_app_images():
         image = Image.open(fp)
         image.thumbnail((64, 64))
         image.save(fp)
+
+
+def get_template_apps():
+    app_templates = []
+    for file in os.listdir(template_apps_folder):
+        config = ConfigParser(interpolation=None)
+        config.read(os.path.join(template_apps_folder, file))
+        app_templates.append(
+            {
+                "name": config.sections()[0],
+                "prefix": config[config.sections()[0]]["prefix"],
+                "url": config[config.sections()[0]]["url"],
+                "icon": config[config.sections()[0]]["icon"],
+                "sidebar_icon": config[config.sections()[0]]["sidebar_icon"],
+                "description": config[config.sections()[0]]["description"],
+                "open_in": config[config.sections()[0]]["open_in"],
+            }
+        )
+    return app_templates
 
 
 def get_update_message_html():
@@ -133,3 +200,41 @@ def get_update_message_html():
 def mark_update_message_read():
     with open(os.path.join(user_data_folder, ".has_read_update"), "w") as has_read:
         has_read.write(dashmachine_version)
+
+
+def convert_form_boolean(value):
+    if value == "on":
+        return_value = "True"
+    elif value == "off":
+        return_value = "False"
+    else:
+        return_value = value
+    return return_value
+
+
+def make_dict_list_string(tuple_list, form):
+    dict_list = []
+    form_ids = []
+    for subvariable_tuple in tuple_list:
+        del form[subvariable_tuple[0]]
+        ini_variable = subvariable_tuple[0].split("-")[0]
+        form_ids.append(subvariable_tuple[0].split("-")[2])
+
+    for form_id in set(form_ids):
+        subvariable_dict = {}
+        for subvariable_tuple in tuple_list:
+            if form_id in subvariable_tuple[0]:
+                st_val = convert_form_boolean(subvariable_tuple[1])
+                subvariable_dict[subvariable_tuple[0].split("-")[1]] = st_val
+        dict_list.append(json.dumps(subvariable_dict))
+
+    dict_list_string = ",".join(map(str, dict_list))
+    return dict_list_string, ini_variable, form
+
+
+def backup_working_config():
+    with open(os.path.join(user_data_folder, "config.ini"), "r") as config_file:
+        with open(
+            os.path.join(user_data_folder, ".config-backup.ini"), "w"
+        ) as bak_file:
+            bak_file.write(config_file.read())

@@ -1,3 +1,6 @@
+{% from 'global_macros.html' import button %}
+{% from 'main/tcdrop.html' import tcdrop %}
+
 {% macro FilesTab() %}
     <div class="row">
         <h5>Images</h5>
@@ -37,7 +40,7 @@
                 <li class="collection-header theme-primary theme-on-primary-text">Backgrounds</li>
                 {% if backgrounds %}
                     {% for background in backgrounds %}
-                        <li class="collection-item pt-2 pb-2 avatar">
+                        <li class="theme-surface collection-item pt-2 pb-2 avatar">
                             <div class="row">
                                 <div class="col s12 mt-2">
                                     <a href="static/images/backgrounds/{{ background }}" target="_blank">
@@ -68,11 +71,11 @@
     <div class="divider"></div>
     <div class="row">
         <div class="col s12">
-            <ul class="collection with-header">
-                <li class="collection-header theme-primary theme-on-primary-text">Icons</li>
+            <div class="collection with-header">
+                <div class="collection-header theme-primary theme-on-primary-text">Icons</div>
                 {% if icons %}
                     {% for icon in icons %}
-                        <li class="collection-item pt-2 pb-2 avatar">
+                        <div class="theme-surface collection-item pt-2 pb-2 avatar">
                             <div class="row">
                                 <div class="col s12 mt-2">
                                     <a href="static/images/icons/{{ icon }}" target="_blank">
@@ -92,12 +95,12 @@
                                     </span>
                                 </div>
                             </div>
-                        </li>
+                        </div>
                     {% endfor %}
                 {% else %}
                     <li class="collection-item">No files yet</li>
                 {% endif %}
-            </ul>
+            </div>
         </div>
     </div>
 

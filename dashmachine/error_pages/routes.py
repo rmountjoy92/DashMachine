@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request
 
 error_pages = Blueprint("error_pages", __name__)
 

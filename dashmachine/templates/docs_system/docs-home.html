@@ -1,0 +1,51 @@
+{% extends "docs_system/docs-base.html" %}
+
+{% block tabs %}
+    <li class="tab"><a class="active" href="#setup-about">About</a></li>
+    <li class="tab"><a href="#setup-installation">Installation</a></li>
+    <li class="tab"><a href="#setup-getting-started">Getting Started</a></li>
+{% endblock tabs %}
+
+{% block tabs_content %}
+    <div id="setup-about" class="col s12">
+        <div class="container">
+            <div class="row">
+                <div class="col s12">
+                    <div class="card">
+                        <div class="card-content">
+                            {{ about_html|safe }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="setup-installation" class="col s12">
+        <div class="container">
+            <div class="row">
+                <div class="col s12">
+                    <div class="card">
+                        <div class="card-content">
+                            {{ install_html|safe }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="setup-getting-started" class="col s12">
+        <div class="container">
+            <div class="row">
+                <div class="col s12">
+                    <div class="card">
+                        <div class="card-content">
+                            {{ getting_started_html|safe }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock tabs_content %}

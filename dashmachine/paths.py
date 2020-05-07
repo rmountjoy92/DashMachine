@@ -17,7 +17,11 @@ template_apps_folder = os.path.join(root_folder, "template_apps")
 
 platform_folder = os.path.join(dashmachine_folder, "platform")
 
+docs_folder = os.path.join(dashmachine_folder, "docs_system", "docs")
+
 user_data_folder = os.path.join(dashmachine_folder, "user_data")
+
+custom_platforms_folder = os.path.join(user_data_folder, "platform")
 
 auth_cache = os.path.join(user_data_folder, "auth_cache")
 

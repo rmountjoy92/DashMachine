@@ -1,0 +1,81 @@
+{% extends "main/layout.html" %}
+{% from 'global_macros.html' import DMLogo, button %}
+
+{% block page_vendor_css %}
+{% endblock page_vendor_css %}
+
+{% block page_lvl_css %}
+        {{ process_css_sources(src="docs_system/docs-base.css")|safe }}
+{% endblock page_lvl_css %}
+
+{% macro NavItems() %}
+    <li>
+        {{ button(
+        icon="check_circle",
+        float="",
+        href=url_for('docs_system.docs_home'),
+        text="Setup"
+        ) }}
+    </li>
+    <li>
+        {{ button(
+        icon="settings",
+        float="",
+        href=url_for('docs_system.docs_main_settings'),
+        text="Settings"
+        ) }}
+    </li>
+    <li>
+        {{ button(
+        icon="aspect_ratio",
+        float="",
+        href=url_for('docs_system.docs_cards'),
+        text="Cards"
+        ) }}
+    </li>
+    <li>
+        {{ button(
+        icon="language",
+        float="",
+        href=url_for('docs_system.docs_data_sources'),
+        text="Data Sources"
+        ) }}
+    </li>
+{% endmacro %}
+
+{% block content %}
+    <div class="navbar-fixed">
+        <nav class="nav-extended theme-surface pl-1 z-depth-1" style="border-radius: 0 0 10px 10px">
+            <div class="nav-wrapper">
+                <a href="{{ url_for('docs_system.docs_home') }}" class="brand-logo right theme-primary-text">{{ DMLogo(size="32px", style="position: relative; top: 6px") }} Docs</a>
+                <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons-outlined theme-primary-text">menu</i></a>
+                <ul id="nav-mobile" class="hide-on-med-and-down">
+                    {{ NavItems() }}
+                </ul>
+            </div>
+            <div class="nav-content">
+                <ul class="tabs theme-surface" style="border-bottom-right-radius: 10px;">
+                    {% block tabs %}{% endblock tabs %}
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <ul class="sidenav" id="mobile-demo" style="top: 110px">
+        {{ NavItems() }}
+    </ul>
+
+    <div id="main" class="main-full mt-3 ml-1">
+        <div id="md-container">
+            {% block tabs_content %}{% endblock tabs_content %}
+        </div>
+
+    </div>
+{% endblock content %}
+
+{% block page_vendor_js %}
+{% endblock page_vendor_js %}
+
+{% block page_lvl_js %}
+        {{ process_js_sources(src="docs_system/docs-base.js")|safe }}
+{% endblock page_lvl_js %}

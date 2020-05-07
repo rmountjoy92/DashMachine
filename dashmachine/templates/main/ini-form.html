@@ -1,0 +1,210 @@
+{% from 'global_macros.html' import button, input, switch %}
+
+{% macro INIFormInfoBtn(doc_name, key, top, subvariable_header=False) %}
+    <div class="ini-form-info-dropdown-dropdown-container right-align" style="position: relative; top: {{ top }}">
+        {% if subvariable_header %}
+            <i class="material-icons-outlined ini-form-subvariable-input-add-btn icon-btn theme-primary-text">add</i>
+        {% endif %}
+
+        <a class="sidenav-trigger ini-form-info-dropdown-trigger"
+           data-name="{{ key }}"
+           data-target="ini-form-info-dropdown-{{ doc_name }}-{{ key }}">
+            <i class="material-icons-outlined icon-btn">info</i>
+        </a>
+        <ul id='ini-form-info-dropdown-{{ doc_name }}-{{ key }}' class='ini-form-info-dropdown-dropdown-content dropdown-content'>
+            <li>
+                <span class="theme-primary-text">Variable: </span>
+                <span class="ini-form-info-variable selectable">None</span>
+            </li>
+            <li>
+                <span class="theme-primary-text">Description: </span>
+                <span class="ini-form-info-description selectable">None</span>
+            </li>
+            <li>
+                <span class="theme-primary-text">Default: </span>
+                <span class="ini-form-info-default selectable">None</span>
+            </li>
+            <li>
+                <span class="theme-primary-text">Options: </span>
+                <span class="ini-form-info-options selectable">None</span>
+            </li>
+            <li><a href="{{ url_for('docs_system.docs_home') }}">
+                <i class="material-icons-outlined">info</i>View in docs
+            </a></li>
+        </ul>
+    </div>
+{% endmacro %}
+
+{% macro INIForm(ini_dict, doc_dict=None, location=None, app_templates=None, ds_selector=None) %}
+    <div class="ini-form-container" data-name="{{doc_dict['name']|replace(" ", "-")}}">
+
+        <div class="row ini-form-controls-row mb-4 padding-2 theme-background" style="left: 0; margin-left: -15px; position: sticky; top: 0; z-index: 200">
+            {% if not ds_selector %}
+                {{ button(
+                float="left",
+                target_blank=True,
+                href=doc_dict['docs_url'],
+                icon="info",
+                text="Docs"
+                ) }}
+
+                {{ button(
+                class="ini-form-save-btn",
+                data={"url": url_for('main.save_ini_form_to_config'), "location": location},
+                float="left",
+                icon="save",
+                text="Save"
+                ) }}
+            {% endif %}
+
+            {{ button(
+            class="ini-form-cancel-btn hide theme-secondary",
+            float="left",
+            icon="close",
+            text="cancel"
+            ) }}
+
+            <div class="col s12 hide ini-form-error-col">
+                <div class="card theme-failure white-text">
+                    <div class="card-content selectable ini-form-error-div">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        {# DATA SOURCE SELECT #}
+        {% if ds_selector %}
+            <div class="input-field col s12">
+                <select id="ini-form-new-ds-selector" data-url="{{ url_for('main.get_card_editor_ds_form') }}">
+                    <option value=""></option>
+                    {% for platform in ds_selector %}
+                        <option value="{{ platform }}">{{ platform }}</option>
+                    {% endfor %}
+                </select>
+                <label>Platform</label>
+            </div>
+
+        {% endif %}
+
+{#        APP TEMPLATES#}
+        {% if app_templates %}
+            <div class="row card-filter-container card-editor-app-template-search-container">
+                <div class="hide card-editor-app-template-options">
+                    {% for app_template in app_templates %}
+                        <div id="app-template-info-{{ app_template['name']|replace(" ", "-") }}"
+                             class="hide"
+                             data-name="{{ app_template['name'] }}"
+                             data-prefix="{{ app_template['prefix'] }}"
+                             data-url="{{ app_template['url'] }}"
+                             data-sidebar_icon="{{ app_template['sidebar_icon'] }}"
+                             data-description="{{ app_template['description'] }}"
+                             data-open_in="{{ app_template['open_in'] }}"
+                             data-icon="{{ app_template['icon'] }}">
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="col s12 input-field">
+                    <span>
+                        <i class="material-icons prefix card-search-icon">search</i>
+                        <input type="text" class="card-filter theme-surface card-editor-app-template-search" placeholder="Search app templates">
+                    </span>
+                </div>
+            </div>
+        {% endif %}
+
+        <form class="ini-form">
+            <input name="ini_section" value="{{ doc_dict['name'] }}" class="hide">
+            <input name="ini_id" value="{{ ini_dict['id'] }}" class="hide">
+            <input name="prev_name" value="{{ ini_dict['name'] }}" class="hide">
+            {% for variable_dict in doc_dict['variables'] %}
+                <div id="variable-dict-{{doc_dict['name']|replace(" ", "-")}}-{{variable_dict['variable']|replace("]", "")|replace("[", "") }}"
+                     class="hide"
+                     data-disabled="{{ variable_dict['disabled'] }}"
+                     data-variable="{{ variable_dict['variable'] }}"
+                     data-description="{{ variable_dict['description'] }}"
+                     data-default="{{ variable_dict['default'] }}"
+                     data-options="{{ variable_dict['options'] }}"></div>
+                {% for subvariable_dict in variable_dict['variables'] %}
+                    <div id="variable-dict-{{doc_dict['name']|replace(" ", "-")}}-{{variable_dict['variable']|replace("]", "")|replace("[", "") }}-{{ subvariable_dict['variable'] }}"
+                         class="hide"
+                         data-variable="{{ subvariable_dict['variable'] }}"
+                         data-description="{{ subvariable_dict['description'] }}"
+                         data-default="{{ subvariable_dict['default'] }}"
+                         data-options="{{ subvariable_dict['options'] }}"></div>
+                {% endfor %}
+            {% endfor %}
+
+            {% for key, value in ini_dict.items() %}
+                {% if key == "id" %}
+                {% elif value[0] == "list" %}
+                    <div class="row ini-form-subvariable-set-row">
+                        <div class="row mt-4 mb-2">
+                            <div class="col s8">
+                                <h5 class="mb-2 theme-primary-text">{{ key }}</h5>
+                            </div>
+                            <div class="col s4">
+                                {{ INIFormInfoBtn(doc_name=doc_dict['name']|replace(" ", "-"), key=key, subvariable_header=True, top="4px") }}
+                            </div>
+                        </div>
+
+                        {% for v in value[1:] %}
+                            <div class="theme-surface z-depth-1 padding-2 border-radius-10 mb-2 ini-form-subvariable-set-card">
+                                {% set v_id = "-" + range(1, 99999)|random|string %}
+                                {% for v_key, v_value in v.items() %}
+                                    <div class="row">
+                                        {{ input(
+                                        id=key + "-" + v_key + v_id,
+                                        size="s11",
+                                        label=v_key,
+                                        name=key + "-" + v_key + v_id,
+                                        val=v_value|string,
+                                        class="ini-form-subvariable-input ini-form-" + doc_dict['name']|replace(" ", "-") + "-" + key + "-" + v_key
+                                        ) }}
+                                        <div class="col s1 right-align">
+                                            {{ INIFormInfoBtn(doc_name=doc_dict['name']|replace(" ", "-"), key=key + "-" + v_key, top="14px") }}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                                <div class="divider mb-1"></div>
+                                <div class="row pl-1">
+                                    <i class="material-icons-outlined theme-secondary-text ini-form-subvariable-delete-btn icon-btn">delete</i>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                {% elif value in ['True', 'False'] %}
+                    <div class="row pt-0 mt-0">
+                        {{ switch(
+                        size="s11 pt-2",
+                        value=value|string,
+                        label_left=key,
+                        name=key,
+                        id="ini-form-" + doc_dict['name']|replace(" ", "-") + "-" + key
+                        ) }}
+                        <div class="col s1 right-align">
+                            {{ INIFormInfoBtn(doc_dict['name']|replace(" ", "-"), key=key, top="6px") }}
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="row">
+                        {{ input(
+                        size="s11",
+                        name=key,
+                        label=key,
+                        val=value|string,
+                        id="ini-form-" + doc_dict['name']|replace(" ", "-") + "-" + key
+                        ) }}
+
+
+                        <div class="col s1 right-align">
+                            {{ INIFormInfoBtn(doc_dict['name']|replace(" ", "-"), key=key, top="14px") }}
+                        </div>
+                    </div>
+                {% endif %}
+                <div class="divider mt-2 mb-2"></div>
+            {% endfor %}
+        </form>
+    </div>
+{% endmacro %}

@@ -1,28 +1,33 @@
 {% extends "main/base.html" %}
+{% from 'global_macros.html' import input, DMLogo %}
 
 {% block content %}
     <div class="row">
         <div class="col s12 l4 offset-l4">
             <div class="card">
                 <div class="card-content">
-                    <div class="row center-align mt-4">
-                        <img width="120px" src="static/images/logo/logo.svg" alt="DashMachine Logo">
+                    <div class="row center-align">
+                        {{ DMLogo() }}
                     </div>
                     <div class="row">
                         <form class="login-form" method="POST" data-url="{{ url_for('user_system.check_login') }}">
                             {{ form.hidden_tag() }}
 
-                            <div class="input-field col s12">
-                                <i class="material-icons-outlined prefix">person</i>
-                                {{ form.username(class="validate", id="username", type="text") }}
-                                <label for="username" class="center-align">Username</label>
-                            </div>
+                            {{ input(
+                            form_obj=form.username,
+                            size="s12",
+                            icon="person",
+                            label="Username",
+                            id="login-form-username"
+                            ) }}
 
-                            <div class="input-field col s12">
-                                <i class="material-icons-outlined prefix">lock_outline</i>
-                                {{ form.password(class="validate", id="password", type="password") }}
-                                <label for="password">Password</label>
-                            </div>
+                            {{ input(
+                            form_obj=form.password,
+                            size="s12",
+                            icon="lock_outline",
+                            label="Password",
+                            id="login-form-password"
+                            ) }}
 
                             <div class="switch">
                                 <label>
@@ -39,6 +44,9 @@
 
                         </form>
                     </div>
+                </div>
+                <div class="card-action theme-secondary-text">
+                    {{ dm_version }}
                 </div>
             </div>
         </div>

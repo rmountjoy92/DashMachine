@@ -3,6 +3,7 @@ from flask_login import login_user, logout_user
 from dashmachine.user_system.forms import LoginForm
 from dashmachine.user_system.models import User
 from dashmachine import bcrypt
+from dashmachine.version import version, revision_number
 from dashmachine.main.utils import public_route
 
 user_system = Blueprint("user_system", __name__)
@@ -15,8 +16,11 @@ user_system = Blueprint("user_system", __name__)
 @public_route
 @user_system.route("/login", methods=["GET"])
 def login():
+    dm_version = f"{version}-{revision_number}"
     form = LoginForm()
-    return render_template("user/login.html", title="Login", form=form)
+    return render_template(
+        "user/login.html", title="Login", form=form, dm_version=dm_version
+    )
 
 
 @public_route

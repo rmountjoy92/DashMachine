@@ -122,3 +122,4 @@ scheduler.db
 dashmachine/user_data/
 dashmachine/static/images/icons
 dashmachine/static/images/backgrounds
+dashmachine/platform/custom_*

@@ -1,0 +1,210 @@
+{% from 'global_macros.html' import preload_circle %}
+
+{% macro HomeCards(apps, tags) %}
+    {% if apps %}
+        {% for tag in tags %}
+            <div class="tag-group" data-tag="{{ tag.name }}">
+                {% if tag.name != "Untagged" %}
+                    <div class="row" style="z-index: 2">
+                        <div class="col s12 m12 l6 xl4">
+                            <div class="card theme-surface-transparent mt-0 tag-group-btn pointer">
+                                <div class="card-content pt-0 pb-0">
+                                    <h5 style="font-size: 1.4em">
+                                        {% if tag.icon %}
+                                            <i class="material-icons-outlined mr-2 theme-primary-text" style="position: relative; top: .2rem">{{ tag.icon }}</i>
+                                        {% endif %}
+                                        {{ tag.name }}
+                                        <i class="material-icons-outlined theme-secondary-text icon-btn toggle-tag-expand-btn right" data-expanded="true" style="position: relative; bottom: 5px">keyboard_arrow_up</i>
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+                <div class="row tag-apps-row">
+                    {% for app in tag.apps %}
+                        {% if app.type == "app" %}
+                            {{ App(app) }}
+                        {% elif app.type == "collection" %}
+                            {{ Collection(app) }}
+                        {% elif app.type == "custom" %}
+                            {{ Custom(app) }}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <a href="#">
+            <div class="col s12 m6 l3">
+                <div class="card theme-surface-transparent">
+                    <div class="card-action center-align">
+                        <h5>No apps yet, go to settings.</h5>
+                    </div>
+                </div>
+            </div>
+        </a>
+    {% endif %}
+{% endmacro %}
+
+{% macro SidenavApps(apps, tags) %}
+    <div id="list-view-collection" class="collection z-depth-1">
+        {% for tag in tags %}
+            <div class="tag-group" data-tag="{{ tag.name }}">
+                {% if tag.name != "Untagged" %}
+                    <a class="tag-group-btn collection-item font-weight-600 theme-on-primary-text theme-primary pl-1 pointer" style="font-size: 1.2em">
+                        {% if tag.icon %}
+                            <i class="material-icons-outlined">{{ tag.icon }}</i>
+                        {% endif %}
+                        {{ tag.name }}
+                        <i class="material-icons-outlined theme-on-primary-text pointer toggle-tag-expand-btn right" data-expanded="true">keyboard_arrow_up</i>
+                    </a>
+                {% endif %}
+                <div class="row tag-apps-row">
+                    {% for app in tag.apps %}
+                        {% if app.type == 'app' %}
+                            <div class="app-card">
+                                {{ ListViewApp(app) }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <script>
+        $(".tag-group-btn").off('click');
+        $(".tag-group-btn").on('click', function(e) {
+            var tag_name = $(this).closest('.tag-group').attr("data-tag");
+            $(".toggle-tag-expand-btn").each(function(e) {
+                if ($(this).closest('.tag-group').attr("data-tag") == tag_name){
+                    toggle_tag_expand($(this));
+                }
+            });
+        });
+    </script>
+{% endmacro %}
+
+{% macro AppAnchor(app, classes=None, override=None, style=None) %}
+    {% if override == 'iframe' or app.open_in == 'iframe' and override == None %}
+        <a href="{{ url_for('main.app_view', app_id=app.id) }}" class="app-a {{ classes }}" data-name="{{ app.name }}" data-description="{{ app.description }}" data-tags="{{ app.tags }}" style="{{ style }}">
+    {% elif override == 'this_tab' or app.open_in == 'this_tab' and override == None %}
+        <a href="{{ app.prefix }}{{ app.url }}" class="app-a {{ classes }}" data-name="{{ app.name }}" data-description="{{ app.description }}" data-tags="{{ app.tags }}" style="{{ style }}">
+    {% elif override == 'new_tab' or app.open_in == "new_tab" and override == None %}
+        <a href="{{ app.prefix }}{{ app.url }}" target="_blank" class="app-a {{ classes }}" data-name="{{ app.name }}" data-description="{{ app.description }}" data-tags="{{ app.tags }}" style="{{ style }}">
+    {% endif %}
+{% endmacro %}
+
+{% macro App(app) %}
+    <div class="col s12 m6 l4 xl3 xxl2 app-card">
+        <div class="card theme-surface-transparent mt-0">
+            {{ AppAnchor(app) }}
+            <div class="card-content center-align scrollbar pt-3 pb-0" style="max-height: 86px; min-height: 86px; scrollbar-width: none;">
+                {% if app.data_sources.count() > 0 %}
+                    <div class="row">
+                        <div class="col s6 center-align">
+                            <img src="{{ app.icon }}" height="64px">
+                        </div>
+
+                        <div class="col s6 left-align">
+                            <div class="progress data-source-loading">
+                                <div class="indeterminate"></div>
+                            </div>
+                            {% for data_source in app.data_sources %}
+                                <p class="data-source-container"
+                                   data-url="{{ url_for('main.load_data_source') }}"
+                                   data-id="{{ data_source.id }}">
+                                </p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% else %}
+                    <img src="{{ app.icon }}" height="64px">
+                {% endif %}
+            </div>
+    </a>
+    <div class="card-action center-align scrollbar pr-0" style="max-height: 60px; min-height: 60px; scrollbar-width: none;">
+                <span class="app-name-{{ app.id }} font-weight-900 card-title theme-primary-text searchable" style="font-size: 1.2rem">{{ app.name }}
+                    <i class="material-icons activator right theme-secondary-text" style="margin-left: 0px;">more_vert</i>
+                    {% if app.data_sources.count() > 0 %}
+                        <i class="material-icons pointer right theme-secondary-text refresh-data-source-btn">refresh</i>
+                    {% endif %}
+                </span>
+        <style>
+            .app-name-{{ app.id }} {
+                margin-top: 35px;
+            }
+        </style>
+    </div>
+    <div class="card-reveal">
+        <span class="card-title">{{ app.name }}<i class="material-icons right">close</i></span>
+        {% if app.description %}
+            <p class="theme-secondary-text app-description searchable">{{ app.description|safe }}</p>
+        {% endif %}
+    </div>
+    </div>
+    </div>
+{% endmacro %}
+
+{% macro Collection(app) %}
+    <div class="col s12 m6 l4 xl3 xxl2 app-card">
+        <div class="card theme-surface-transparent scrollbar mt-0" style="max-height: 146px; min-height: 146px;">
+            <div class="card-content">
+                <span class="font-weight-900 card-title theme-primary-text">
+                    {% if app.icon %}
+                        <i class="material-icons-outlined right">{{app.icon}}</i>
+                    {% endif %}
+                    <text class="searchable">{{ app.name }}</text>
+                </span>
+                <div class="collection">
+                    {% for url in app.urls_json %}
+
+                        <div class="collection-item">
+                            {% if url['icon'] %}
+                                <img src="{{ url['icon'] }}" height="24px" class="mr-2" style="position: relative; top: 5px;">
+                            {% endif %}
+                            {% if url['open_in'] == 'this_tab' %}
+                                <a href="{{ url['url'] }}" class="font-weight-700 searchable" style="font-size: 1.1rem">
+                            {% else %}
+                                <a href="{{ url['url'] }}" target="_blank" class="font-weight-700 searchable" style="font-size: 1.1rem">
+                            {% endif %}
+                            {{ url['name'] }}
+                            </a>
+                        </div>
+
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro Custom(app) %}
+    <div class="col s12 m6 l4 xl3 xxl2 app-card">
+        <div class="card theme-surface-transparent scrollbar mt-0" style="max-height: 146px; min-height: 146px;">
+            <div class="hide searchable">{{ app.name }}</div>
+            <div class="card-content">
+                <div class="col s12">
+                    <div class="progress data-source-loading">
+                        <div class="indeterminate"></div>
+                    </div>
+                    {% for data_source in app.data_sources %}
+                        <p class="data-source-container"
+                           data-url="{{ url_for('main.load_data_source') }}"
+                           data-id="{{ data_source.id }}">
+                        </p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro ListViewApp(app) %}
+    <span class="hide searchable">{{ app.name }}</span>
+    {{ AppAnchor(app, classes="collection-item", style="min-height: 50px") }}
+    <img src="{{ app.icon }}" class="app-icon">
+    <span class="theme-muted-text app-name">{{ app.name }}</span>
+    </a>
+    {# </a> This closes AppAnchor() #}
+{% endmacro %}

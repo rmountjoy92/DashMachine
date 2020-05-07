@@ -16,7 +16,7 @@ class UserForm(FlaskForm):
 
 
 class LoginForm(FlaskForm):
-    username = StringField(validators=[DataRequired()])
+    username = StringField(validators=[DataRequired()], render_kw={"autofocus": True})
 
     password = PasswordField(validators=[DataRequired()])
 

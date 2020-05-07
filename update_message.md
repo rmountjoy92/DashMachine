@@ -1,22 +1,17 @@
-##### Updated to version 0.5!
-> In this version, I removed the need for database migrations by making the database 100% dynamic. Meaning when you run dashmachine your old site.db file will be deleted and a new one will be created using the data from config.ini. This will make adding features in the future easier and updates will break things less. To accomplish this you will notice that user management has been moved to config.ini. If you are upgrading from a previous version, your user table was deleted. Please login with default user/pass (which is now 'admin' and 'admin') and take a look at the users section in the readme to add users.
+##### Updated to version 0.6!
+> Version 0.6 brings DashMachine one big step forward to being a finished product by adding a gui to edit the various settings in the config.ini.
 
 **Changelog**
-- ui fixes
-- users are now managed through config.ini
-- no more alembic, completely dynamic database, created on startup
-- users can now override global settings
-- added update message
-- performance fixes
-- added setting for hiding sidebar by default
-- broke up config readme into 3 tabs, and 3 .md files
-- changed 'app templates' to 'card templates'
-- added 'collection' cards
-- added 'custom' cards
-- added options for setting tag icons and sort position
-- removed list view to focus on different card types on /home
-- added ability to collapse/expand tags on /home
-- added setting for having tags default to collapsed state
-- created a public user view with no sidebar
-- added sidebar default overrides for users
-- fixes #57, #55, #45, #41, #40 
+- improvements to /home including 'pinned' cards, multi-select tag filtering, 'action providers' allowing you to do web searches from the searchbar
+- rebuilt sidenav with list view, mirroring filter/search/collapse state of the homepage
+- /settings and /home now on same route
+- dynamic reloading of settings (no more page reloads)
+- dedicated config.ini editor slide-out
+- settings editor slide-out
+- card editor slide-out
+- better access group control
+- dedicated documentation pages
+- improved documentation
+- new system for automatically generating documentation for platforms
+- ability to load custom platforms
+- added an 'on_starup' method for platforms allowing for registering api routes. (example coming soon)

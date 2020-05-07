@@ -1,0 +1,128 @@
+{#  CARD EDITOR #}
+{% macro CardEditor() %}
+    <style>
+        #card-editor-sidenav .card-editor-add-dropdown-overlay {
+            position: absolute;
+            background-color: rgba(0,0,0, 0.5);
+            margin: -2%;
+            top: 0;
+            left: 0;
+            height: 102vh;
+            width: 104%;
+        }
+    </style>
+
+    <div id="card-editor-cards-table" class="row">
+        <div class="row card-filter-container">
+            <div class="hide card-editor-add-dropdown-overlay"></div>
+            <div class="col s12 input-field">
+                <span>
+                    <i class="material-icons prefix card-search-icon">search</i>
+                    <input type="text" id="card-editor-card-search" class="card-filter theme-surface" placeholder="Search cards">
+                    <a id="card-editor-add-btn" class='dropdown-trigger' href='#' data-target='card-editor-add-dropdown'>
+                        <i class="material-icons right filter-action pointer">add</i>
+                    </a>
+                    <i class="material-icons right filter-action pointer show-card-editor-data-sources-table">language</i>
+                </span>
+
+                <ul id='card-editor-add-dropdown' class='dropdown-content' data-url="{{ url_for('main.get_card_editor_form') }}">
+                    <li><a href="#" class="card-editor-add-dropdown-a" data-type="app">
+                        <i class="material-icons-outlined">add</i>App
+                    </a></li>
+                    <li><a href="#" class="card-editor-add-dropdown-a" data-type="collection">
+                        <i class="material-icons-outlined">add</i>Collection
+                    </a></li>
+                    <li><a href="#" class="card-editor-add-dropdown-a" data-type="custom">
+                        <i class="material-icons-outlined">add</i>Custom Card
+                    </a></li>
+                    <li><a href="{{ url_for('docs_system.docs_cards') }}">
+                        <i class="material-icons-outlined">info</i>Cards Docs
+                    </a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <table class="highlight centered">
+                    <thead class="mb-2">
+                    <tr class="theme-on-primary-text font-weight-900" style="font-size: 1.1rem; border: 0">
+                        <th class="theme-primary" style="border-radius: 10px 0 0 10px;">Name</th>
+                        <th class="theme-primary" style="border-radius: 0;">Type</th>
+                        <th class="theme-primary" style="border-radius: 0 10px 10px 0;">Tags</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for app in apps %}
+                        <tr class="card-editor-app-row"
+                            style="border: 0"
+                            data-id="{{ app.id }}"
+                            data-url="{{ url_for('main.get_card_editor_form') }}">
+                            <td style="border-radius: 10px 0 0 10px;">{{ app.name }}</td>
+                            <td style="border-radius: 0;">{{ app.type }}</td>
+                            <td style="border-radius: 0 10px 10px 0;">
+                                {% for tag in app.tags %}
+                                    -{{ tag.name }}
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="card-editor-data-sources-table" class="row hide">
+        <div class="row card-filter-container">
+            <div class="hide card-editor-add-dropdown-overlay"></div>
+            <div class="col s12 input-field">
+                <span>
+                    <i class="material-icons prefix card-search-icon">search</i>
+                    <input type="text" id="card-editor-data-sources-search" class="card-filter theme-surface" placeholder="Search data sources">
+
+                    <a id="card-editor-data-source-add-btn" class='dropdown-trigger' href='#' data-target='card-editor-data-source-add-dropdown'>
+                        <i class="material-icons right filter-action pointer">add</i>
+                    </a>
+                    <ul id='card-editor-data-source-add-dropdown' class='dropdown-content'>
+                        <li><a href="#" id="card-editor-add-new-ds-btn" data-url="{{ url_for('main.get_card_editor_ds_form', new="True") }}">
+                            <i class="material-icons-outlined">add</i>Data Source
+                        </a></li>
+                        <li><a href="{{ url_for('docs_system.docs_data_sources') }}">
+                            <i class="material-icons-outlined">info</i>Data Source Docs
+                        </a></li>
+                    </ul>
+
+                    <i class="material-icons right filter-action pointer show-card-editor-cards-table">aspect_ratio</i>
+                </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <table class="highlight centered">
+                    <thead>
+                    <tr>
+                        <th class="theme-primary theme-on-primary-text" style="border-radius: 10px 0 0 10px;">Name</th>
+                        <th class="theme-primary theme-on-primary-text" style="border-radius: 0 10px 10px 0;">Platform</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for ds in data_sources %}
+                        <tr class="card-editor-data-source-row"
+                            data-id="{{ ds['id'] }}"
+                            data-url="{{ url_for('main.get_card_editor_ds_form') }}">
+                            <td style="border-radius: 10px 0 0 10px;">{{ ds['name'] }}</td>
+                            <td style="border-radius: 0 10px 10px 0;">{{ ds['platform'] }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div id="card-editor-form-container"></div>
+    <div id="card-editor-data-sources-form-container"></div>
+
+    {{ process_js_sources(src="main/card-editor.js")|safe }}
+{% endmacro %}

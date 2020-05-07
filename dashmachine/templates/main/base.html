@@ -1,119 +1,163 @@
 {% from 'global_macros.html' import button %}
 
+{% macro SettingsData() %}
+    <div id="settings-data" class="hide" data-url="{{ url_for('settings_system.get_settings_data') }}">
+        {#  System settings from database  #}
+        <input id="settings-background" class="hide" value="{{ settings.selected_background }}">
+        <input id="settings-theme" class="hide" value="{{ settings.theme }}">
+        <input id="settings-accent" class="hide" value="{{ settings.accent }}">
+        <input id="settings-tags_expanded" class="hide" value="{{ settings.tags_expanded }}">
+
+        {#  User settings from database  #}
+        <input id="user-background" class="hide" value="{{ user['selected_background'] }}">
+        <input id="user-theme" class="hide" value="{{ user['theme'] }}">
+        <input id="user-accent" class="hide" value="{{ user['accent'] }}">
+        <input id="user-tags_expanded" class="hide" value="{{ user['tags_expanded'] }}">
+
+        {% for action_provider in action_providers %}
+            <span class="hide action-provider-span"
+                  data-action="{{ action_provider['action'] }}"
+                  data-macro="{{ action_provider['macro'] }}"
+                  data-name="{{ action_provider['name'] }}">
+            </span>
+        {% endfor %}
+    </div>
+{% endmacro %}
+
 <!DOCTYPE html>
 <html id="html" class="loading" lang="en" data-textdirection="ltr">
 <!-- BEGIN: Head-->
 
 <head>
-  <script>
-    let mode = localStorage.getItem('mode');
-    if (mode === 'dark') {
-      document.documentElement.setAttribute('data-theme', 'dark');
-    } else {
-      document.documentElement.setAttribute('data-theme', 'light');
-    }
-    let accent = localStorage.getItem('accent');
-    document.documentElement.setAttribute('data-accent', accent);
-  </script>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-  <meta name="description"
-    content="Another web application bookmark dashboard, with fun features.">
-  <meta name="author" content="rmountjoy">
-  {% if title %}
-  <title>{{ title }} - {{ settings.custom_app_title }}</title>
-  {% else %}
-  <title>{{ settings.custom_app_title }}</title>
-  {% endif %}
-  <link rel="apple-touch-icon" href="static/images/favicon/apple-touch-icon-152x152.png">
-  <link rel="shortcut icon" type="image/x-icon" href="static/images/favicon/favicon-32x32.png">
-  <link href="static/css/vendors/material-icons.css" rel="stylesheet">
-  <link href="static/css/vendors/google-fonts.css" rel="stylesheet">
-  <!-- BEGIN: VENDOR CSS-->
-  <link rel="stylesheet" href="static/css/vendors/materialize.min.css">
-  {% block page_vendor_css %}{% endblock page_vendor_css %}
-  <!-- END: VENDOR CSS-->
-  <!-- BEGIN: Page Level CSS-->
-  {% block page_lvl_css %}{% endblock page_lvl_css %}
-  <!-- END: Page Level CSS-->
+{#    PRELOAD THE BACKGROUND VIA CSS TO AVOID JANK #}
+    {% if user['selected_background'] and user['selected_background'] != 'None' %}
+        <style>
+            body {
+            {% if user['selected_background'].startswith('#') or user['selected_background'].startswith('var(') %}
+                background-color: {{ user['selected_background'] }} !important;
+            {% else %}
+                background-image: url("{{ user['selected_background'] }}");
+            {% endif %}
+            }
+        </style>
+    {% elif settings.selected_background and settings.selected_background != 'None' %}
+        <style>
+            body {
+            {% if settings.selected_background.startswith('#') or settings.selected_background.startswith('var(') %}
+                background-color: {{ settings.selected_background }} !important;
+            {% else %}
+                background-image: url("{{ settings.selected_background }}");
+            {% endif %}
+                background-size: cover;
+                background-attachment: fixed;
+                min-height: 100vh;
+            }
+        </style>
+    {% endif %}
 
-  <!-- BEGIN: DashMachine modules CSS-->
-  {{ process_css_sources(app_global=True)|safe }}
-  <!-- END: DashMachine modules CSS-->
+    <script>
+        // load cached theme settings from localstorage to avoid jank
+        if (localStorage.getItem('mode') === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+        }
+        document.documentElement.setAttribute('data-accent', localStorage.getItem('accent'));
+    </script>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="description"
+          content="Another web application bookmark dashboard, with fun features.">
+    <meta name="author" content="rmountjoy">
+    {% if title %}
+        <title>{{ title }} - {{ settings.custom_app_title }}</title>
+    {% else %}
+        <title>{{ settings.custom_app_title }}</title>
+    {% endif %}
+    <link rel="apple-touch-icon" href="static/images/favicon/apple-touch-icon-152x152.png">
+    <link rel="shortcut icon" type="image/x-icon" href="static/images/favicon/favicon-32x32.png">
+    <link href="static/css/vendors/material-icons.css" rel="stylesheet">
+    <link href="static/css/vendors/google-fonts.css" rel="stylesheet">
+    <!-- BEGIN: VENDOR CSS-->
+    <link rel="stylesheet" href="static/css/vendors/materialize.min.css">
+    {% block page_vendor_css %}{% endblock page_vendor_css %}
+    <!-- END: VENDOR CSS-->
+    <!-- BEGIN: Page Level CSS-->
+    {% block page_lvl_css %}{% endblock page_lvl_css %}
+    <!-- END: Page Level CSS-->
+
+    <!-- BEGIN: DashMachine modules CSS-->
+    {{ process_css_sources(app_global=True)|safe }}
+    <!-- END: DashMachine modules CSS-->
 </head>
 <!-- END: Head-->
 
 <body id="body" class="vertical-layout page-header-light vertical-menu-collapsible 2-columns  " data-open="click"
-  data-menu="vertical-dark-menu" data-col="2-columns">
-  <input id="copy-input" style="white-space: pre" class="hide">
+      data-menu="vertical-dark-menu" data-col="2-columns">
+<input id="copy-input" style="white-space: pre" class="hide">
 
-  {#  System settings from database  #}
-  <input id="settings-theme" class="hide" value="{{ settings.theme }}">
-  <input id="settings-accent" class="hide" value="{{ settings.accent }}">
-  <input id="settings-sidebar_default" class="hide" value="{{ settings.sidebar_default }}">
-  <input id="settings-tags_expanded" class="hide" value="{{ settings.tags_expanded }}">
+<div id="settings-data-container" class="hide">
+    {{ SettingsData() }}
+</div>
 
-  {#  User settings from database  #}
-  <input id="user-name" class="hide" value="{{ current_user.username }}">
-  <input id="user-theme" class="hide" value="{{ current_user.theme }}">
-  <input id="user-accent" class="hide" value="{{ current_user.accent }}">
-  <input id="user-sidebar_default" class="hide" value="{{ current_user.sidebar_default }}">
-  <input id="user-tags_expanded" class="hide" value="{{ current_user.tags_expanded }}">
 
-  <script src="static/js/vendors/jquery.min.js"></script>
+<script src="static/js/vendors/jquery.min.js"></script>
 
-  <div id="update-message-modal" class="modal">
-      <div id="update-message-content" class="modal-content">
-          {{ update_message|safe }}
-      </div>
-      <div class="modal-footer">
-          {{ button(
+<div id="update-message-modal" class="modal">
+    <div id="update-message-content" class="modal-content">
+        {{ update_message|safe }}
+    </div>
+    <div class="modal-footer">
+        {{ button(
           id="update-message-read-btn",
           data={"url": url_for('main.update_message_read')},
           icon="check_circle",
           text="read"
           ) }}
 
-          {{ button(
+        {{ button(
           class="modal-close",
           icon="restore",
           text="later"
           ) }}
-      </div>
-  </div>
+    </div>
+</div>
 
-  {% block header %}{% endblock header %}
+{% block header %}{% endblock header %}
 
-  {% block sidenav %}{% endblock sidenav %}
+{% block sidenav %}{% endblock sidenav %}
 
-  {% block content %}{% endblock content %}
+{% block content %}{% endblock content %}
 
-  {% block footer %}{% endblock footer %}
+{% block footer %}{% endblock footer %}
 
-  <!-- BEGIN VENDOR JS-->
-  <script src="static/js/vendors/jqueryui.min.js"></script>
-  <script src="static/js/vendors/materialize.min.js"></script>
-  <!-- END VENDOR JS-->
+<!-- BEGIN VENDOR JS-->
+<script src="static/js/vendors/jqueryui.min.js"></script>
+<script src="static/js/vendors/touch-punch.min.js"></script>
+<script src="static/js/vendors/materialize.min.js"></script>
+<!-- END VENDOR JS-->
 
-  <!-- BEGIN PAGE VENDOR JS-->
-  {% block page_vendor_js %}{% endblock page_vendor_js %}
-  <!-- END PAGE VENDOR JS-->
+<!-- BEGIN PAGE VENDOR JS-->
+{% block page_vendor_js %}{% endblock page_vendor_js %}
+<!-- END PAGE VENDOR JS-->
 
-  <!-- BEGIN DashMachine modules JS-->
-  {{ process_js_sources(app_global=True)|safe }}
-  <!-- END DashMachine modules  JS-->
+<!-- BEGIN DashMachine modules JS-->
+{{ process_js_sources(app_global=True)|safe }}
+<!-- END DashMachine modules  JS-->
 
-  <!-- BEGIN PAGE LEVEL JS-->
-  {% block page_lvl_js %}{% endblock page_lvl_js %}
-  <!-- END PAGE LEVEL JS-->
-  <noscript>
+<!-- BEGIN PAGE LEVEL JS-->
+{% block page_lvl_js %}{% endblock page_lvl_js %}
+{% block modules %}{% endblock modules %}
+<!-- END PAGE LEVEL JS-->
+<noscript>
     <style>
-      body {
-        visibility: visible;
-      }
+        body {
+            visibility: visible;
+        }
     </style>
-  </noscript>
+</noscript>
 
 </body>
 

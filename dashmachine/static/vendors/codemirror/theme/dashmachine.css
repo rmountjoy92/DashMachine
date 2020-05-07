@@ -1,0 +1,82 @@
+
+.cm-s-dashmachine.CodeMirror {
+  background-color: var(--theme-background);
+  color: var(--theme-color-font);
+}
+
+.cm-s-dashmachine .CodeMirror-gutters {
+  background: var(--theme-background);
+  color: var(--theme-color-font);
+  border: none;
+}
+
+.CodeMirror-line {
+  padding-left: 1rem !important;
+}
+
+.cm-s-dashmachine .CodeMirror-guttermarker,
+.cm-s-dashmachine .CodeMirror-guttermarker-subtle,
+.cm-s-dashmachine .CodeMirror-linenumber {
+  color: var(--theme-color-font);
+}
+
+.cm-s-dashmachine .CodeMirror-cursor {
+  border-left: 1px solid var(--theme-primary);
+}
+
+.cm-s-dashmachine div.CodeMirror-selected {
+  background: var(--theme-surface-1);
+}
+
+.cm-s-dashmachine.CodeMirror-focused div.CodeMirror-selected {
+  background: var(--theme-surface-1);
+}
+
+.cm-s-dashmachine .CodeMirror-line::selection,
+.cm-s-dashmachine .CodeMirror-line>span::selection,
+.cm-s-dashmachine .CodeMirror-line>span>span::selection {
+  background: var(--theme-surface-1);
+}
+
+.cm-s-dashmachine .CodeMirror-line::-moz-selection,
+.cm-s-dashmachine .CodeMirror-line>span::-moz-selection,
+.cm-s-dashmachine .CodeMirror-line>span>span::-moz-selection {
+  background: var(--theme-surface-1);
+}
+
+.cm-s-dashmachine .CodeMirror-activeline-background {
+  background: var(--theme-surface-1);
+}
+
+.cm-s-dashmachine .cm-keyword {
+  color: #C792EA;
+}
+
+.cm-s-dashmachine .cm-operator {
+  color: #89DDFF;
+}
+
+.cm-s-dashmachine .cm-variable-2 {
+  color: #EEFFFF;
+}
+
+.cm-s-dashmachine .cm-variable-3,
+.cm-s-dashmachine .cm-type {
+  color: #f07178;
+}
+
+.cm-s-dashmachine .cm-builtin {
+  color: #FFCB6B;
+}
+
+.cm-s-dashmachine .cm-atom {
+  color: #F78C6C;
+}
+
+.cm-s-dashmachine .cm-number {
+  color: var(--theme-secondary);
+}
+
+.cm-s-dashmachine .cm-def {
+  color: var(--theme-primary);
+}

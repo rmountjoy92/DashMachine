@@ -1,12 +1,10 @@
-<!--addme global "are you sure" modal-->
-
 <!--GLOBAL SWITCH-->
 {% macro switch(
 id="",
 form_obj=None,
 label_left="",
 label_right="",
-val=None,
+value=None,
 size="",
 name="",
 onclickval=None,
@@ -28,7 +26,7 @@ data={}) %}
 
             {% else %}
 
-                {% if value == True %}
+                {% if value == 'True' %}
                     <input id="{{id}}" name="{{name}}" type="checkbox" checked>
                 {% else %}
                     <input id="{{id}}" name="{{name}}" type="checkbox">
@@ -50,7 +48,8 @@ class=None,
 data={},
 icon=None,
 float="right",
-href=None
+href=None,
+target_blank=None
 )%}
     <a class="waves-effect waves-light btn {{class}} {{float}} theme-on-primary-text"
             {% if id %}
@@ -59,6 +58,10 @@ href=None
 
             {% if href %}
        href="{{href}}"
+            {% endif %}
+
+            {% if target_blank %}
+       target="_blank"
             {% endif %}
 
             {% for key, value in data.items() %}
@@ -77,7 +80,7 @@ href=None
 
 <!--GLOBAL TEXT INPUT FIELD (INCLUDES PARENT COL)-->
 {% macro input(
-id,
+id=None,
 label=None,
 name="",
 form_obj=None,
@@ -107,7 +110,7 @@ col_style=None
                 {{ form_obj(id=id, value=val, class="validate " + class) }}
             {% endif %}
         {% else %}
-            <input id="{{ id }}" type="text" value={{val}} class="validate {{class}}" {{required}}>
+            <input {% if id %}id="{{ id }}"{% endif %} {% if id %}name="{{ name }}"{% endif %} type="text" {% if val and val|length > 0 %}value="{{val}}"{% endif %} class="validate {{class}}" {{required}}>
         {% endif %}
 
         {% if label %}
@@ -177,5 +180,98 @@ class=''
         {% if label %}
             <label>{{ label }}</label>
         {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro DMLogo(size="64px", style="", class="") %}
+    <svg style="isolation:isolate; height: {{size}}; width: {{size}}; {{ style }}" viewBox="0 0 88 88" xmlns="http://www.w3.org/2000/svg" class="{{ class }} dm-logo-svg">
+        <defs>
+            <clipPath id="dm-logo-clip-path">
+                <rect width="88" height="88"/>
+            </clipPath>
+        </defs>
+        <g clip-path="url(#dm-logo-clip-path)">
+            <rect width="88" height="88" fill-opacity="0"/>
+            <path d="m23.544 69.951c2.2 1.773 4.849 3.098 7.929 4.4l1.32 11.449c0 1.32 0.88 2.2 2.2 2.2h17.6c1.32 0 2.2-0.88 2.2-2.2l1.324-11.449c2.627-0.875 5.725-2.627 7.925-4.4l10.551 4.849c0.875 0.449 2.2 0 2.649-1.32l8.8-15.4c0.871-1.329 0.431-2.631-0.449-3.08l-9.249-6.6c0.449-1.32 0.449-3.08 0.449-4.4s-0.449-3.08-0.449-4.4l9.249-7.049c1.324-0.431 1.324-1.751 0.449-3.071l-8.8-15.4c-0.449-0.88-1.769-1.329-2.649-0.88l-10.551 4.4c-2.2-1.751-4.849-3.08-7.929-4.4l-1.32-11c0-1.32-0.88-2.2-2.2-2.2h-17.6c-1.32 0-2.2 0.88-2.2 2.2l-1.325 11.449c-2.626 0.875-5.724 2.627-7.924 4.4l10.751 11.164c2.74-1.781 6.004-2.813 9.498-2.813 9.68 0 17.6 7.92 17.6 17.6s-7.92 17.6-17.6 17.6c-3.726 0-7.19-1.173-10.036-3.177l-10.213 11.528z" fill="#ff9800"/>
+            <path class="clear-fill" d="m11.381 48.4c0-1.32-0.449-3.08-0.449-4.4s0-3.08 0.449-4.4l-9.249-6.6c-0.88-0.449-1.32-1.751-0.449-3.08l8.8-15.4c0.449-1.32 1.773-1.764 2.649-1.32l10.551 4.849c2.2-1.773 5.298-3.525 7.924-4.4l1.325-11.449c0-1.32 0.88-2.2 2.2-2.2h17.6c1.32 0 2.2 0.88 2.2 2.2l1.32 11c3.08 1.32 5.729 2.649 7.929 4.4l10.551-4.4c0.88-0.449 2.2 0 2.649 0.88l8.8 15.4c0.875 1.32 0.875 2.64-0.449 3.071l-9.249 7.049c0 1.32 0.449 3.08 0.449 4.4s0 3.08-0.449 4.4l9.249 6.6c0.88 0.449 1.32 1.751 0.449 3.08l-8.8 15.4c-0.449 1.32-1.774 1.769-2.649 1.32l-10.551-4.849c-2.2 1.773-5.298 3.525-7.925 4.4l-1.324 11.449c0 1.32-0.88 2.2-2.2 2.2h-17.6c-1.32 0-2.2-0.88-2.2-2.2l-1.32-11.449c-3.08-1.302-5.729-2.627-7.929-4.4l-10.551 4.849c-0.88 0.449-2.2 0-2.649-0.88l-8.8-15.4c-0.427-0.871-0.427-2.2 0.449-3.071l9.249-7.049zm32.551 13.2c9.68 0 17.6-7.92 17.6-17.6s-7.92-17.6-17.6-17.6-17.6 7.92-17.6 17.6 7.92 17.6 17.6 17.6z" fill="none"/>
+            <path d="m44 32.214h-16.937c-1.06 0-1.92 0.861-1.92 1.92v19.732c0 1.059 0.86 1.92 1.92 1.92h16.937c6.505 0 11.786-5.281 11.786-11.786s-5.281-11.786-11.786-11.786z" fill="#ff9800" fill-rule="evenodd"/>
+        </g>
+    </svg>
+
+{% endmacro %}
+
+{% macro SidenavToggle() %}
+    <div id="sidenav-toggle-svg-container" class="hide">
+        <svg id="sidenav-expand-area-svg" width="10pt" height="81pt" style="isolation:isolate" viewBox="0 0 10 81" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <clipPath id="sidenav-expand-area-svg-cp">
+                    <rect width="10" height="81"/>
+                </clipPath>
+            </defs>
+            <g clip-path="url(#sidenav-expand-area-svg-cp)">
+                <rect width="10" height="81" fill-opacity="0"/>
+                <path class="primary" d="m0 0h7.57c1.341 0 2.43 1.089 2.43 2.43v76.14c0 1.341-1.089 2.43-2.43 2.43h-7.57v-81z"/>
+                <path class="on-primary" d="m3.167 43.177c-0.062 0-0.121-0.014-0.173-0.043-0.131-0.071-0.208-0.223-0.208-0.413v-4.443c0-0.193 0.075-0.343 0.208-0.413 0.132-0.07 0.3-0.052 0.46 0.055l3.303 2.174c0.155 0.102 0.243 0.251 0.243 0.408 0 0.158-0.088 0.306-0.243 0.408l-3.303 2.174c-0.095 0.059-0.194 0.093-0.287 0.093z" fill="#fff"/>
+            </g>
+        </svg>
+
+        <br>
+
+        <svg id="sidenav-drag-handle-svg" width="10pt" height="19pt" style="isolation:isolate;" viewBox="0 0 10 19" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <clipPath id="sidenav-drag-handle-svg-cp">
+                    <rect width="10" height="19"/>
+                </clipPath>
+            </defs>
+            <g clip-path="url(#sidenav-drag-handle-svg-cp)">
+                <rect width="10" height="19" fill-opacity="0"/>
+                <path class="primary" d="m0 0h8.05c1.076 0 1.95 0.874 1.95 1.95v15.1c0 1.076-0.874 1.95-1.95 1.95h-8.05v-19z"/>
+                <path class="on-primary" d="m5 5.929c0.563 0 1.02 0.457 1.02 1.02s-0.457 1.02-1.02 1.02-1.02-0.457-1.02-1.02 0.457-1.02 1.02-1.02zm0 2.551c0.563 0 1.02 0.457 1.02 1.02s-0.457 1.02-1.02 1.02-1.02-0.457-1.02-1.02 0.457-1.02 1.02-1.02zm0 2.551c0.563 0 1.02 0.457 1.02 1.02s-0.457 1.02-1.02 1.02-1.02-0.457-1.02-1.02 0.457-1.02 1.02-1.02z" fill="#fff" fill-rule="evenodd"/>
+            </g>
+        </svg>
+    </div>
+{% endmacro %}
+
+{% macro ActionBar(tags, location) %}
+    <div class="row card-filter-container">
+        <div class="col s12 m12 {% if location == "home" %} l6 xl4{% endif %} input-field">
+            <span>
+                <i class="material-icons prefix card-search-icon">search</i>
+                <input data-search-providers-url="{{ url_for('main.build_action_provider_url') }}"
+                       type="text"
+                       class="card-filter action-bar theme-surface-transparent"
+                       placeholder="Search apps" autofocus>
+
+                {% if True %}
+                    <i class="toggle-tag-expand-all-btn material-icons right filter-action pointer">unfold_less</i>
+                    <!-- Dropdown Trigger -->
+                    <a class='dropdown-trigger filter-tags-dropdown-trigger' data-target='filter-tags-dropdown-{{ location }}'>
+                        <i class="material-icons right filter-action pointer">tune</i>
+                    </a>
+
+                    <!-- Dropdown Structure -->
+                    <ul id='filter-tags-dropdown-{{ location }}' class='filter-tags-dropdown dropdown-content' style="min-width: 50%">
+                        <li><a class="filter-tags-dropdown-a show-all">
+                            <i class="material-icons theme-secondary-text">close</i> Show all
+                        </a></li>
+                        {% for tag in tags %}
+                            <li><a class="filter-tags-dropdown-a pointer">
+                                <div class="row">
+                                    <div class="col s2" style="position: relative; top: 4px;">
+                                        <label>
+                                            <input type="checkbox" data-name="{{ tag.name }}"/>
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                    <div class="col s10" style="position: relative; top: 6px;">
+                                        {{ tag.name }}
+                                    </div>
+                                </div>
+                            </a></li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </span>
+        </div>
     </div>
 {% endmacro %}

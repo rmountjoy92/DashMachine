@@ -1,54 +1,90 @@
-"""
-
-##### http_status
-Make a http call on a given URL and display if the service is online.
-```ini
-[variable_name]
-platform = http_status
-resource = https://your-website.com/api
-method = get
-authentication = basic
-username = my_username
-password = my_password
-headers = {"Content-Type": "application/json"}
-return_codes = 2xx,3xx
-```
-> **Returns:** a right-aligned colored bullet point on the app card.
-
-| Variable        | Required | Description                                                     | Options           |
-|-----------------|----------|-----------------------------------------------------------------|-------------------|
-| [variable_name] | Yes      | Name for the data source.                                       | [variable_name]   |
-| platform        | Yes      | Name of the platform.                                           | rest              |
-| resource        | Yes      | Url of rest api resource.                                       | url               |
-| method          | No       | Method for the api call, default is GET                         | GET,HEAD,OPTIONS,TRACE|
-| authentication  | No       | Authentication for the api call, default is None                | None,basic,digest |
-| username        | No       | Username to use for auth.                                       | string            |
-| password        | No       | Password to use for auth.                                       | string            |
-| headers         | No       | Request headers                                                 | json              |
-| return_codes    | No       | Acceptable http status codes, x is handled as wildcard          | string            |
-
-> **Working example:**
->```ini
->[http_status_test]
->platform = http_status
->resource = https://google.com
->return_codes = 2xx,3xx
->
->[Google]
->prefix = https://
->url = google.com
->icon = static/images/apps/default.png
->open_in = this_tab
->data_sources = http_status_test
->```
-
-"""
-
 from requests import Request, Session
 from requests.auth import HTTPBasicAuth, HTTPDigestAuth
 
 
 class Platform:
+    def docs(self):
+        documentation = {
+            "name": "http_status",
+            "author": "franznemeth",
+            "author_url": "https://github.com/franznemeth",
+            "version": 1.0,
+            "description": "Make a http call on a given URL and display if the service is online.",
+            "example": """
+```ini
+[http_status_test]
+platform = http_status
+resource = https://google.com
+return_codes = 2xx,3xx
+
+[Google]
+prefix = https://
+url = google.com
+icon = static/images/apps/default.png
+open_in = this_tab
+data_sources = http_status_test
+```
+            """,
+            "returns": "a right-aligned colored bullet point on the app card.",
+            "variables": [
+                {
+                    "variable": "[variable_name]",
+                    "description": "Name for the data source.",
+                    "default": "",
+                    "options": ".ini header",
+                },
+                {
+                    "variable": "platform",
+                    "description": "Name of the platform.",
+                    "default": "http_status",
+                    "options": "http_status",
+                },
+                {
+                    "variable": "resource",
+                    "description": "Url of rest api resource.",
+                    "default": "https://google.com",
+                    "options": "url",
+                },
+                {
+                    "variable": "method",
+                    "description": "Method for the api call",
+                    "default": "GET",
+                    "options": "GET,HEAD,OPTIONS,TRACE",
+                },
+                {
+                    "variable": "authentication",
+                    "description": "Authentication for the api call",
+                    "default": "",
+                    "options": "None,basic,digest",
+                },
+                {
+                    "variable": "username",
+                    "description": "Username to use for auth.",
+                    "default": "",
+                    "options": "string",
+                },
+                {
+                    "variable": "password",
+                    "description": "Password to use for auth.",
+                    "default": "",
+                    "options": "string",
+                },
+                {
+                    "variable": "headers",
+                    "description": "Request headers",
+                    "default": "",
+                    "options": "json",
+                },
+                {
+                    "variable": "return_codes",
+                    "description": "Acceptable http status codes, x is handled as wildcard",
+                    "default": "2xx,3xx",
+                    "options": "string",
+                },
+            ],
+        }
+        return documentation
+
     def __init__(self, *args, **kwargs):
         # parse the user's options from the config entries
         for key, value in kwargs.items():
@@ -65,7 +101,7 @@ class Platform:
             self.return_codes = "2xx,3xx"
         if not hasattr(self, "ssl_ignore"):
             self.ssl_ignore = "No"
-            
+
     def process(self):
         # Check if method is within allowed methods for http_status
         if self.method.upper() not in ["GET", "HEAD", "OPTIONS", "TRACE"]:
@@ -87,7 +123,7 @@ class Platform:
         )
         prepped = req.prepare()
         if self.ssl_ignore == "yes":
-            resp = s.send(prepped,verify=False)
+            resp = s.send(prepped, verify=False)
         else:
             resp = s.send(prepped)
         resp = s.send(prepped)

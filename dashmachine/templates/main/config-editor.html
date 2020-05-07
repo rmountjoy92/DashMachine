@@ -1,0 +1,79 @@
+{% from 'global_macros.html' import button, input %}
+{% macro ConfigEditor() %}
+    <link rel="stylesheet" href="static/vendors/codemirror/lib/codemirror.css">
+    <link rel="stylesheet" href="static/vendors/codemirror/theme/dashmachine.css">
+
+    <style>
+        #config-card-title {
+            font-size: 2rem;
+            position: relative;
+            top: 8px;
+        }
+        @media (max-width: 990px)
+        {
+            #config-card-title-col {
+                margin-bottom: 10px;
+            }
+        }
+        .CodeMirror {
+            height: auto;
+        }
+        #config-card-title-row {
+            position: sticky;
+            top: 0;
+            padding-top: 10px;
+            z-index: 1100;
+            background: var(--theme-background);
+        }
+    </style>
+
+    <div class="row">
+        <div class="col s12">
+            <div id="config-card-title-row" class="row">
+                <div id="config-card-title-col" class="col s12 m4">
+                    <span id="config-card-title">Config.ini</span>
+                </div>
+                <div class="col s12 m8">
+                    <span>
+
+                        {{ button(
+                        icon="save",
+                        id="save-config-btn",
+                        float="right",
+                        class="ml-0 mt-1 mb-1",
+                        data={'url': url_for('settings_system.save_config')},
+                        text="save"
+                        ) }}
+
+                        {{ button(
+                        icon="close",
+                        float="right",
+                        class="ml-0 mt-1 mb-1 sidenav-close theme-secondary ",
+                        text="close"
+                        ) }}
+
+                    </span>
+                </div>
+                <div class="col s12 hide">
+                    <div class="card theme-failure white-text">
+                        <div id="config-editor-error-div" class="card-content selectable">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <form id="config-form">
+                {{ input(
+                size="s12",
+                col_class="config-textarea-col",
+                class="materialize-textarea",
+                form_obj=config_form.config,
+                id="config-textarea"
+                ) }}
+            </form>
+        </div>
+    </div>
+
+    <script src="static/vendors/codemirror/lib/codemirror.js"></script>
+    <script src="static/vendors/codemirror/mode/properties/properties.js"></script>
+    {{ process_js_sources(src="main/config-editor.js")|safe }}
+{% endmacro %}
