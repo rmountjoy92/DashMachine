@@ -1,44 +1,68 @@
-"""
-##### curl
-Curl an URL and show result
-```ini
-[variable_name]
-platform = curl
-resource = https://example.com
-value_template = {{value}}
-response_type = json
-```
-> **Returns:** `value_template` as rendered string
-| Variable        | Required | Description                                                     | Options           |
-|-----------------|----------|-----------------------------------------------------------------|-------------------|
-| [variable_name] | Yes      | Name for the data source.                                       | [variable_name]   |
-| platform        | Yes      | Name of the platform.                                           | curl              |
-| resource        | Yes      | Url to curl                                                     | url               |
-| value_template  | Yes      | Jinja template for how the returned data from api is displayed. | jinja template    |
-| response_type   | No       | Response type. Use json if response is a JSON. Default is plain.| plain,json        |
-> **Working example:**
->```ini
->[test]
->platform = curl
->resource = https://api.myip.com
->value_template = My IP: {{value.ip}}
-response_type = json
->
->[MyIp.com]
->prefix = https://
->url = myip.com
->icon = static/images/apps/default.png
->description = Link to myip.com
->open_in = new_tab
->data_sources = test
->```
-"""
-
 import requests
 from flask import render_template_string
 
 
 class Platform:
+    def docs(self):
+        documentation = {
+            "name": "curl",
+            "author": "buoyantotter",
+            "author_url": "https://github.com/buoyantotter",
+            "version": 1.0,
+            "description": "Curl an URL and show result",
+            "example": """
+```ini
+[test]
+platform = curl
+resource = https://api.myip.com
+value_template = My IP: {{value.ip}}
+response_type = json
+[MyIp.com]
+prefix = https://
+url = myip.com
+icon = static/images/apps/default.png
+description = Link to myip.com
+open_in = new_tab
+data_sources = test
+```
+            """,
+            "returns": "`value_template` as rendered string",
+            "returns_json_keys": ["value"],
+            "variables": [
+                {
+                    "variable": "[variable_name]",
+                    "description": "Name for the data source.",
+                    "default": "",
+                    "options": ".ini header",
+                },
+                {
+                    "variable": "platform",
+                    "description": "Name of the platform.",
+                    "default": "curl",
+                    "options": "curl",
+                },
+                {
+                    "variable": "resource",
+                    "description": "Url to curl",
+                    "default": "https://example.com",
+                    "options": "url",
+                },
+                {
+                    "variable": "value_template",
+                    "description": "Jinja template for how the returned data from api is displayed.",
+                    "default": "{{value}}",
+                    "options": "jinja template",
+                },
+                {
+                    "variable": "response_type",
+                    "description": "Response type. Use json if response is a JSON.",
+                    "default": "plain",
+                    "options": "plain,json",
+                },
+            ],
+        }
+        return documentation
+
     def __init__(self, *args, **kwargs):
         # parse the user's options from the config entries
         for key, value in kwargs.items():
