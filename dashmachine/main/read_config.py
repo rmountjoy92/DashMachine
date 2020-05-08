@@ -187,14 +187,15 @@ def create_settings(config):
     settings.tags_expanded = config["Settings"].get("tags_expanded", "True")
 
     settings.tags = config["Settings"].get("tags", None)
-    error = validate_json_csv(settings.tags)
-    if error:
-        return (
-            None,
-            {
-                "msg": f"{config_restored_msg} Invalid Json for settings - tags: {error}."
-            },
-        )
+    if settings.tags:
+        error = validate_json_csv(settings.tags)
+        if error:
+            return (
+                None,
+                {
+                    "msg": f"{config_restored_msg} Invalid Json for settings - tags: {error}."
+                },
+            )
 
     settings.action_providers = config["Settings"].get(
         "action_providers",

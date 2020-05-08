@@ -12,20 +12,20 @@
 {% block content %}
     <div id="main" class="main-full">
         <div class="container">
-            {% if access_group.can_access_card_editor == "True" and access_group.can_see_sidenav == "True" %}
-                <div class="fixed-action-btn">
-                    <a href="#" data-target="card-editor-sidenav" class="btn-floating theme-primary card-editor-add-from-home-btn sidenav-trigger">
-                        <i class="material-icons-outlined theme-on-primary-text">add</i>
-                    </a>
-                </div>
-            {% endif %}
-
             {{ ActionBar(tags, location="home") }}
             <div id="home-cards-container"
                  data-url="{{ url_for('main.load_apps', home="true") }}"
                  class="row">
                 {{ HomeCards(apps, tags) }}
             </div>
+
+            {% if access_group.can_access_card_editor == "True" and access_group.can_see_sidenav == "True" %}
+                <div class="fixed-action-btn">
+                    <a id="card-editor-add-from-home-btn" href="#" data-target="card-editor-sidenav" class="btn-floating theme-primary card-editor-add-from-home-btn sidenav-trigger">
+                        <i class="material-icons-outlined theme-on-primary-text">add</i>
+                    </a>
+                </div>
+            {% endif %}
         </div>
     </div>
 {% endblock content %}

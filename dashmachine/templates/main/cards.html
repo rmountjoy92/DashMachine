@@ -35,15 +35,13 @@
             </div>
         {% endfor %}
     {% else %}
-        <a href="#">
-            <div class="col s12 m6 l3">
-                <div class="card theme-surface-transparent">
-                    <div class="card-action center-align">
-                        <h5>No apps yet, go to settings.</h5>
-                    </div>
-                </div>
+        <!-- Tap Target Structure -->
+        <div id="add-new-app-tap-target" class="tap-target theme-primary" data-target="card-editor-add-from-home-btn">
+            <div class="tap-target-content">
+                <h5 class="theme-on-primary-text">No apps yet</h5>
+                <p class="theme-on-primary-text">Click here to add an app.</p>
             </div>
-        </a>
+        </div>
     {% endif %}
 {% endmacro %}
 

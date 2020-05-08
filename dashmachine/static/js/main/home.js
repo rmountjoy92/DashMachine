@@ -42,4 +42,21 @@ $( document ).ready(function() {
 
     init_home_cards();
 
+    $(".card-editor-add-from-home-btn").on('mouseenter', function(e) {
+        $('body')[0].click();
+    });
+
+    $(".card-editor-add-from-home-btn").on('click', function(e) {
+        $("#card-editor-data-sources-form-container").addClass('hide');
+        $("#card-editor-data-sources-table").addClass('hide');
+        $("#card-editor-form-container").removeClass('hide');
+        $("#card-editor-cards-table").removeClass('hide');
+
+        sleep(250).then(() => {
+            $("#card-editor-add-btn").dropdown('open');
+        });
+    });
+
+    $('#add-new-app-tap-target').tapTarget();
+    $('#add-new-app-tap-target').tapTarget('open');
 });

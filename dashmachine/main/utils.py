@@ -88,6 +88,7 @@ def dashmachine_init():
 
 def get_access_group(user, page=None):
     access_groups = []
+    access_group = None
     if user.is_authenticated:
         access_group = AccessGroups()
 
@@ -101,7 +102,7 @@ def get_access_group(user, page=None):
                 if key.startswith("can_") and value == "True":
                     setattr(access_group, key, value)
 
-    else:
+    if not access_group:
         access_group = AccessGroups.query.filter_by(name="public_users").first()
 
     redirect_url = url_for("error_pages.unauthorized")

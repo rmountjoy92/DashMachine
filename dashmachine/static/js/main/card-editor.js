@@ -32,17 +32,6 @@ $("#card-editor-data-source-add-btn").dropdown({
     }
 });
 
-$(".card-editor-add-from-home-btn").on('click', function(e) {
-    $("#card-editor-data-sources-form-container").addClass('hide');
-    $("#card-editor-data-sources-table").addClass('hide');
-    $("#card-editor-form-container").removeClass('hide');
-    $("#card-editor-cards-table").removeClass('hide');
-
-    sleep(250).then(() => {
-        $("#card-editor-add-btn").dropdown('open');
-    });
-});
-
 $(".card-editor-app-row").on('click', function(e) {
     var form = $("#card-editor-form-container")
     var table = $("#card-editor-cards-table")
