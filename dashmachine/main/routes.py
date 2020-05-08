@@ -165,6 +165,8 @@ def load_settings_editor():
             json.loads(tag_json)
             for tag_json in settings_dict["tags"].replace("},{", "}%,%{").split("%,%")
         ]
+    else:
+        settings_dict["tags"] = ["list"] + [{"name": "", "icon": "", "sort_pos": ""}]
     settings_editor_html = render_template_string(
         """
         {% from 'main/settings-editor.html' import SettingsEditor with context %}

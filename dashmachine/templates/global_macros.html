@@ -240,9 +240,9 @@ class=''
                 <input data-search-providers-url="{{ url_for('main.build_action_provider_url') }}"
                        type="text"
                        class="card-filter action-bar theme-surface-transparent"
-                       placeholder="Search apps" autofocus>
+                       placeholder="Search.." autofocus>
 
-                {% if True %}
+                {% if tags|length > 1 %}
                     <i class="toggle-tag-expand-all-btn material-icons right filter-action pointer">unfold_less</i>
                     <!-- Dropdown Trigger -->
                     <a class='dropdown-trigger filter-tags-dropdown-trigger' data-target='filter-tags-dropdown-{{ location }}'>
