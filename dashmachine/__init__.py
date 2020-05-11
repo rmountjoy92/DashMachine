@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import os
+import uuid
 from flask import Flask
 from flask_caching import Cache
 from flask_sqlalchemy import SQLAlchemy
@@ -10,6 +11,16 @@ from dashmachine.paths import user_data_folder
 
 if not os.path.isdir(user_data_folder):
     os.mkdir(user_data_folder)
+
+secret_file = os.path.join(user_data_folder, ".secret")
+if not os.path.isfile(secret_file):
+    with open(secret_file, "w") as new_file:
+        new_file.write(uuid.uuid4().hex)
+
+with open(secret_file, "r") as secret_file:
+    secret_key = secret_file.read().encode("utf-8")
+    if len(secret_key) < 32:
+        secret_key = uuid.uuid4().hex
 
 context_path = os.getenv("CONTEXT_PATH", "")
 app = Flask(__name__, static_url_path=context_path + "/static")
