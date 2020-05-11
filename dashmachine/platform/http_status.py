@@ -65,7 +65,7 @@ class Platform:
             self.return_codes = "2xx,3xx"
         if not hasattr(self, "ssl_ignore"):
             self.ssl_ignore = "No"
-            
+
     def process(self):
         # Check if method is within allowed methods for http_status
         if self.method.upper() not in ["GET", "HEAD", "OPTIONS", "TRACE"]:
@@ -87,7 +87,7 @@ class Platform:
         )
         prepped = req.prepare()
         if self.ssl_ignore == "yes":
-            resp = s.send(prepped,verify=False)
+            resp = s.send(prepped, verify=False)
         else:
             resp = s.send(prepped)
         resp = s.send(prepped)
