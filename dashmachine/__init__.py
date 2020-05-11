@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import os
+import uuid
 from flask import Flask
 from flask_caching import Cache
 from flask_sqlalchemy import SQLAlchemy
@@ -11,13 +12,23 @@ from dashmachine.paths import user_data_folder
 if not os.path.isdir(user_data_folder):
     os.mkdir(user_data_folder)
 
+secret_file = os.path.join(user_data_folder, ".secret")
+if not os.path.isfile(secret_file):
+    with open(secret_file, "w") as new_file:
+        new_file.write(uuid.uuid4().hex)
+
+with open(secret_file, "r") as secret_file:
+    secret_key = secret_file.read().encode("utf-8")
+    if len(secret_key) < 32:
+        secret_key = uuid.uuid4().hex
+
 context_path = os.getenv("CONTEXT_PATH", "")
 app = Flask(__name__, static_url_path=context_path + "/static")
 cache = Cache(app, config={"CACHE_TYPE": "simple"})
 api = Api(app)
 
 app.config["AVATARS_IDENTICON_BG"] = (255, 255, 255)
-app.config["SECRET_KEY"] = "66532a62c4048f976e22a39638b6f10e"
+app.config["SECRET_KEY"] = secret_key
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///user_data/site.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
