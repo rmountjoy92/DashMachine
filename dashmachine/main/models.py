@@ -28,6 +28,8 @@ class Apps(db.Model):
     data_template = db.Column(db.String())
     groups = db.Column(db.String())
     tags = db.Column(db.String())
+    type = db.Column(db.String())
+    urls = db.Column(db.String())
 
 
 class DataSources(db.Model):
@@ -58,3 +60,5 @@ class Groups(db.Model):
 class Tags(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String())
+    icon = db.Column(db.String())
+    sort_pos = db.Column(db.Integer)

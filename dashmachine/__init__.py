@@ -30,6 +30,7 @@ api = Api(app)
 app.config["AVATARS_IDENTICON_BG"] = (255, 255, 255)
 app.config["SECRET_KEY"] = "66532a62c4048f976e22a39638b6f10e"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///user_data/site.db"
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
 
 db = SQLAlchemy(app)

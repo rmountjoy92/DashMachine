@@ -17,9 +17,14 @@
 @media screen and (max-width: 992px) {
     .tags-select-col {
         top: 0;
-        width: calc(100vw - 45px) !important;
-        margin-left: 15px !important;
+        /*width: calc(100vw - 45px) !important;*/
+        /*margin-left: 15px !important;*/
     }
+}
+
+.app-card .card-reveal {
+    position:
+
 }
 
 #list-view-collection .app-a {

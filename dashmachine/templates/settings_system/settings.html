@@ -1,7 +1,6 @@
 {% extends "main/layout.html" %}
 {% from 'global_macros.html' import input, button, select %}
 {% from 'main/tcdrop.html' import tcdrop %}
-{% from 'settings_system/user.html' import UserTab with context %}
 {% from 'settings_system/files.html' import FilesTab with context %}
 {% block page_vendor_css %}
 {% endblock page_vendor_css %}
@@ -59,25 +58,29 @@
 
                 <div class="col s12 m12 l6">
                     <div class="card">
-                        <div class="card-content">
+                        <div class="card-content pr-2">
 
                             <div class="row">
                                 <div class="col s12 mb-2">
                                     <ul class="tabs tabs-fixed-width">
-                                        <li class="tab col s3"><a href="#config-readme">
-                                            <i class="material-icons-outlined">info</i>
+                                        <li class="tab col s3"><a href="#settings-readme">
+                                            <i class="material-icons-outlined">settings</i>
+                                        </a></li>
+
+                                        <li class="tab col s3"><a href="#cards-readme">
+                                            <i class="material-icons-outlined">aspect_ratio</i>
+                                        </a></li>
+
+                                        <li class="tab col s3"><a href="#data-sources-readme">
+                                            <i class="material-icons-outlined">language</i>
                                         </a></li>
 
                                         <li class="tab col s3"><a href="#images">
                                             <i class="material-icons-outlined">photo_library</i>
                                         </a></li>
 
-                                        <li class="tab col s3"><a href="#apps">
-                                            <i class="material-icons-outlined">apps</i>
-                                        </a></li>
-
-                                        <li class="tab col s3"><a href="#user">
-                                            <i class="material-icons-outlined">person</i>
+                                        <li class="tab col s3"><a href="#about">
+                                            <i class="material-icons-outlined">security</i>
                                         </a></li>
                                     </ul>
                                 </div>
@@ -86,9 +89,15 @@
                                     {{ FilesTab() }}
                                 </div>
 
-                                <div id="apps" class="col s12 scrollbar settings-page-card-right">
-                                    <h5>App Templates</h5>
-                                    <div class="row card-filter-container">
+                                <div id="settings-readme" class="col s12 scrollbar settings-page-card-right scrollbar-x">
+                                    {{ config_readme['settings']|safe }}
+                                </div>
+
+                                <div id="cards-readme" class="col s12 scrollbar settings-page-card-right scrollbar-x">
+                                    <h4>Cards</h4>
+                                    <h5>Card Templates</h5>
+                                    <span>Search for preconfigured cards included with DashMachine.</span>
+                                    <div class="row card-filter-container" style="position: relative;">
                                         <div class="col s12 input-field">
                                             <span>
                                                 <i class="material-icons prefix card-search-icon">search</i>
@@ -101,19 +110,52 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col s12 scrollbar settings-page-card-right">
+                                        <div class="col s12 scrollbar">
                                             <div id="template-div" class="selectable code"></div>
                                         </div>
                                     </div>
 
+                                    {{ config_readme['cards']|safe }}
                                 </div>
 
-                                <div id="config-readme" class="col s12 scrollbar settings-page-card-right">
-                                    {{ config_readme|safe }}
+                                <div id="data-sources-readme" class="col s12 scrollbar settings-page-card-right scrollbar-x">
+                                    {{ config_readme['data_sources']|safe }}
                                 </div>
 
-                                <div id="user" class="col s12 scrollbar settings-page-card-right">
-                                    {{ UserTab() }}
+                                <div id="about" class="col s12 scrollbar settings-page-card-right">
+                                    <div class="row">
+                                        <div class="card theme-surface-1">
+                                            <div class="card-content center-align">
+                                                <img src="static/images/logo/full.svg">
+                                                <h5>DashMachine</h5>
+                                                <div class="divider"></div>
+                                                <p class="font-weight-900 mb-2">Version:</p>
+                                                <p class="mb-2">{{ version }}-{{ revision_number }}</p>
+
+                                                <div class="divider"></div>
+                                                <p class="font-weight-900 mb-2">Author:</p>
+                                                <p class="mb-2">Ross Mountjoy (<a href="https://github.com/rmountjoy92" target="_blank"> Github </a>)</p>
+
+                                                <div class="divider"></div>
+                                                <p class="font-weight-900 mb-2">Source code:</p>
+                                                <p class="mb-2"><a href="https://github.com/rmountjoy92/DashMachine" target="_blank"> Repo</a></p>
+
+                                                <div class="divider"></div>
+                                                <p class="font-weight-900 mb-2">Reddit:</p>
+                                                <p class="mb-2"><a href="https://www.reddit.com/r/DashMachine/" target="_blank"> r/DashMachine</a>
+
+                                                <div class="divider"></div>
+                                                <p class="font-weight-900 mb-2">Donations:</p>
+                                                <p class="mb-2"><a href="https://liberapay.com/rmountjoy/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a></p>
+                                                <p class="mb-2"><a href="https://www.bountysource.com/teams/dashmachine-app" target="_blank"> Bountysource donation link</a></p>
+
+                                                <div class="divider"></div>
+                                                <p class="font-weight-900 mb-2">Bounties for new features:</p>
+                                                <p class="mb-2"><a href="https://www.bountysource.com/" target="_blank"> Bountysource link</a></p>
+                                                <p class="mb-2"><a href="https://github.com/bountysource/core/wiki/Frequently-Asked-Questions" target="_blank"> Bountysource faqs</a></p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
                             </div>

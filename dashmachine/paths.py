@@ -19,6 +19,11 @@ platform_folder = os.path.join(dashmachine_folder, "platform")
 
 user_data_folder = os.path.join(dashmachine_folder, "user_data")
 
+auth_cache = os.path.join(user_data_folder, "auth_cache")
+
+if not os.path.isdir(auth_cache):
+    os.mkdir(auth_cache)
+
 static_folder = os.path.join(dashmachine_folder, "static")
 
 images_folder = os.path.join(static_folder, "images")

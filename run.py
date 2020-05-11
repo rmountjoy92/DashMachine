@@ -1,13 +1,18 @@
 #!/usr/bin/env python3
 
 import os
-from dashmachine.paths import root_folder
+import pathlib
 
-os.system("python " + os.path.join(root_folder, "manage_db.py db stamp head"))
 
-os.system("python " + os.path.join(root_folder, "manage_db.py db migrate"))
+root_folder = pathlib.Path().absolute()
+if not os.path.isdir(os.path.join(root_folder, "dashmachine", "user_data")):
+    os.mkdir(os.path.join(root_folder, "dashmachine", "user_data"))
+db_file_path = os.path.join(root_folder, "dashmachine", "user_data", "site.db")
+try:
+    os.remove(db_file_path)
+except FileNotFoundError:
+    pass
 
-os.system("python " + os.path.join(root_folder, "manage_db.py db upgrade"))
 
 from dashmachine import app
 from dashmachine.main.utils import dashmachine_init

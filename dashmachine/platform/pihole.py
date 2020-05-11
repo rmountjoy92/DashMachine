@@ -1,3 +1,58 @@
+"""
+
+##### PiHole
+Display information from the PiHole API
+```ini
+[variable_name]
+platform = pihole
+host = 192.168.1.101
+password = {{ PiHole password }}
+value_template = {{ value_template }}
+```
+> **Returns:** `value_template` as rendered string
+
+| Variable        | Required | Description                                                     | Options           |
+|-----------------|----------|-----------------------------------------------------------------|-------------------|
+| [variable_name] | Yes      | Name for the data source.                                       | [variable_name]   |
+| platform        | Yes      | Name of the platform.                                           | pihole            |
+| host            | Yes      | Host of the PiHole                                              | host              |
+| password        | Yes      | Password for the PiHole                                         | password          |
+| value_template  | Yes      | Jinja template for how the returned data from API is displayed. | jinja template    |
+
+
+<br />
+###### **Available fields for value_template**
+
+* domain_count
+* queries
+* blocked
+* ads_percentage
+* unique_domains
+* forwarded
+* cached
+* total_clients
+* unique_clients
+* total_queries
+* gravity_last_updated
+
+> **Working example:**
+>```ini
+> [pihole-data]
+> platform = pihole
+> host = 192.168.1.101
+> password = password123
+> value_template = Ads Blocked Today: {{ blocked }}<br>Status: {{ status }}<br>Queries today: {{ queries }}
+>
+> [PiHole]
+> prefix = http://
+> url = 192.168.1.101
+> icon = static/images/apps/pihole.png
+> description = A black hole for Internet advertisements
+> open_in = new_tab
+> data_sources = pihole-data
+>```
+"""
+
 from flask import render_template_string
 
 

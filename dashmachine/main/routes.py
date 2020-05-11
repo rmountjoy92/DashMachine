@@ -5,13 +5,13 @@ from htmlmin.main import minify
 from configparser import ConfigParser
 from flask import render_template, url_for, redirect, request, Blueprint, jsonify
 from flask_login import current_user
-from dashmachine.main.models import Files, Apps, DataSources, Tags
-from dashmachine.main.forms import TagsForm
+from dashmachine.main.models import Files, Apps, DataSources
 from dashmachine.main.utils import (
-    public_route,
     check_groups,
     get_data_source,
+    mark_update_message_read,
 )
+from dashmachine.user_system.models import User
 from dashmachine.settings_system.models import Settings
 from dashmachine.paths import cache_folder, user_data_folder
 from dashmachine import app, db
@@ -35,28 +35,9 @@ def response_minify(response):
     return response
 
 
-# blocks access to all pages (except public routes) unless the user is
-# signed in.
-@main.before_app_request
-def check_valid_login():
-
-    if any(
-        [
-            request.endpoint.startswith("static"),
-            current_user.is_authenticated,
-            getattr(app.view_functions[request.endpoint], "is_public", False),
-        ]
-    ):
-        return
-
-    else:
-        return redirect(url_for("user_system.login"))
-
-
 # ------------------------------------------------------------------------------
 # /home
 # ------------------------------------------------------------------------------
-@public_route
 @main.route("/")
 @main.route("/home", methods=["GET"])
 def home():
@@ -66,7 +47,6 @@ def home():
     return render_template("main/home.html")
 
 
-@public_route
 @main.route("/app_view?<app_id>", methods=["GET"])
 def app_view(app_id):
     settings = Settings.query.first()
@@ -85,18 +65,10 @@ def load_data_source():
     return data
 
 
-@public_route
-@main.route("/change_home_view_mode?<mode>", methods=["GET"])
-def change_home_view_mode(mode):
-    config = ConfigParser()
-    config.read(os.path.join(user_data_folder, "config.ini"))
-    config.set("Settings", "home_view_mode", mode)
-    config.write(open(os.path.join(user_data_folder, "config.ini"), "w"))
-    settings = Settings.query.first()
-    settings.home_view_mode = mode
-    db.session.merge(settings)
-    db.session.commit()
-    return redirect(url_for("main.home"))
+@main.route("/update_message_read", methods=["GET"])
+def update_message_read():
+    mark_update_message_read()
+    return "ok"
 
 
 # ------------------------------------------------------------------------------

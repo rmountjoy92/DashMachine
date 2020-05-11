@@ -18,19 +18,8 @@ def load_files_html():
     )
 
 
-def get_config_html():
-    with open(os.path.join(root_folder, "config_readme.md")) as readme_file:
-        md = readme_file.read()
-    platforms = os.listdir(platform_folder)
-    platforms = sorted(platforms)
-    for platform in platforms:
-        name, extension = os.path.splitext(platform)
-        if extension.lower() == ".py":
-            module = importlib.import_module(f"dashmachine.platform.{name}", ".")
-            if module.__doc__:
-                md += module.__doc__
-
-    config_html = markdown(
+def convert_html_to_md(md):
+    html = markdown(
         md,
         extras=[
             "tables",
@@ -40,4 +29,28 @@ def get_config_html():
             "code-friendly",
         ],
     )
-    return config_html
+    return html
+
+
+def get_config_html():
+    with open(os.path.join(root_folder, "readme_settings.md")) as readme_file:
+        md = readme_file.read()
+    html = {"settings": convert_html_to_md(md)}
+
+    with open(os.path.join(root_folder, "readme_cards.md")) as readme_file:
+        md = readme_file.read()
+    html["cards"] = convert_html_to_md(md)
+
+    with open(os.path.join(root_folder, "readme_data_sources.md")) as readme_file:
+        md = readme_file.read()
+    platforms = os.listdir(platform_folder)
+    platforms = sorted(platforms)
+    for platform in platforms:
+        name, extension = os.path.splitext(platform)
+        if extension.lower() == ".py":
+            module = importlib.import_module(f"dashmachine.platform.{name}", ".")
+            if module.__doc__:
+                md += module.__doc__
+    html["data_sources"] = convert_html_to_md(md)
+
+    return html

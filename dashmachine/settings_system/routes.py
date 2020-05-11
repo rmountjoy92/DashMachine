@@ -4,7 +4,6 @@ from configparser import ConfigParser
 from flask_login import current_user
 from flask import render_template, request, Blueprint, jsonify, redirect, url_for
 from dashmachine.user_system.forms import UserForm
-from dashmachine.user_system.utils import add_edit_user
 from dashmachine.user_system.models import User
 from dashmachine.main.utils import public_route, check_groups
 from dashmachine.main.read_config import read_config
@@ -18,8 +17,7 @@ from dashmachine.paths import (
     user_data_folder,
     template_apps_folder,
 )
-from dashmachine.version import version
-from dashmachine import db
+from dashmachine.version import version, revision_number
 
 settings_system = Blueprint("settings_system", __name__)
 
@@ -54,6 +52,7 @@ def settings():
         user_form=user_form,
         template_apps=",".join(template_apps),
         version=version,
+        revision_number=revision_number,
         users=users,
         config_readme=config_readme,
     )
@@ -92,55 +91,7 @@ def delete_file():
 
 @settings_system.route("/settings/get_app_template", methods=["GET"])
 def get_app_template():
-    # template_app = TemplateApps.query.filter_by(name=request.args.get("name")).first()
-    # template = f"[{template_app.name}]<br>"
-    # for key, value in row2dict(template_app).items():
-    #     if key not in ["id", "name"]:
-    #         template += f"{key} = {value}<br>"
-
     fn = os.path.join(template_apps_folder, f"{request.args.get('name')}.ini")
     with open(fn, "r") as template_app_ini:
         template = template_app_ini.read().replace("\n", "<br>")
     return template
-
-
-@settings_system.route("/settings/edit_user", methods=["POST"])
-def edit_user():
-    form = UserForm()
-    settings_db = Settings.query.first()
-    form.role.choices += [(role, role) for role in settings_db.roles.split(",")]
-    if form.validate_on_submit():
-        if form.password.data != form.confirm_password.data:
-            return jsonify(data={"err": "Passwords don't match"})
-        err = add_edit_user(
-            form.username.data,
-            form.password.data,
-            user_id=form.id.data,
-            role=form.role.data,
-        )
-        if err:
-            return jsonify(data={"err": err})
-    else:
-        err_str = ""
-        for fieldName, errorMessages in form.errors.items():
-            err_str += f"{fieldName}: "
-            for err in errorMessages:
-                err_str += f"{err} "
-        return jsonify(data={"err": err_str})
-    users = User.query.all()
-    html = render_template("settings_system/user.html", users=users)
-    return jsonify(data={"err": "success", "html": html})
-
-
-@settings_system.route("/settings/delete_user", methods=["GET"])
-def delete_user():
-    admin_users = User.query.filter_by(role="admin").all()
-    user = User.query.filter_by(id=request.args.get("id")).first()
-    if len(admin_users) < 2 and user.role == "admin":
-        return jsonify(data={"err": "You must have at least one admin user"})
-    else:
-        User.query.filter_by(id=request.args.get("id")).delete()
-    db.session.commit()
-    users = User.query.all()
-    html = render_template("settings_system/user.html", users=users)
-    return jsonify(data={"err": "success", "html": html})
