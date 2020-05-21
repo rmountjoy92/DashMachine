@@ -35,26 +35,30 @@ function init_home_cards(){
         });
     });
 
-    $(".expandable-card").on('mouseenter', function(e) {
-        var width = $(this).width();
-        var avail_space = $(window).height() - $(this).offset().top + $(this).height();
-        console.log(avail_space)
-        $(this).css("position", "absolute");
-        $(this).css("max-height", "unset");
-        $(this).css("overflow", "auto");
-        $(this).css("height", "auto");
-        $(this).css("width", width);
-        $(this).css("z-index", 888);
-    });
-    $(".expandable-card").on('mouseleave', function(e) {
-        var width = $(this).width()
-        $(this).css("position", "relative");
-        $(this).css("max-height", "146px");
-        $(this).css("overflow", "hidden");
-        $(this).css("height", "146px");
-        $(this).css("width", width);
-        $(this).css("z-index", 1);
-    });
+    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+        $(".expandable-card").addClass('scrollbar');
+    } else {
+        $(".expandable-card").on('mouseenter', function(e) {
+            var width = $(this).width();
+            var avail_space = $(window).height() - $(this).offset().top + $(this).height();
+            console.log(avail_space)
+            $(this).css("position", "absolute");
+            $(this).css("max-height", "unset");
+            $(this).css("overflow", "auto");
+            $(this).css("height", "auto");
+            $(this).css("width", width);
+            $(this).css("z-index", 888);
+        });
+        $(".expandable-card").on('mouseleave', function(e) {
+            var width = $(this).width()
+            $(this).css("position", "relative");
+            $(this).css("max-height", "146px");
+            $(this).css("overflow", "hidden");
+            $(this).css("height", "146px");
+            $(this).css("width", width);
+            $(this).css("z-index", 1);
+        });
+    }
 }
 
 
