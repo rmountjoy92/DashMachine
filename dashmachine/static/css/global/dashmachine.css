@@ -882,6 +882,7 @@ span.badge.new {
 /* MODULE SIDENAVS */
 #card-editor-sidenav, #settings-editor-sidenav {
     width: 25%;
+    z-index: 8000;
 }
 @media only screen and (min-width: 1901px) {
     #card-editor-sidenav, #settings-editor-sidenav {
@@ -906,6 +907,7 @@ span.badge.new {
 
 #config-editor-sidenav {
     width: 100vw;
+    z-index: 7999;
 }
 
 #card-editor-sidenav table, #settings-editor-sidenav table {

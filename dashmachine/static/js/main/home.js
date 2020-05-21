@@ -39,9 +39,14 @@ function init_home_cards(){
         $(".expandable-card").addClass('scrollbar');
     } else {
         $(".expandable-card").on('mouseenter', function(e) {
+            var tag_row = $(this).closest('.tag-apps-row');
+            tag_row.css("min-height", tag_row.height());
+
+            var column = $(this).closest('.col')
+            column.css('min-width', column.width());
+            column.css('min-height', column.height());
+
             var width = $(this).width();
-            var avail_space = $(window).height() - $(this).offset().top + $(this).height();
-            console.log(avail_space)
             $(this).css("position", "absolute");
             $(this).css("max-height", "unset");
             $(this).css("overflow", "auto");
@@ -50,12 +55,19 @@ function init_home_cards(){
             $(this).css("z-index", 888);
         });
         $(".expandable-card").on('mouseleave', function(e) {
+            var tag_row = $(this).closest('.tag-apps-row');
+            tag_row.css("min-height", "unset");
+
+            var column = $(this).closest('.col');
+            column.css('min-width', "unset");
+            column.css('min-height', "unset");
+
             var width = $(this).width()
             $(this).css("position", "relative");
             $(this).css("max-height", "146px");
             $(this).css("overflow", "hidden");
             $(this).css("height", "146px");
-            $(this).css("width", width);
+            $(this).css("width", "unset");
             $(this).css("z-index", 1);
         });
     }

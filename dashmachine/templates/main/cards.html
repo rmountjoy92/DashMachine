@@ -21,7 +21,7 @@
                         </div>
                     </div>
                 {% endif %}
-                <div class="row tag-apps-row" style="min-height: 161px">
+                <div class="row tag-apps-row">
                     {% for app in tag.apps %}
                         {% if app.type == "app" %}
                             {{ App(app) }}
