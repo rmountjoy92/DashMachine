@@ -1,0 +1,67 @@
+{% extends "docs_system/docs-base.html" %}
+{% from 'global_macros.html' import DMLogo, button %}
+
+{% macro NavItems() %}
+    <li>
+        {{ button(
+        icon="check_circle",
+        float="",
+        href=url_for('docs_system.docs_home'),
+        text="Setup"
+        ) }}
+    </li>
+    <li>
+        {{ button(
+        icon="settings",
+        float="",
+        href=url_for('docs_system.docs_main_settings'),
+        text="Settings"
+        ) }}
+    </li>
+    <li>
+        {{ button(
+        icon="aspect_ratio",
+        float="",
+        href=url_for('docs_system.docs_cards'),
+        text="Cards"
+        ) }}
+    </li>
+    <li>
+        {{ button(
+        icon="language",
+        float="",
+        href=url_for('docs_system.docs_data_sources'),
+        text="Data Sources"
+        ) }}
+    </li>
+{% endmacro %}
+
+{% block main_class %}mt-3 ml-1{% endblock main_class %}
+
+{% block navbar %}
+    <div class="navbar-fixed">
+        <nav class="nav-extended theme-surface pl-1 z-depth-1" style="border-radius: 0 0 10px 10px">
+            <div class="nav-wrapper">
+                <a href="{{ url_for('docs_system.docs_home') }}" class="brand-logo right theme-primary-text">{{ DMLogo(size="32px", style="position: relative; top: 6px") }} Docs</a>
+
+                <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons-outlined theme-primary-text">menu</i></a>
+                <ul id="nav-mobile" class="hide-on-med-and-down">
+                    {{ NavItems() }}
+                </ul>
+            </div>
+            <div class="nav-content">
+                <ul class="tabs theme-surface" style="border-bottom-right-radius: 10px;">
+                    {% block tabs %}{% endblock tabs %}
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <ul class="sidenav" id="mobile-demo" style="top: 110px">
+        {{ NavItems() }}
+    </ul>
+{% endblock navbar %}
+
+{% block md_content %}
+    {% block tabs_content %}{% endblock tabs_content %}
+{% endblock md_content %}

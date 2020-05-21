@@ -1,10 +1,5 @@
 sleep(500).then(() => {
-    var config_textarea_codemirror = CodeMirror.fromTextArea(document.getElementById("config-textarea"), {
-        lineNumbers: true,
-        mode: 'properties',
-        theme: 'dashmachine',
-        scrollbarStyle: null,
-    });
+    init_codemirror('properties');
 
     $("#save-config-btn").on('click', function(e) {
         $.ajax({

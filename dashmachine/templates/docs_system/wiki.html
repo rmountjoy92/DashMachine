@@ -1,0 +1,54 @@
+{% extends "docs_system/docs-base.html" %}
+{% block md_content %}
+    <div class="row" style="padding-left: 8px;">
+        <div class="col s12 l6 xl6 hide">
+            <div class="card">
+                <div class="card-content">
+                    <h5>Wiki</h5>
+                </div>
+                <div class="card-action">
+                    tags!
+                </div>
+            </div>
+        </div>
+
+        <div class="col s12">
+            <div class="card">
+                <div class="card-content theme-primary theme-on-primary-text" style="padding: 1rem">
+                    <div class="row">
+                        <div class="col s12 m6">
+                            <span class="font-weight-900 theme-on-primary-text">{{ wiki.name }}</span><br>
+                            <span class="theme-on-primary-text">{{ wiki.description }}</span>
+                        </div>
+                        <div class="col s12 m6 right-align">
+                            <span class="theme-on-primary-text">
+                                <i id="edit-wiki-btn"
+                                   class="material-icons-outlined icon-btn"
+                                   data-permalink="{{ wiki.permalink }}"
+                                   data-name="{{ wiki.name }}"
+                                   data-author="{{ wiki.author }}"
+                                   data-description="{{ wiki.description }}"
+                                   data-tags="{{ wiki.tags_str }}"
+                                   data-md="{{ wiki_md }}">edit
+                                </i>
+                                <i class="material-icons-outlined icon-btn">delete</i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-action">
+                    {% if wiki %}
+                        <div id="wiki-md-container">
+                            {{ wiki_md_html|safe }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock md_content %}
+
+{% block page_lvl_js %}
+    {{ process_js_sources(src="docs_system/wiki.js")|safe }}
+{% endblock page_lvl_js %}

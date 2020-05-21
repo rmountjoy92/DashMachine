@@ -21,3 +21,12 @@
         /*margin-left: 15px !important;*/
     }
 }
+
+.expandable-card {
+    max-height: 146px;
+    min-height: 146px;
+    border: 0;
+}
+.collection-url-collection-item:hover {
+    background: var(--theme-background) !important;
+}

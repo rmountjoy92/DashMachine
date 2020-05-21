@@ -46,6 +46,16 @@
                         ) }}
 
                         {{ button(
+                        icon="save",
+                        id="save-editing-wiki-btn",
+                        float="right",
+                        class="ml-0 mt-1 mb-1 hide",
+                        data={'url': url_for('docs_system.save_wiki')},
+                        text="save"
+                        ) }}
+
+                        {{ button(
+                        id="close-config-editor-sidenav",
                         icon="close",
                         float="right",
                         class="ml-0 mt-1 mb-1 sidenav-close theme-secondary ",
@@ -62,6 +72,46 @@
                 </div>
             </div>
             <form id="config-form">
+                <div id="wiki-config-form hide">
+                    <input id="wiki-config-form-permalink" class="hide" name="wiki_permalink">
+
+                    {{ input(
+                    id="wiki-config-form-permalink-new",
+                    size="s12",
+                    label="Wiki permalink",
+                    form_obj=config_form.wiki_permalink_new
+                    ) }}
+
+                    {{ input(
+                    id="wiki-config-form-name",
+                    size="s12",
+                    label="Wiki name",
+                    form_obj=config_form.wiki_name
+                    ) }}
+
+                    {{ input(
+                    id="wiki-config-form-author",
+                    size="s12",
+                    label="Wiki author",
+                    form_obj=config_form.wiki_author
+                    ) }}
+
+                    {{ input(
+                    id="wiki-config-form-description",
+                    size="s12",
+                    class="materialize-textarea",
+                    label="Wiki description",
+                    form_obj=config_form.wiki_description
+                    ) }}
+
+                    {{ input(
+                    id="wiki-config-form-tags",
+                    size="s12",
+                    label="Wiki tags",
+                    form_obj=config_form.wiki_tags
+                    ) }}
+                </div>
+
                 {{ input(
                 size="s12",
                 col_class="config-textarea-col",
@@ -70,10 +120,12 @@
                 id="config-textarea"
                 ) }}
             </form>
+            <textarea id="config-editor-config-data" class="hide">{{ config_form.config.data }}</textarea>
         </div>
     </div>
 
     <script src="static/vendors/codemirror/lib/codemirror.js"></script>
     <script src="static/vendors/codemirror/mode/properties/properties.js"></script>
+    <script src="static/vendors/codemirror/mode/markdown/markdown.js"></script>
     {{ process_js_sources(src="main/config-editor.js")|safe }}
 {% endmacro %}

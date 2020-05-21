@@ -5,7 +5,7 @@
         {% for tag in tags %}
             <div class="tag-group" data-tag="{{ tag.name }}">
                 {% if tag.name != "Untagged" %}
-                    <div class="row" style="z-index: 2">
+                    <div class="row" style="z-index: 2;">
                         <div class="col s12 m12 l6 xl4">
                             <div class="card theme-surface-transparent mt-0 tag-group-btn pointer">
                                 <div class="card-content pt-0 pb-0">
@@ -21,7 +21,7 @@
                         </div>
                     </div>
                 {% endif %}
-                <div class="row tag-apps-row">
+                <div class="row tag-apps-row" style="min-height: 161px">
                     {% for app in tag.apps %}
                         {% if app.type == "app" %}
                             {{ App(app) }}
@@ -146,40 +146,39 @@
 
 {% macro Collection(app) %}
     <div class="col s12 m6 l4 xl3 xxl2 app-card">
-        <div class="card theme-surface-transparent scrollbar mt-0" style="max-height: 146px; min-height: 146px;">
-            <div class="card-content">
-                <span class="font-weight-900 card-title theme-primary-text">
+        <div class="collection expandable-card with-header mt-0 z-depth-1 theme-surface-transparent">
+
+            <div class="collection-header theme-primary">
+                <span class="font-weight-900 card-title theme-on-primary-text">
                     {% if app.icon %}
                         <i class="material-icons-outlined right">{{app.icon}}</i>
                     {% endif %}
                     <text class="searchable">{{ app.name }}</text>
                 </span>
-                <div class="collection">
-                    {% for url in app.urls_json %}
+            </div>
 
-                        <div class="collection-item">
+            {% for url in app.urls_json %}
+                {% if url['open_in'] == 'this_tab' %}
+                    <a href="{{ url['url'] }}" class="font-weight-700 searchable" style="font-size: 1.1rem">
+                {% else %}
+                    <a href="{{ url['url'] }}" target="_blank" class="font-weight-700 searchable" style="font-size: 1.1rem">
+                {% endif %}
+                        <div class="collection-item theme-surface-transparent collection-url-collection-item">
                             {% if url['icon'] %}
                                 <img src="{{ url['icon'] }}" height="24px" class="mr-2" style="position: relative; top: 5px;">
                             {% endif %}
-                            {% if url['open_in'] == 'this_tab' %}
-                                <a href="{{ url['url'] }}" class="font-weight-700 searchable" style="font-size: 1.1rem">
-                            {% else %}
-                                <a href="{{ url['url'] }}" target="_blank" class="font-weight-700 searchable" style="font-size: 1.1rem">
-                            {% endif %}
-                            {{ url['name'] }}
-                            </a>
-                        </div>
 
-                    {% endfor %}
-                </div>
-            </div>
+                            {{ url['name'] }}
+                        </div>
+                    </a>
+            {% endfor %}
         </div>
     </div>
 {% endmacro %}
 
 {% macro Custom(app) %}
     <div class="col s12 m6 l4 xl3 xxl2 app-card">
-        <div class="card theme-surface-transparent scrollbar mt-0" style="max-height: 146px; min-height: 146px;">
+        <div class="card theme-surface-transparent expandable-card mt-0" style="max-height: 146px; min-height: 146px;">
             <div class="hide searchable">{{ app.name }}</div>
             <div class="card-content">
                 <div class="col s12">

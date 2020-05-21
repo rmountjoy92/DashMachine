@@ -178,6 +178,13 @@ function load_card_editor() {
         }
     });
 }
+
+function reset_config_editor(){
+    $("#config-card-title").text("Config.ini");
+    config_textarea_codemirror.setValue($("#config-editor-config-data").val());
+    config_textarea_codemirror.toTextArea();
+    init_codemirror('properties');
+}
 function load_config_editor() {
     $("#config-editor-sidenav").sidenav({
         edge: 'left',
@@ -189,7 +196,7 @@ function load_config_editor() {
             $("#settings-editor-sidenav").sidenav('close');
             $("#card-editor-sidenav").sidenav('close');
             $("#main-sidenav").sidenav('close');
-        }
+        },
     });
     $.ajax({
         url: $("#config-editor-container").attr('data-url'),
@@ -203,6 +210,16 @@ function load_config_editor() {
         }
     });
 }
+var config_textarea_codemirror = ""
+function init_codemirror(mode) {
+    config_textarea_codemirror = CodeMirror.fromTextArea(document.getElementById("config-textarea"), {
+        lineNumbers: true,
+        mode: mode,
+        theme: 'dashmachine',
+        scrollbarStyle: null,
+    });
+}
+
 function load_settings_editor() {
     $("#settings-editor-sidenav").sidenav({
         edge: 'left',

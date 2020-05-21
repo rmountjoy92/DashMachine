@@ -1,0 +1,53 @@
+{% extends "main/layout.html" %}
+
+{% block page_vendor_css %}
+{% endblock page_vendor_css %}
+
+{% block page_lvl_css %}
+    {#    {{ process_css_sources(src="main/home.css")|safe }}#}
+{% endblock page_lvl_css %}
+
+{% block content %}
+    <div id="main" class="main-full">
+        <div class="container">
+            <div class="row card-filter-container" style="padding-left: 10px">
+                <div class="col s12 m12 l4 xl3  input-field">
+                    <span>
+                        <i class="material-icons prefix card-search-icon">search</i>
+                        <input type="text" id="wiki-tags-search" class="card-filter theme-surface" placeholder="Search tags">
+{#                        <i class="material-icons right filter-action pointer">language</i>#}
+                    </span>
+                </div>
+            </div>
+
+            <div class="row" style="padding-left: 10px">
+                <div class="col s12">
+                    <h4 class="theme-muted-text mb-0">Tags
+                        <i class="material-icons-outlined icon-btn">add</i>
+                    </h4>
+                </div>
+                {% for wiki_tag in wiki_tags %}
+                    <div class="col s12 m12 l4 xl3">
+                        <div class="card">
+                            <a href="{{ url_for('docs_system.wikis', tag=wiki_tag.id) }}">
+                                <div class="card-content">
+                                    <span class="font-weight-900" style="font-size: 1.2rem">{{ wiki_tag.name }}</span>
+                                </div>
+                            </a>
+                            <div class="card-action theme-primary theme-on-primary-text pt-1 pb-1">
+                                <i class="material-icons-outlined icon-btn">edit</i>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block page_vendor_js %}
+{% endblock page_vendor_js %}
+
+{% block page_lvl_js %}
+    {#    {{ process_js_sources(src="main/home.js")|safe }}#}
+{% endblock page_lvl_js %}

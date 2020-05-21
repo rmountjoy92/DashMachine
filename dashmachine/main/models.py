@@ -12,6 +12,12 @@ rel_apps_tags = db.Table(
     db.Column("app_id", db.Integer, db.ForeignKey("apps.id")),
 )
 
+rel_wiki_wiki_tags = db.Table(
+    "rel_wiki_wiki_tags",
+    db.Column("wiki_tag_id", db.Integer, db.ForeignKey("wiki_tags.id")),
+    db.Column("wiki_id", db.Integer, db.ForeignKey("wiki.id")),
+)
+
 
 class Files(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -63,3 +69,26 @@ class Tags(db.Model):
     apps = db.relationship(
         "Apps", secondary=rel_apps_tags, backref=db.backref("tags", lazy="dynamic"),
     )
+
+
+class WikiTags(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String())
+    wikis = db.relationship(
+        "Wiki",
+        secondary=rel_wiki_wiki_tags,
+        backref=db.backref("wiki_tags", lazy="dynamic"),
+    )
+
+
+class Wiki(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    permalink = db.Column(db.String())
+    name = db.Column(db.String())
+    author = db.Column(db.String())
+    description = db.Column(db.String())
+    md = db.Column(db.String())
+    score = db.Column(db.Integer, default=0)
+    created = db.Column(db.String())
+    updated = db.Column(db.String())
+    url = db.Column(db.String())

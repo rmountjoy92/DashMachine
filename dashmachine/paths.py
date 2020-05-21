@@ -23,6 +23,10 @@ user_data_folder = os.path.join(dashmachine_folder, "user_data")
 
 custom_platforms_folder = os.path.join(user_data_folder, "platform")
 
+wiki_folder = os.path.join(user_data_folder, "wiki")
+
+wiki_config_file = os.path.join(wiki_folder, "wiki_config.ini")
+
 auth_cache = os.path.join(user_data_folder, "auth_cache")
 
 if not os.path.isdir(auth_cache):

@@ -17,6 +17,7 @@ from dashmachine.paths import (
 from dashmachine.main.models import Tags
 from dashmachine.main.read_config import read_config
 from dashmachine.user_system.models import AccessGroups
+from dashmachine.docs_system.utils import build_wiki_from_wiki_folder
 from dashmachine.version import version as dashmachine_version
 from dashmachine import db
 
@@ -84,6 +85,9 @@ def dashmachine_init():
             platform = module.Platform()
             if getattr(platform, "on_startup", None):
                 platform.on_startup()
+
+    # build wiki
+    build_wiki_from_wiki_folder()
 
 
 def get_access_group(user, page=None):
