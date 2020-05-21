@@ -233,7 +233,7 @@ class=''
 {% endmacro %}
 
 {% macro ActionBar(tags, location) %}
-    <div class="row card-filter-container">
+    <div class="row card-filter-container" style="z-index: 9998">
         <div class="col s12 m12 {% if location == "home" %} l6 xl4{% endif %} input-field">
             <span>
                 <i class="material-icons prefix card-search-icon">search</i>

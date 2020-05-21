@@ -44,7 +44,7 @@ function init_home_cards(){
         $(this).css("overflow", "auto");
         $(this).css("height", "auto");
         $(this).css("width", width);
-        $(this).css("z-index", 9999);
+        $(this).css("z-index", 888);
     });
     $(".expandable-card").on('mouseleave', function(e) {
         var width = $(this).width()
