@@ -57,7 +57,23 @@
 
     <div id="main-sidenav" class="sidenav theme-background z-depth-5" style="z-index: 8001">
         <div class="row mt-2 mr-2 ml-2">
-            <i class="material-icons-outlined icon-btn theme-secondary-text">toggle_off</i>
+            {% if current_user %}
+                <span id="toggle-user-theme-btn" data-url="{{ url_for('main.toggle_theme') }}" data-user_id="{{ current_user.id }}">
+                    {% if current_user.theme %}
+                        {% if current_user.theme == "light" %}
+                            <i class="material-icons-outlined icon-btn theme-secondary-text">toggle_off</i>
+                        {% elif current_user.theme == "dark" %}
+                            <i class="material-icons-outlined icon-btn theme-primary-text">toggle_on</i>
+                        {% endif %}
+                    {% else %}
+                        {% if settings.theme == "light" %}
+                            <i class="material-icons-outlined icon-btn theme-secondary-text">toggle_off</i>
+                        {% elif settings.theme == "dark" %}
+                            <i class="material-icons-outlined icon-btn theme-primary-text">toggle_on</i>
+                        {% endif %}
+                    {% endif %}
+                </span>
+            {% endif %}
 
             {% if page != "home" %}
                 <a href="{{ url_for('main.home') }}">

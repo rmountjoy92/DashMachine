@@ -455,6 +455,27 @@ $(document).ready(function () {
         $("#card-editor-add-btn").dropdown('recalculateDimensions');
     });
 
+    $("#toggle-user-theme-btn").on('click', function(e) {
+        var icon_btn = $(this).find('.icon-btn');
+        $.ajax({
+            url: $(this).attr('data-url'),
+            type: 'GET',
+            data: {id: $(this).attr("data-user_id"), current_status: icon_btn.text()},
+            success: function(data){
+                fetch_settings();
+                if (icon_btn.text() == "toggle_on"){
+                    icon_btn.text('toggle_off');
+                    icon_btn.removeClass('theme-primary-text');
+                    icon_btn.addClass('theme-secondary-text');
+                } else {
+                    icon_btn.text('toggle_on');
+                    icon_btn.removeClass('theme-secondary-text');
+                    icon_btn.addClass('theme-primary-text');
+                }
+            }
+        });
+    });
+
 
     // ACTION BARS
     var action_providers = {}

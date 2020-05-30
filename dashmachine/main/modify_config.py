@@ -7,8 +7,9 @@ from dashmachine.main.utils import make_dict_list_string, convert_form_boolean
 from dashmachine.main.models import DataSources
 
 
-def modify_config(form):
-    form = dict(form)
+def modify_config(form, convert_form=True):
+    if convert_form:
+        form = dict(form)
     config = ConfigParser(interpolation=None)
     try:
         config.read(os.path.join(user_data_folder, "config.ini"))

@@ -25,7 +25,7 @@ sleep(500).then(() => {
 
     var ctrlDown = false;
     var saved = false;
-    $( document ).keydown(function( e ) {
+    $("#config-editor-container").keydown(function( e ) {
         if (e.key === 'Control') {
             ctrlDown = true;
         }
@@ -35,7 +35,7 @@ sleep(500).then(() => {
             $("#save-config-btn").trigger("click")
         }
     });
-    $( document ).keyup(function( e ) {
+    $("#config-editor-container").keyup(function( e ) {
         if (e.key === 'Control') {
             ctrlDown = false;
         }

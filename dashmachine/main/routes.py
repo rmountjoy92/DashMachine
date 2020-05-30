@@ -411,6 +411,32 @@ def save_ini_form_to_config():
     return modify_config(request.form)
 
 
+@main.route("/toggle_theme", methods=["GET"])
+def toggle_theme():
+    user = User.query.filter_by(id=request.args.get("id")).first()
+    if request.args.get("current_status") == "toggle_off":
+        theme = "dark"
+    elif request.args.get("current_status") == "toggle_on":
+        theme = "light"
+
+    form = row2dict(user)
+    form["ini_section"] = "Users"
+    form["ini_id"] = ""
+    form["prev_name"] = user.username
+    form["password"] = ""
+    form["confirm_password"] = ""
+    form["theme"] = theme
+    del form["id"]
+    del_keys = []
+    for k, v in form.items():
+        if v == "None":
+            del_keys.append(k)
+    for k in del_keys:
+        del form[k]
+
+    return modify_config(form=form)
+
+
 # ------------------------------------------------------------------------------
 # TCDROP routes
 # ------------------------------------------------------------------------------
