@@ -10,6 +10,19 @@ class Platform:
             "author_url": "https://github.com/Azelphur",
             "version": 1.0,
             "description": "Display information from Deluge web ui.",
+            "returns_json_keys": [
+                "upload_rate",
+                "download_rate",
+                "max_upload",
+                "max_download",
+                "upload_protocol_rate",
+                "download_protocol_rate",
+                "num_connections",
+                "max_num_connections",
+                "dht_nodes",
+                "free_space",
+                "has_incoming_connections",
+            ],
             "example": """
 ```ini
 [deluge]
