@@ -369,6 +369,10 @@ input:disabled {
     height: 0;
 }
 
+#main-sidenav .collection .collection-item {
+    border-bottom: unset;
+}
+
 #sidenav-drag-handle-svg path:not(.on-primary) {
     fill: var(--theme-primary);
 }
