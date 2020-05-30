@@ -22,4 +22,25 @@ sleep(500).then(() => {
             }
         });
     });
+
+    var ctrlDown = false;
+    var saved = false;
+    $( document ).keydown(function( e ) {
+        if (e.key === 'Control') {
+            ctrlDown = true;
+        }
+        if (e.key === 's' && ctrlDown && !saved) {
+            e.preventDefault(); // prevent save-as-webpage popup
+            saved = true;
+            $("#save-config-btn").trigger("click")
+        }
+    });
+    $( document ).keyup(function( e ) {
+        if (e.key === 'Control') {
+            ctrlDown = false;
+        }
+        if (e.key === 's' && saved) {
+            saved = false;
+        }
+    });
 });
