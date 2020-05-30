@@ -142,10 +142,7 @@ data_sources = plex
             self.__dict__[key] = value
 
         if not hasattr(self, "token"):
-            print(
-                "Please add a token\nSee https://support.plex.tv/articles/204059436-finding-an-authentication-token-x-plex-token/ to find it."
-            )
-            exit(1)
+            self.token = None
         else:
             self.plex = Plex(self.host, self.token)
 
