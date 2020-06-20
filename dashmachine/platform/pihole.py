@@ -28,9 +28,8 @@ class PiHole(object):
         self.pw = None
 
     def refresh(self):
-        rawdata = requests.get(
-            "http://" + self.ip_address + "/admin/api.php?summary"
-        ).json()
+        if self.ip_address != None:
+            rawdata = requests.get("http://" + self.ip_address + "/admin/api.php?summary").json()
 
         if self.auth_data != None:
             topdevicedata = requests.get(
@@ -56,19 +55,20 @@ class PiHole(object):
                 + self.auth_data.token
             ).json()["querytypes"]
 
-        # Data that is returned is now parsed into vars
-        self.status = rawdata["status"]
-        self.domain_count = rawdata["domains_being_blocked"]
-        self.queries = rawdata["dns_queries_today"]
-        self.blocked = rawdata["ads_blocked_today"]
-        self.ads_percentage = rawdata["ads_percentage_today"]
-        self.unique_domains = rawdata["unique_domains"]
-        self.forwarded = rawdata["queries_forwarded"]
-        self.cached = rawdata["queries_cached"]
-        self.total_clients = rawdata["clients_ever_seen"]
-        self.unique_clients = rawdata["unique_clients"]
-        self.total_queries = rawdata["dns_queries_all_types"]
-        self.gravity_last_updated = rawdata["gravity_last_updated"]
+        if self.ip_address != None:            
+            # Data that is returned is now parsed into vars
+            self.status = rawdata["status"]
+            self.domain_count = rawdata["domains_being_blocked"]
+            self.queries = rawdata["dns_queries_today"]
+            self.blocked = rawdata["ads_blocked_today"]
+            self.ads_percentage = rawdata["ads_percentage_today"]
+            self.unique_domains = rawdata["unique_domains"]
+            self.forwarded = rawdata["queries_forwarded"]
+            self.cached = rawdata["queries_cached"]
+            self.total_clients = rawdata["clients_ever_seen"]
+            self.unique_clients = rawdata["unique_clients"]
+            self.total_queries = rawdata["dns_queries_all_types"]
+            self.gravity_last_updated = rawdata["gravity_last_updated"]
 
     def refreshTop(self, count):
         if self.auth_data == None:
@@ -265,7 +265,15 @@ data_sources = pihole-data
         for key, value in kwargs.items():
             self.__dict__[key] = value
 
-        # self.pihole = PiHole(self.host)
+
+        #set defaults
+        if not hasattr(self, "host"):
+            self.host = None
+        if not hasattr(self, "password"):
+            self.password = "password123"
+
+            
+        self.pihole = PiHole(self.host)
 
     def process(self):
         self.pihole.refresh()
