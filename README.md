@@ -1,8 +1,26 @@
 # DashMachine
 ### Another web application bookmark dashboard, with fun features.
+![Subreddit subscribers](https://img.shields.io/reddit/subreddit-subscribers/dashmachine?style=social)
 
-## Before Installing
-Please read the latest update post: https://www.reddit.com/r/DashMachine/comments/fqk8gl/version_05/
+![GitHub last commit](https://img.shields.io/github/last-commit/rmountjoy92/dashmachine)
+![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/rmountjoy/dashmachine)
+
+![Docker Pulls](https://img.shields.io/docker/pulls/rmountjoy/dashmachine)
+![GitHub Repo stars](https://img.shields.io/github/stars/rmountjoy92/dashmachine?style=social)
+
+![GitHub repo size](https://img.shields.io/github/repo-size/rmountjoy92/dashmachine)
+![Docker Image Size (tag)](https://img.shields.io/docker/image-size/rmountjoy/dashmachine/latest?label=Docker%20Image%20Size)
+![Lines of code](https://img.shields.io/tokei/lines/github/rmountjoy92/dashmachine)
+
+[![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
+[![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/sindresorhus/awesome)
+
+[![Donate](https://img.shields.io/badge/$-support-ff69b4.svg?style=flat)](https://liberapay.com/rmountjoy) 
+![Bountysource](https://img.shields.io/bountysource/team/dashmachine/activity)
+
+Want a feature added now? [Open a bounty](https://www.bountysource.com/teams/dashmachine-app)
+
+## Screenshots
 
 ![screenshot](https://raw.githubusercontent.com/rmountjoy92/DashMachine/master/screenshot1.png)
 
@@ -12,20 +30,6 @@ Please read the latest update post: https://www.reddit.com/r/DashMachine/comment
 
 ![screenshot](https://raw.githubusercontent.com/rmountjoy92/DashMachine/master/screenshot4.png)
 
-### Features
-* creates a dashboard to view web pages
-* uses a single .ini file for configuration
-* dark mode/light mode and accent colors
-* custom backgrounds and icons
-* web interface to edit the config file and add image files
-* ability to open web pages in current tab, new tab or iframe
-* hideable sidebar with dragable reveal button
-* user login system
-* 'app templates' which are sample config entries for popular self hosted apps
-* powerful plugin system for adding data from various sources to display on cards
-* multiple card types including collections and custom cards
-* multiple users, access groups, access settings
-* tagging system
 
 ## Installation
 ### Docker
@@ -82,27 +86,13 @@ https://github.com/rmountjoy92/DashMachine/blob/master/pull_request_template.md
 See this link for how to create a pull request:
 https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request
 
-## Subreddit 
-https://www.reddit.com/r/DashMachine
-
-## Want to buy me a coffee?
-recurring:
-<a href="https://liberapay.com/rmountjoy/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a>
-
-recurring or one-time:
-https://www.bountysource.com/teams/dashmachine-app
-
-## Want a feature to be added faster?
-Open a bounty on https://www.bountysource.com/
-
-Bountysource faq: https://github.com/bountysource/core/wiki/Frequently-Asked-Questions
-
 ## Tech used
-* Flask
-* SQLalchemy w/ SQLite
-* Jinja2
+* Flask (Python 3)
+* SQLalchemy w/ SQLite database
+* HTML5/Jinja2
 * Materialize css
 * JavaScript/jQuery/jQueryUI
+* .ini (for configuration)
 
 ## FAQs
 1. application does not work in iframe
