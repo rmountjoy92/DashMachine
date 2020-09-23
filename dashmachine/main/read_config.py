@@ -49,6 +49,8 @@ def read_config():
 
             settings.accent = config["Settings"].get("accent", "orange")
 
+            settings.layout = config["Settings"].get("layout", "left")
+
             settings.background = config["Settings"].get("background", "None")
 
             if "roles" in config["Settings"]:
