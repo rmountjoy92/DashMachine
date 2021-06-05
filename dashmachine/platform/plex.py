@@ -4,7 +4,7 @@ Connect to Plex Media Server and see current sessions details
 ```ini
 [variable_name]
 platform = plex
-url = http://plex_host:plex_port
+host = http://plex_host:plex_port
 token = plex_token
 value_template = {{ value_template }}
 ```
