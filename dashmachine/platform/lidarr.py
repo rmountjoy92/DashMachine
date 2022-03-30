@@ -77,6 +77,9 @@ class Lidarr(object):
         self.version = "?"
         self.wanted_missing = 0
         self.wanted_cutoff = 0
+        self.artists = 0
+        self.albums = 0
+        self.tracks = 0
         self.queue = 0
         self.diskspace = [
             {"path": "", "total": "", "free": "", "used": ""},
@@ -133,6 +136,81 @@ class Lidarr(object):
 
         if rawdata != None:
             self.version = rawdata["version"]
+
+    def getArtists(self):
+        verify = (
+            False
+            if str(self.verify).lower() == "false"
+            or str(self.prefix).lower() == "http://"
+            else True
+        )
+        headers = {"X-Api-Key": self.api_key}
+        port = "" if self.port == None else ":" + self.port
+
+        if self.method.upper() == "GET":
+            try:
+                rawdata = requests.get(
+                    self.prefix + self.host + port + self.endpoint + "/artist",
+                    headers=headers,
+                    verify=verify,
+                    timeout=10,
+                ).json()
+            except Exception as e:
+                rawdata = None
+                self.error = f"{e}"
+
+        if rawdata != None:
+            self.artists = len(rawdata)
+
+    def getAlbums(self):
+        verify = (
+            False
+            if str(self.verify).lower() == "false"
+            or str(self.prefix).lower() == "http://"
+            else True
+        )
+        headers = {"X-Api-Key": self.api_key}
+        port = "" if self.port == None else ":" + self.port
+
+        if self.method.upper() == "GET":
+            try:
+                rawdata = requests.get(
+                    self.prefix + self.host + port + self.endpoint + "/album",
+                    headers=headers,
+                    verify=verify,
+                    timeout=10,
+                ).json()
+            except Exception as e:
+                rawdata = None
+                self.error = f"{e}"
+
+        if rawdata != None:
+            self.artists = len(rawdata)
+
+    def getTracks(self):
+        verify = (
+            False
+            if str(self.verify).lower() == "false"
+            or str(self.prefix).lower() == "http://"
+            else True
+        )
+        headers = {"X-Api-Key": self.api_key}
+        port = "" if self.port == None else ":" + self.port
+
+        if self.method.upper() == "GET":
+            try:
+                rawdata = requests.get(
+                    self.prefix + self.host + port + self.endpoint + "/track",
+                    headers=headers,
+                    verify=verify,
+                    timeout=10,
+                ).json()
+            except Exception as e:
+                rawdata = None
+                self.error = f"{e}"
+
+        if rawdata != None:
+            self.artists = len(rawdata)
 
     def getWanted(self, wType):
         verify = (
@@ -239,6 +317,9 @@ class Lidarr(object):
         if self.error == None:
             self.error = ""
             self.getVersion()
+            self.getArtists()
+            self.getAlbums()
+            self.getTracks()
             self.getWanted("missing")
             self.getWanted("cutoff")
             self.getQueue()
