@@ -72,6 +72,7 @@ class Sonarr(object):
         # Initialize results
         self.error = None
         self.version = "?"
+        self.shows = 0
         self.wanted_missing = 0
         self.queue = 0
         self.diskspace = [
