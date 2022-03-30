@@ -130,6 +130,31 @@ class Sonarr(object):
         if rawdata != None:
             self.version = rawdata["version"]
 
+    def getShows(self):
+        verify = (
+            False
+            if str(self.verify).lower() == "false"
+            or str(self.prefix).lower() == "http://"
+            else True
+        )
+        headers = {"X-Api-Key": self.api_key}
+        port = "" if self.port == None else ":" + self.port
+
+        if self.method.upper() == "GET":
+            try:
+                rawdata = requests.get(
+                    self.prefix + self.host + port + self.endpoint + "/series",
+                    headers=headers,
+                    verify=verify,
+                    timeout=10,
+                ).json()
+            except Exception as e:
+                rawdata = None
+                self.error = f"{e}"
+
+        if rawdata != None:
+            self.shows = len(rawdata)
+
     def getWanted(self):
         verify = (
             False
@@ -226,6 +251,7 @@ class Sonarr(object):
         if self.error == None:
             self.error = ""
             self.getVersion()
+            self.getShows()
             self.getWanted()
             self.getQueue()
             self.getDiskspace()
