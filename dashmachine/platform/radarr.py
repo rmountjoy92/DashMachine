@@ -61,7 +61,7 @@ import requests
 
 class Radarr(object):
     def __init__(self, method, prefix, host, port, api_key, verify):
-        self.endpoint = "/api"
+        self.endpoint = "/api/v3"
         self.method = method
         self.prefix = prefix
         self.host = host
@@ -178,7 +178,7 @@ class Radarr(object):
                 self.error = f"{e}"
 
         if rawdata != None:
-            self.queue = len((rawdata))
+            self.queue = rawdata["totalRecords"]
 
     def getDiskspace(self):
         verify = (
